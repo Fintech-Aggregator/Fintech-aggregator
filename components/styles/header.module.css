@@ -1,0 +1,28 @@
+.mainHeader {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 70px;
+}
+.userName {
+  font-size: 30px;
+}
+.logo {
+  max-width: 70px;
+  max-height: 70px;
+}
+.secondHeader {
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+}
+.iconButton {
+  display: flex;
+  align-items: center;
+}
+.divider {
+  border: none;
+  height: 1px;
+  background-color: #333;
+  margin: 10px 0;
+}
