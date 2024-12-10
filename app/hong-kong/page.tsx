@@ -1,8 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./hong-kong-list.module.css";
+import { TableRow } from "@/components/shared/table-row";
 
-interface Props {
+export interface RowProps {
   id: number;
   licenseName: string;
   address: string;
@@ -10,14 +11,14 @@ interface Props {
 }
 
 const HongKong: React.FC = () => {
-  const [hongKongData, setHongKongData] = useState<Props[]>([]);
+  const [hongKongData, setHongKongData] = useState<RowProps[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/hong-kong");
+        const res = await fetch("http://localhost:3001/api/hong-kong");
         const data = await res.json();
         setHongKongData(data["hongKongData"]);
       } catch (error) {
@@ -59,19 +60,15 @@ const HongKong: React.FC = () => {
         </thead>
         <tbody>
           {hongKongData.map((data) => (
-            <tr key={data.id}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedRows.has(data.id)}
-                  onChange={() => toggleRowSelection(data.id)}
-                />
-              </td>
-              <td>{data.id}</td>
-              <td>{data.licenseName}</td>
-              <td>{data.address}</td>
-              <td>{data.addressType}</td>
-            </tr>
+            <TableRow
+              key={data.id}
+              id={data.id}
+              address={data.address}
+              addressType={data.addressType}
+              licenseName={data.licenseName}
+              selectedRows={selectedRows}
+              toggleRowSelection={toggleRowSelection}
+            />
           ))}
         </tbody>
       </table>
