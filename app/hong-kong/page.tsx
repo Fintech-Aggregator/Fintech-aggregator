@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./hong-kong-list.module.css";
+import SearchForm from "../components/shared/searchForm";
 
 interface Props {
   id: number;
@@ -46,35 +47,41 @@ const HongKong: React.FC = () => {
   }
 
   return (
-    <div className={styles.tableContainer}>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Select</th>
-            <th>ID</th>
-            <th>License Name</th>
-            <th>Address</th>
-            <th>Address Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          {hongKongData.map((data) => (
-            <tr key={data.id}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedRows.has(data.id)}
-                  onChange={() => toggleRowSelection(data.id)}
-                />
-              </td>
-              <td>{data.id}</td>
-              <td>{data.licenseName}</td>
-              <td>{data.address}</td>
-              <td>{data.addressType}</td>
+    <div>
+      <div style={{ padding: "20px" }}>
+        <h1>Search Form</h1>
+        <SearchForm />
+      </div>
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
+          <thead>
+            <tr>
+              <th>Select</th>
+              <th>ID</th>
+              <th>License Name</th>
+              <th>Address</th>
+              <th>Address Type</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {hongKongData.map((data) => (
+              <tr key={data.id}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selectedRows.has(data.id)}
+                    onChange={() => toggleRowSelection(data.id)}
+                  />
+                </td>
+                <td>{data.id}</td>
+                <td>{data.licenseName}</td>
+                <td>{data.address}</td>
+                <td>{data.addressType}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
