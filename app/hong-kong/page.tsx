@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./hong-kong-list.module.css";
+import { TableRow } from "../components/shared/table-row";
 import SearchForm from "../components/shared/searchForm";
 
 interface Props {
@@ -65,19 +66,15 @@ const HongKong: React.FC = () => {
           </thead>
           <tbody>
             {hongKongData.map((data) => (
-              <tr key={data.id}>
-                <td>
-                  <input
-                    type="checkbox"
-                    checked={selectedRows.has(data.id)}
-                    onChange={() => toggleRowSelection(data.id)}
-                  />
-                </td>
-                <td>{data.id}</td>
-                <td>{data.licenseName}</td>
-                <td>{data.address}</td>
-                <td>{data.addressType}</td>
-              </tr>
+              <TableRow
+                key={data.id}
+                id={data.id}
+                address={data.address}
+                addressType={data.addressType}
+                licenseName={data.licenseName}
+                selectedRows={selectedRows}
+                toggleRowSelection={toggleRowSelection}
+              />
             ))}
           </tbody>
         </table>
