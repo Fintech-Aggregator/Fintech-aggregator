@@ -32,7 +32,7 @@ const SearchForm: React.FC = () => {
   };
 
   return (
-    <form style={{ maxWidth: "400px", margin: "0 auto", padding: "16px" }}>
+    <form style={{ width: "420px", margin: "0 auto", padding: "16px" }}>
       <InputField
         label="Name of Licensee"
         name="name"
@@ -67,12 +67,14 @@ const SearchForm: React.FC = () => {
       >
         <Button
           label="Search"
+          size="large"
           type="button"
           onClick={handleSearch}
           variant="primary"
         />
         <Button
           label="Clear"
+          size="large"
           type="button"
           onClick={handleClear}
           variant="secondary"

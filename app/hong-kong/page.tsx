@@ -49,35 +49,34 @@ const HongKong: React.FC = () => {
 
   return (
     <div>
-      <div style={{ padding: "20px" }}>
-        <h1>Search Form</h1>
-        <SearchForm />
-      </div>
-      <div className={styles.tableContainer}>
-        <table className={styles.table}>
-          <thead>
-            <tr>
-              <th>Select</th>
-              <th>ID</th>
-              <th>License Name</th>
-              <th>Address</th>
-              <th>Address Type</th>
-            </tr>
-          </thead>
-          <tbody>
-            {hongKongData.map((data) => (
-              <TableRow
-                key={data.id}
-                id={data.id}
-                address={data.address}
-                addressType={data.addressType}
-                licenseName={data.licenseName}
-                selectedRows={selectedRows}
-                toggleRowSelection={toggleRowSelection}
-              />
-            ))}
-          </tbody>
-        </table>
+      <SearchForm />
+      <div className={styles.centerTable}>
+        <div className={styles.tableContainer}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Select</th>
+                <th>ID</th>
+                <th>License Name</th>
+                <th>Address</th>
+                <th>Address Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {hongKongData.map((data) => (
+                <TableRow
+                  key={data.id}
+                  id={data.id}
+                  address={data.address}
+                  addressType={data.addressType}
+                  licenseName={data.licenseName}
+                  selectedRows={selectedRows}
+                  toggleRowSelection={toggleRowSelection}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   );
