@@ -18,7 +18,7 @@ const HongKong: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:3001/api/hong-kong");
+        const res = await fetch("http://localhost:3000/api/hong-kong");
         const data = await res.json();
         setHongKongData(data["hongKongData"]);
       } catch (error) {
