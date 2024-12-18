@@ -12,12 +12,20 @@ const Header = () => {
   return (
     <>
       <header className={styles.mainHeader}>
-        <img
-          className={styles.logo}
-          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFz_vC0EXRut6N5GePX35CaTWmQkzqrk1AtQ&s"
-          alt="Logo"
-        />
-        <div className={styles.secondHeader}>
+        <div className={styles.firstBlockHeader}>
+          <img
+            className={styles.logo}
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFz_vC0EXRut6N5GePX35CaTWmQkzqrk1AtQ&s"
+            alt="Logo"
+          />
+          <Link href="/">
+            <span className={styles.userName}>Home</span>
+          </Link>
+          <Link href="/hong-kong">
+            <span className={styles.pageName}>Hong Kong</span>
+          </Link>
+        </div>
+        <div className={styles.secondBlockHeader}>
           <span className={styles.userName}>Name</span>
           <Link href="/login" id="launchModalBtn" className={styles.iconButton}>
             <svg

@@ -1,9 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./hong-kong-list.module.css";
-import { TableRow } from "@/components/shared/table-row";
+import { TableRow } from "../components/shared/table-row";
+import SearchForm from "../components/shared/searchForm";
+import { Skeleton } from "../components/ui/skeleton";
 
-export interface RowProps {
+interface Props {
   id: number;
   licenseName: string;
   address: string;
@@ -11,7 +13,7 @@ export interface RowProps {
 }
 
 const HongKong: React.FC = () => {
-  const [hongKongData, setHongKongData] = useState<RowProps[]>([]);
+  const [hongKongData, setHongKongData] = useState<Props[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
 
@@ -43,35 +45,74 @@ const HongKong: React.FC = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div>
+        <SearchForm />
+        <div className={styles.centerTable}>
+          <div className={styles.tableContainer}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Select</th>
+                  <th>ID</th>
+                  <th>License Name</th>
+                  <th>Address</th>
+                  <th>Address Type</th>
+                </tr>
+              </thead>
+              <tbody>
+                {...Array(10)
+                  .fill(0)
+                  .map((_, index) => 
+                    <tr key={index}>
+                      <td>
+                        <input type="checkbox" checked={selectedRows.has(index)} onChange={() => toggleRowSelection(index)} />
+                      </td>
+                      <td><Skeleton className="w-[50px] h-[50px] rounded-[10px]" /></td>
+                      <td><Skeleton className="w-[220px] h-[50px] rounded-[10px]" /></td>
+                      <td><Skeleton className="w-[360px] h-[50px] rounded-[10px]" /></td>
+                      <td><Skeleton className="w-[150px] h-[50px] rounded-[10px]" /></td>
+                    </tr> )}
+              </tbody>
+            </table>
+          </div>
+          
+        </div>
+      </div>
+    );
   }
 
   return (
-    <div className={styles.tableContainer}>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Select</th>
-            <th>ID</th>
-            <th>License Name</th>
-            <th>Address</th>
-            <th>Address Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          {hongKongData.map((data) => (
-            <TableRow
-              key={data.id}
-              id={data.id}
-              address={data.address}
-              addressType={data.addressType}
-              licenseName={data.licenseName}
-              selectedRows={selectedRows}
-              toggleRowSelection={toggleRowSelection}
-            />
-          ))}
-        </tbody>
-      </table>
+    <div>
+      <SearchForm />
+      <div className={styles.centerTable}>
+        <div className={styles.tableContainer}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>Select</th>
+                <th>ID</th>
+                <th>License Name</th>
+                <th>Address</th>
+                <th>Address Type</th>
+              </tr>
+            </thead>
+            <tbody>
+              {hongKongData.map((data) => (
+                <TableRow
+                  key={data.id}
+                  id={data.id}
+                  address={data.address}
+                  addressType={data.addressType}
+                  licenseName={data.licenseName}
+                  selectedRows={selectedRows}
+                  toggleRowSelection={toggleRowSelection}
+                />
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   );
 };

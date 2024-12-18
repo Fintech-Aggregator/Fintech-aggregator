@@ -1,6 +1,5 @@
 .tableContainer {
   width: 967px;
-
   overflow: auto;
   border: 1px solid #ddd;
 }
@@ -24,4 +23,10 @@
 
 .table tr:hover {
   background-color: #f1f1f1;
+}
+.centerTable {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
 }
