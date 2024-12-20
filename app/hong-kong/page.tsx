@@ -16,6 +16,8 @@ const HongKong: React.FC = () => {
   const [hongKongData, setHongKongData] = useState<Props[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
+  const [currentPage, setCurrentPage] = useState(0);
+  const rowsPerPage = 10;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,6 +46,23 @@ const HongKong: React.FC = () => {
     });
   };
 
+  const handleNextPage = () => {
+    if ((currentPage + 1) * rowsPerPage < hongKongData.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePreviousPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const currentData = hongKongData.slice(
+    currentPage * rowsPerPage,
+    (currentPage + 1) * rowsPerPage
+  );
+
   if (loading) {
     return (
       <div>
@@ -61,22 +80,34 @@ const HongKong: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {...Array(10)
+                {Array(10)
                   .fill(0)
-                  .map((_, index) => 
+                  .map((_, index) => (
                     <tr key={index}>
-                      <td>
-                        <input type="checkbox" checked={selectedRows.has(index)} onChange={() => toggleRowSelection(index)} />
+                      <td style={{ width: "26px" }}>
+                        <input
+                          type="checkbox"
+                          checked={selectedRows.has(index)}
+                          onChange={() => toggleRowSelection(index)}
+                        />
                       </td>
-                      <td><Skeleton className="w-[50px] h-[50px] rounded-[10px]" /></td>
-                      <td><Skeleton className="w-[220px] h-[50px] rounded-[10px]" /></td>
-                      <td><Skeleton className="w-[360px] h-[50px] rounded-[10px]" /></td>
-                      <td><Skeleton className="w-[150px] h-[50px] rounded-[10px]" /></td>
-                    </tr> )}
+                      <td style={{ width: "26px" }}>
+                        <Skeleton className="w-[26px] h-[50px] rounded-[10px]" />
+                      </td>
+                      <td style={{ width: "294px" }}>
+                        <Skeleton className="w-[294px] h-[50px] rounded-[10px]" />
+                      </td>
+                      <td style={{ width: "375px" }}>
+                        <Skeleton className="w-[375px] h-[50px] rounded-[10px]" />
+                      </td>
+                      <td style={{ width: "125px" }}>
+                        <Skeleton className="w-[125px] h-[50px] rounded-[10px]" />
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>
-          
         </div>
       </div>
     );
@@ -90,15 +121,53 @@ const HongKong: React.FC = () => {
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>Select</th>
+                <th>
+                  {" "}
+                  <button
+                    onClick={handlePreviousPage}
+                    disabled={currentPage === 0}
+                    className={styles.paginationButton}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#00cc99"
+                      className="bi bi-caret-left-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                    </svg>
+                  </button>
+                </th>
                 <th>ID</th>
                 <th>License Name</th>
                 <th>Address</th>
-                <th>Address Type</th>
+                <th>
+                  Address Type{" "}
+                  <button
+                    onClick={handleNextPage}
+                    disabled={
+                      (currentPage + 1) * rowsPerPage >= hongKongData.length
+                    }
+                    className={styles.paginationButton}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      fill="#00cc99"
+                      className="bi bi-caret-right-fill"
+                      viewBox="0 0 16 16"
+                    >
+                      <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                    </svg>
+                  </button>
+                </th>
               </tr>
             </thead>
             <tbody>
-              {hongKongData.map((data) => (
+              {currentData.map((data) => (
                 <TableRow
                   key={data.id}
                   id={data.id}
@@ -111,6 +180,44 @@ const HongKong: React.FC = () => {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className={styles.pagination}>
+          <button
+            onClick={handlePreviousPage}
+            disabled={currentPage === 0}
+            className={styles.paginationButton}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="#00cc99"
+              className="bi bi-caret-left-fill"
+              viewBox="0 0 16 16"
+            >
+              <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+            </svg>
+          </button>
+          <span>
+            Сторінка {currentPage + 1} із{" "}
+            {Math.ceil(hongKongData.length / rowsPerPage)}
+          </span>
+          <button
+            onClick={handleNextPage}
+            disabled={(currentPage + 1) * rowsPerPage >= hongKongData.length}
+            className={styles.paginationButton}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="#00cc99"
+              className="bi bi-caret-right-fill"
+              viewBox="0 0 16 16"
+            >
+              <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+            </svg>
+          </button>
         </div>
       </div>
     </div>

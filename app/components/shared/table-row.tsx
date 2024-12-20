@@ -6,20 +6,32 @@ interface Props {
   address: string;
   addressType: string;
   selectedRows: Set<number>;
-  toggleRowSelection: (id: number)=> void;
+  toggleRowSelection: (id: number) => void;
   className?: string;
 }
 
-export const TableRow: React.FC<Props> = ({ id, licenseName, address, addressType, selectedRows, toggleRowSelection, className }) => {
+export const TableRow: React.FC<Props> = ({
+  id,
+  licenseName,
+  address,
+  addressType,
+  selectedRows,
+  toggleRowSelection,
+  className,
+}) => {
   return (
     <tr className={className} key={id}>
-      <td>
-        <input type="checkbox" checked={selectedRows.has(id)} onChange={() => toggleRowSelection(id)} />
+      <td style={{ width: "26px" }}>
+        <input
+          type="checkbox"
+          checked={selectedRows.has(id)}
+          onChange={() => toggleRowSelection(id)}
+        />
       </td>
-      <td>{id}</td>
-      <td>{licenseName}</td>
-      <td>{address}</td>
-      <td>{addressType}</td>
+      <td style={{ width: "26px" }}>{id}</td>
+      <td style={{ width: "294px" }}>{licenseName}</td>
+      <td style={{ width: "375px" }}>{address}</td>
+      <td style={{ width: "125px" }}>{addressType}</td>
     </tr>
   );
 };
