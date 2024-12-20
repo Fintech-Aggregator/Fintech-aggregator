@@ -71,7 +71,7 @@ const HongKong: React.FC = () => {
           <div className={styles.tableContainer}>
             <table className={styles.table}>
               <thead>
-                <tr>
+                <tr style={{ borderBottom: "1px solid #000000;" }}>
                   <th>Select</th>
                   <th>ID</th>
                   <th>License Name</th>
@@ -119,8 +119,17 @@ const HongKong: React.FC = () => {
       <div className={styles.centerTable}>
         <div className={styles.tableContainer}>
           <table className={styles.table}>
-            <thead>
-              <tr>
+            <thead
+              style={{
+                backgroundColor: "white",
+              }}
+            >
+              <tr
+                style={{
+                  borderBottom: "1px solid #000000;",
+                  backgroundColor: "white",
+                }}
+              >
                 <th>
                   {" "}
                   <button
@@ -143,7 +152,7 @@ const HongKong: React.FC = () => {
                 <th>ID</th>
                 <th>License Name</th>
                 <th>Address</th>
-                <th>
+                <th style={{ width: "133px" }}>
                   Address Type{" "}
                   <button
                     onClick={handleNextPage}

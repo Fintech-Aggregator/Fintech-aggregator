@@ -1,8 +1,11 @@
 .tableContainer {
   width: 967px;
   overflow: auto;
-  border: 1px solid #ddd;
+  border: 1px solid #000000;
   border-radius: 10px;
+}
+.table thead {
+  background-color: white !important;
 }
 .table {
   width: 100%;
