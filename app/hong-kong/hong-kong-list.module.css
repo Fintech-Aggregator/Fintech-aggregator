@@ -19,10 +19,10 @@
   padding: 8px;
   text-align: left;
 }
-
-.table th {
+.tableHeader th {
+  text-align: center;
   background-color: #f2f2f2;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .table tr:hover {

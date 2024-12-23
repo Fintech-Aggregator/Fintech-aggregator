@@ -1,5 +1,5 @@
-import styles from "../styles/search-bar.module.css";
-import Content from "./content";
+import styles from "./search-bar.module.css";
+import HomeContent from "./homeContent";
 export default function SearchBar() {
   return (
     <div className={styles.mainSearch}>
@@ -21,7 +21,7 @@ export default function SearchBar() {
         </svg>
       </div>
 
-      <Content />
+      <HomeContent />
     </div>
   );
 }

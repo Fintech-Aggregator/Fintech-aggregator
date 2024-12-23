@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./hong-kong-list.module.css";
-import { TableRow } from "../components/shared/table-row";
+import { TableRow } from "../components/shared/TablesExpanded/tableContent";
 import SearchForm from "../components/shared/searchForm";
 import { Skeleton } from "../components/ui/skeleton";
 
@@ -66,11 +66,10 @@ const HongKong: React.FC = () => {
   if (loading) {
     return (
       <div>
-        <SearchForm />
         <div className={styles.centerTable}>
           <div className={styles.tableContainer}>
             <table className={styles.table}>
-              <thead>
+              <thead className={styles.tableHeader}>
                 <tr style={{ borderBottom: "1px solid #000000;" }}>
                   <th>Select</th>
                   <th>ID</th>
@@ -115,64 +114,18 @@ const HongKong: React.FC = () => {
 
   return (
     <div>
-      <SearchForm />
       <div className={styles.centerTable}>
         <div className={styles.tableContainer}>
           <table className={styles.table}>
-            <thead
-              style={{
-                backgroundColor: "white",
-              }}
-            >
-              <tr
-                style={{
-                  borderBottom: "1px solid #000000;",
-                  backgroundColor: "white",
-                }}
-              >
+            <thead className={styles.tableHeader}>
+              <tr>
                 <th>
-                  {" "}
-                  <button
-                    onClick={handlePreviousPage}
-                    disabled={currentPage === 0}
-                    className={styles.paginationButton}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="#00cc99"
-                      className="bi bi-caret-left-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
-                    </svg>
-                  </button>
+                  <input type="checkbox" />
                 </th>
                 <th>ID</th>
                 <th>License Name</th>
                 <th>Address</th>
-                <th style={{ width: "133px" }}>
-                  Address Type{" "}
-                  <button
-                    onClick={handleNextPage}
-                    disabled={
-                      (currentPage + 1) * rowsPerPage >= hongKongData.length
-                    }
-                    className={styles.paginationButton}
-                  >
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="16"
-                      height="16"
-                      fill="#00cc99"
-                      className="bi bi-caret-right-fill"
-                      viewBox="0 0 16 16"
-                    >
-                      <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
-                    </svg>
-                  </button>
-                </th>
+                <th style={{ width: "133px" }}>Address Type</th>
               </tr>
             </thead>
             <tbody>
