@@ -1,8 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./hong-kong-list.module.css";
-import { TableRow } from "../components/shared/TablesExpanded/tableContent";
-import SearchForm from "../components/shared/searchForm";
+import { TableContent } from "../components/shared/TablesExpanded/tableContent";
+import TableHeader from "../components/shared/TablesExpanded/tableHeader";
 import { Skeleton } from "../components/ui/skeleton";
 
 interface Props {
@@ -69,15 +69,7 @@ const HongKong: React.FC = () => {
         <div className={styles.centerTable}>
           <div className={styles.tableContainer}>
             <table className={styles.table}>
-              <thead className={styles.tableHeader}>
-                <tr style={{ borderBottom: "1px solid #000000;" }}>
-                  <th>Select</th>
-                  <th>ID</th>
-                  <th>License Name</th>
-                  <th>Address</th>
-                  <th>Address Type</th>
-                </tr>
-              </thead>
+              <TableHeader />
               <tbody>
                 {Array(10)
                   .fill(0)
@@ -117,20 +109,10 @@ const HongKong: React.FC = () => {
       <div className={styles.centerTable}>
         <div className={styles.tableContainer}>
           <table className={styles.table}>
-            <thead className={styles.tableHeader}>
-              <tr>
-                <th>
-                  <input type="checkbox" />
-                </th>
-                <th>ID</th>
-                <th>License Name</th>
-                <th>Address</th>
-                <th style={{ width: "133px" }}>Address Type</th>
-              </tr>
-            </thead>
+            <TableHeader />
             <tbody>
               {currentData.map((data) => (
-                <TableRow
+                <TableContent
                   key={data.id}
                   id={data.id}
                   address={data.address}

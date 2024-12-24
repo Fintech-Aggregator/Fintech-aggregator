@@ -4,9 +4,7 @@
   border: 1px solid #000000;
   border-radius: 10px;
 }
-.table thead {
-  background-color: white !important;
-}
+
 .table {
   width: 100%;
   height: 100%;
@@ -19,12 +17,6 @@
   padding: 8px;
   text-align: left;
 }
-.tableHeader th {
-  text-align: center;
-  background-color: #f2f2f2;
-  font-weight: 500;
-}
-
 .table tr:hover {
   background-color: #f1f1f1;
 }
@@ -33,4 +25,11 @@
   align-items: center;
   flex-direction: column;
   padding: 20px;
+}
+.table tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+
+.table tr:nth-child(odd) {
+  background-color: #ffffff;
 }

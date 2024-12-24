@@ -10,7 +10,7 @@ interface Props {
   className?: string;
 }
 
-export const TableRow: React.FC<Props> = ({
+export const TableContent: React.FC<Props> = ({
   id,
   licenseName,
   address,
