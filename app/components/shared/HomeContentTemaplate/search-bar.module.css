@@ -32,7 +32,7 @@
 .searchIcon {
   position: relative;
   right: 25px;
-  top: 4px;
+  top: 10px;
 }
 
 .tiny {
@@ -44,6 +44,7 @@
 
 .medium {
   width: 350px;
+  height: 40px;
 }
 
 .large {

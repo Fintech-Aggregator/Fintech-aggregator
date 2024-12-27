@@ -4,7 +4,8 @@ import styles from "./hong-kong-list.module.css";
 import { TableContent } from "../components/shared/TablesExpanded/tableContent";
 import TableHeader from "../components/shared/TablesExpanded/tableHeader";
 import { Skeleton } from "../components/ui/skeleton";
-
+import SearchBar from "../components/shared/HomeContentTemaplate/search-bar";
+import Pagination from "../components/shared/TablesExpanded/pagination";
 interface Props {
   id: number;
   licenseName: string;
@@ -106,6 +107,19 @@ const HongKong: React.FC = () => {
 
   return (
     <div>
+      <div
+        style={{
+          marginRight: "30px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "480px",
+        }}
+      >
+        <SearchBar size="medium" />
+        <Pagination />
+      </div>
+
       <div className={styles.centerTable}>
         <div className={styles.tableContainer}>
           <table className={styles.table}>

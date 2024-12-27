@@ -11,11 +11,13 @@ export default function SearchBar({
   showIcon = true,
   showPlaceholder = true,
 }: SearchBarProps) {
+  const sizeClass = styles[size];
+
   return (
     <div className={styles.mainSearch}>
       <div className={styles.IconAndInput}>
         <input
-          className={styles.searchInput}
+          className={`${styles.searchInput} ${sizeClass}`}
           type="text"
           placeholder={showPlaceholder ? "Search" : ""}
         />
@@ -24,7 +26,7 @@ export default function SearchBar({
             xmlns="http://www.w3.org/2000/svg"
             width="16"
             height="16"
-            fill="currentColor"
+            fill="#05D69E"
             viewBox="0 0 16 16"
             className={styles.searchIcon}
           >
