@@ -1,11 +1,11 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import styles from "./hong-kong-list.module.css";
-import { TableContent } from "../components/shared/TablesExpanded/tableContent";
-import TableHeader from "../components/shared/TablesExpanded/tableHeader";
-import { Skeleton } from "../components/ui/skeleton";
-import SearchBar from "../components/shared/HomeContentTemaplate/search-bar";
-import Pagination from "../components/shared/TablesExpanded/pagination";
+import { TableContent } from "../../components/shared/TablesExpanded/tableContent";
+import TableHeader from "../../components/shared/TablesExpanded/tableHeader";
+import { Skeleton } from "../../components/ui/skeleton";
+import SearchBar from "../../components/shared/HomeContentTemaplate/search-bar";
+import Pagination from "../../components/shared/TablesExpanded/pagination";
 interface Props {
   id: number;
   licenseName: string;
@@ -59,14 +59,23 @@ const HongKong: React.FC = () => {
     }
   };
 
-  const currentData = hongKongData.slice(
-    currentPage * rowsPerPage,
-    (currentPage + 1) * rowsPerPage
-  );
+  const currentData = hongKongData.slice(currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage);
 
   if (loading) {
     return (
       <div>
+        <div
+          style={{
+            marginRight: "30px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "480px",
+          }}
+        >
+          <SearchBar size="medium" />
+          <Pagination />
+        </div>
         <div className={styles.centerTable}>
           <div className={styles.tableContainer}>
             <table className={styles.table}>
@@ -77,11 +86,7 @@ const HongKong: React.FC = () => {
                   .map((_, index) => (
                     <tr key={index}>
                       <td style={{ width: "26px" }}>
-                        <input
-                          type="checkbox"
-                          checked={selectedRows.has(index)}
-                          onChange={() => toggleRowSelection(index)}
-                        />
+                        <input type="checkbox" checked={selectedRows.has(index)} onChange={() => toggleRowSelection(index)} />
                       </td>
                       <td style={{ width: "26px" }}>
                         <Skeleton className="w-[26px] h-[50px] rounded-[10px]" />
@@ -140,11 +145,7 @@ const HongKong: React.FC = () => {
           </table>
         </div>
         <div className={styles.pagination}>
-          <button
-            onClick={handlePreviousPage}
-            disabled={currentPage === 0}
-            className={styles.paginationButton}
-          >
+          <button onClick={handlePreviousPage} disabled={currentPage === 0} className={styles.paginationButton}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -157,8 +158,7 @@ const HongKong: React.FC = () => {
             </svg>
           </button>
           <span>
-            Сторінка {currentPage + 1} із{" "}
-            {Math.ceil(hongKongData.length / rowsPerPage)}
+            Сторінка {currentPage + 1} із {Math.ceil(hongKongData.length / rowsPerPage)}
           </span>
           <button
             onClick={handleNextPage}
