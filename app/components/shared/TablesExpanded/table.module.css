@@ -19,6 +19,7 @@
 .stylesForInput {
   align-items: center;
   height: 25px;
+  width: 200px;
   border: none;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);

@@ -2,8 +2,9 @@ import React from "react";
 import styles from "./table.module.css";
 import SearchBar from "../HomeContentTemaplate/search-bar";
 import SelectField from "../../ui/selectField";
+import Image from "next/image";
 
-function tableHeader() {
+function TableHeader() {
   return (
     <thead className={styles.tableHeader}>
       <tr>
@@ -106,7 +107,21 @@ function tableHeader() {
                 />
               </svg>
             </div>
-            <select className={styles.stylesForInput} name="" id=""></select>
+            <div className="relative">
+              <Image
+                className="absolute top-2.5 left-44"
+                src="/Vector.svg"
+                alt="Vector"
+                width={10}
+                height={10}
+              />
+              <select
+                className={styles.stylesForInput}
+                style={{ appearance: "none" }}
+                name=""
+                id=""
+              ></select>
+            </div>
           </div>
         </th>
       </tr>
@@ -114,4 +129,4 @@ function tableHeader() {
   );
 }
 
-export default tableHeader;
+export default TableHeader;

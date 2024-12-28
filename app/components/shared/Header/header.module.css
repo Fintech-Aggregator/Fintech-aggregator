@@ -9,7 +9,7 @@
 }
 .pageName {
   font-size: 30px;
-  color: #00cc99;
+  color: var(--green-color);
 }
 .logo {
   max-width: 70px;
