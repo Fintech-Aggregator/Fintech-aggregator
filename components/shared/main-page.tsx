@@ -7,7 +7,7 @@ export default function Content() {
     <div className={styles.template}>
       <div className={styles.block1}>
         
-        <img src={Image1.src} className={styles.image1} />
+        {/* <img src={Image1.src} className={styles.image1} /> */}
         
         <div className={styles.text_overlay1}>
           <h1>Your key to fintech licenses Fast, Accurate, Convenient</h1>
