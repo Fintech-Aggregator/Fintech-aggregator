@@ -13,7 +13,7 @@ interface Props {
   tableData: RowProps[];
 }
 
-export const TableContainer: React.FC<Props> = ({ tableData }) => {
+export const Table: React.FC<Props> = ({ tableData }) => {
   const [selectedRows, setSelectedRows] = React.useState<Set<number>>(
     new Set()
   );

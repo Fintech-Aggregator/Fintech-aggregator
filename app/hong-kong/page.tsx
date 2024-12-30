@@ -1,9 +1,10 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import SearchBar from "../components/shared/HomeContentTemaplate/search-bar";
-import Pagination from "../components/shared/TablesExpanded/pagination";
-import { TableContainer } from "../components/shared/TablesExpanded/tableContainer";
-import { TableSkeleton } from "../components/shared/TablesExpanded/TableSkeleton";
+import SearchBar from "@/components/shared/HomeContentTemaplate/search-bar";
+import Pagination from "@/components/shared/TablesExpanded/pagination";
+import { Table } from "@/components/shared/TablesExpanded/Table";
+
+import { TableSkeleton } from "@/components/shared/TablesExpanded/TableSkeleton";
 interface Props {
   id: number;
   licenseName: string;
@@ -44,11 +45,7 @@ const HongKong: React.FC = () => {
         <SearchBar size="medium" />
         <Pagination />
       </div>
-      {loading ? (
-        <TableSkeleton />
-      ) : (
-        <TableContainer tableData={hongKongData} />
-      )}
+      {loading ? <TableSkeleton /> : <Table tableData={hongKongData} />}
     </div>
   );
 };
