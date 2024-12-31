@@ -1,9 +1,11 @@
-import SearchBar from "@/components/shared/HomeContentTemaplate/search-bar";
-
+import SearchBar from "@/components/shared/search-bar";
+import SearchBlock from "@/components/shared/search-block";
+import MainPage from "@/components/shared/main-page";
 function Home() {
   return (
     <>
-      <SearchBar />
+      <MainPage />
+      <SearchBlock />
     </>
   );
 }

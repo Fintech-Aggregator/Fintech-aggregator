@@ -1,0 +1,228 @@
+.IconAndInput {
+  display: flex;
+  justify-content: space-between;
+  width: 700px;
+}
+
+.search_bar_block {
+  display: flex;
+}
+
+.mainSearch {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin: 25px;
+  margin-top: 80px;
+}
+
+.searchInput {
+  align-items: center;
+  width: 300px;
+  height: 40px;
+  border: 1px solid black;
+  border-radius: 10px;
+
+  padding-left: 20px;
+  color: black;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 17px;
+}
+
+.searchInput::placeholder {
+  color: #9a9a9a;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.searchIcon {
+  position: relative;
+  right: 25px;
+  top: 10px;
+}
+
+.filter_block {
+  display: flex;
+  justify-content: space-between;
+  width: 200px;
+}
+
+.filter_button {
+  padding: 8px 12px;
+  background-color: white;
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 80px;
+  height: 40px;
+}
+
+.filterIcon {
+  position: relative;
+  right: -13px;
+}
+
+.filter_button:hover {
+  background-color: #e0e0e0;
+}
+
+.rows_dropdown {
+  padding: 8px;
+  border: 1px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  width: 80px;
+  height: 40px;
+}
+
+.country_table {
+  width: 700px;
+  height: 500px;
+  border: 0px solid black;
+  margin-top: 15px;
+}
+
+.tableContainer {
+  width: 700px;
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid black;
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 160px;
+}
+
+.row.header {
+  font-weight: bold;
+  background-color: #f4f4f4;
+  border-bottom: 1px solid black;
+}
+
+.row div {
+  padding: 10px;
+  text-align: center;
+  /* border-bottom: 1px solid #ddd; */
+}
+
+.row:last-child div {
+  border-bottom: none;
+}
+
+.row:nth-child(odd) {
+  background-color: #f9f9f9;
+}
+
+.row:nth-child(even) {
+  background-color: #ffffff;
+}
+
+
+/* For small screens (max-width: 768px) */
+@media (max-width: 768px) {
+  .IconAndInput {
+    flex-direction: column-reverse;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .search_bar_block {
+    /* flex-direction: column; */
+    align-items: center;
+  }
+
+  .mainSearch {
+    margin: 15px;
+    margin-top: 50px;
+  }
+
+  .searchInput {
+    width: 300px;
+    height: 40px;
+  }
+
+  .filter_block {
+    /* flex-direction: column; */
+    justify-content: space-around;
+    width: 100%;
+    gap: 10px;
+  }
+
+  .filter_button{
+    width: 80px;
+    height: 30px;
+  }
+  .rows_dropdown {
+    width: 100px;
+    height: 30px;
+  }
+
+  .tableContainer {
+    width: 100%;
+    /* font-size: 14px; */
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .row {
+    grid-template-columns: 1fr;
+    text-align: left;
+  }
+}
+
+/* For medium screens (768px - 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .IconAndInput {
+    width: ;
+    justify-content: center;
+    margin-right: 60px;
+  }
+  .searchInput {
+    width: 350px;
+    height: 40px;
+  }
+
+  .filter_block {
+    justify-content: space-around;
+  }
+
+  .tableContainer {
+    width: 90%;
+  }
+
+  .row {
+    grid-template-columns: 1fr fr;
+  }
+}
+
+/* For large screens (min-width: 1025px) */
+@media (min-width: 1025px) {
+  .IconAndInput {
+    width: 700px;
+  }
+
+  .searchInput {
+    width: 300px;
+    height: 40px;
+  }
+
+  .filter_block {
+    width: 200px;
+    justify-content: space-between;
+  }
+
+  .tableContainer {
+    width: 700px;
+  }
+
+  .row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
