@@ -28,7 +28,14 @@ export const TableContent: React.FC<Props> = ({
           onChange={() => toggleRowSelection(id)}
         />
       </td>
-      <td style={{ width: "26px" }}>{id}</td>
+      <td
+        style={{
+          width: "26px",
+          paddingLeft: "17px",
+        }}
+      >
+        {id}
+      </td>
       <td style={{ width: "294px" }}>{licenseName}</td>
       <td style={{ width: "375px" }}>{address}</td>
       <td style={{ width: "125px" }}>{addressType}</td>

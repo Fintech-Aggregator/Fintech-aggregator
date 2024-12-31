@@ -7,10 +7,6 @@
 .tableHeader tr {
   border-bottom: 1px solid #000000;
 }
-.content {
-  display: flex;
-  flex-direction: column;
-}
 
 .tableHeader .idInput {
   width: 30px;
@@ -37,7 +33,6 @@
 .searchIcon {
   position: relative;
   right: 30px;
-  top: 4px;
 }
 .container {
   width: 80px;
@@ -67,4 +62,7 @@
   height: 100%;
   opacity: 0;
   cursor: pointer;
+}
+.licenseeLength {
+  width: 190px;
 }

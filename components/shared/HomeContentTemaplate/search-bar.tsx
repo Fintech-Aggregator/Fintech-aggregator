@@ -1,18 +1,26 @@
+"use client";
+import Image from "next/image";
 import styles from "./search-bar.module.css";
 
 interface SearchBarProps {
   size?: "tiny" | "small" | "medium" | "large";
   showIcon?: boolean;
   showPlaceholder?: boolean;
+  onSearch?: (value: string) => void;
 }
 
 export default function SearchBar({
   size = "medium",
   showIcon = true,
+  onSearch,
   showPlaceholder = true,
 }: SearchBarProps) {
   const sizeClass = styles[size];
-
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (onSearch) {
+      onSearch(event.target.value);
+    }
+  };
   return (
     <div className={styles.mainSearch}>
       <div className={styles.IconAndInput}>
@@ -20,18 +28,16 @@ export default function SearchBar({
           className={`${styles.searchInput} ${sizeClass}`}
           type="text"
           placeholder={showPlaceholder ? "Search" : ""}
+          onChange={handleInputChange}
         />
         {showIcon && (
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="#05D69E"
-            viewBox="0 0 16 16"
+          <Image
             className={styles.searchIcon}
-          >
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-          </svg>
+            src="/search.svg"
+            alt="Vector"
+            width={20}
+            height={20}
+          />
         )}
       </div>
     </div>

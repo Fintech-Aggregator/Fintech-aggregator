@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styles from "./table.module.css";
+import Image from "next/image";
 
 function Pagination() {
   const [selectedValue, setSelectedValue] = useState<number>(1);
@@ -9,16 +10,13 @@ function Pagination() {
   return (
     <div className={styles.container}>
       <span>{selectedValue}</span>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="16"
-        height="16"
-        fill="#05D69E"
-        viewBox="0 0 16 16"
+      <Image
         className={styles.icon}
-      >
-        <path d="M1.5 6.5l6 6 6-6h-12z" />
-      </svg>
+        src="/Vector.svg"
+        alt="Vector"
+        width={10}
+        height={10}
+      />
 
       <select
         value={selectedValue}

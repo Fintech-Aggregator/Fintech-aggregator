@@ -1,6 +1,6 @@
 import React from "react";
 import { Skeleton } from "../../ui/skeleton";
-import TableHeader from "./tableHeader";
+import TableHeader from "./TableHeader";
 import styles from "@/app/hong-kong/hong-kong-list.module.css";
 export const TableSkeleton = () => {
   return (
@@ -17,7 +17,7 @@ export const TableSkeleton = () => {
                     <input type="checkbox" />
                   </td>
                   <td style={{ width: "26px" }}>
-                    <Skeleton className="w-[26px] h-[50px] rounded-[10px]" />
+                    <Skeleton className="w-[30px] h-[50px] rounded-[10px]" />
                   </td>
                   <td style={{ width: "294px" }}>
                     <Skeleton className="w-[294px] h-[50px] rounded-[10px]" />
