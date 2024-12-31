@@ -1,0 +1,68 @@
+.tableHeader th {
+  text-align: center;
+  background-color: #f2f2f2;
+  font-weight: 500;
+}
+
+.tableHeader tr {
+  border-bottom: 1px solid #000000;
+}
+
+.tableHeader .idInput {
+  width: 30px;
+  padding-left: 2px;
+}
+.stylesForInput {
+  align-items: center;
+  height: 25px;
+  width: 150px;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  padding-left: 10px;
+  color: black;
+  font-weight: 500;
+  font-style: italic;
+  font-size: 17px;
+}
+.addIcon {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+.searchIcon {
+  position: relative;
+  right: 30px;
+}
+.container {
+  width: 80px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  border: 1px solid #000;
+  border-radius: 8px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  position: relative;
+  background-color: #fff;
+}
+
+.icon {
+  cursor: pointer;
+}
+
+.select {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.licenseeLength {
+  width: 190px;
+}

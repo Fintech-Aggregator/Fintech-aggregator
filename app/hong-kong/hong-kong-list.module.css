@@ -1,9 +1,10 @@
 .tableContainer {
   width: 967px;
-
   overflow: auto;
-  border: 1px solid #ddd;
+  border: 1px solid #000000;
+  border-radius: 10px;
 }
+
 .table {
   width: 100%;
   height: 100%;
@@ -12,16 +13,23 @@
 
 .table th,
 .table td {
-  border: 1px solid #ddd;
+  border: 0px solid #ddd;
   padding: 8px;
   text-align: left;
 }
-
-.table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
 .table tr:hover {
   background-color: #f1f1f1;
+}
+.centerTable {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+}
+.table tr:nth-child(even) {
+  background-color: #f6f6f6;
+}
+
+.table tr:nth-child(odd) {
+  background-color: #ffffff;
 }

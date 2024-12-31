@@ -1,4 +1,4 @@
-import SearchBar from "@/components/shared/search-bar";
+import SearchBar from "@/components/shared/HomeContentTemaplate/search-bar";
 
 function Home() {
   return (
