@@ -1,6 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import styles from "./hong-kong-list.module.css";
+import SearchBar from "@/components/shared/HomeContentTemaplate/search-bar";
+import Pagination from "@/components/shared/TablesExpanded/pagination";
+import { Table } from "@/components/shared/TablesExpanded/Table";
+import { TableSkeleton } from "@/components/shared/TablesExpanded/TableSkeleton";
 
 interface Props {
   id: number;
@@ -11,15 +14,17 @@ interface Props {
 
 const HongKong: React.FC = () => {
   const [hongKongData, setHongKongData] = useState<Props[]>([]);
+  const [filteredData, setFilteredData] = useState<Props[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("http://localhost:3000/api/hong-kong");
+        const res = await fetch("/api/hong-kong");
         const data = await res.json();
         setHongKongData(data["hongKongData"]);
+        setFilteredData(data["hongKongData"]);
       } catch (error) {
         console.log(error);
       }
@@ -29,52 +34,29 @@ const HongKong: React.FC = () => {
     fetchData();
   }, []);
 
-  const toggleRowSelection = (id: number) => {
-    setSelectedRows((prev) => {
-      const updated = new Set(prev);
-      if (updated.has(id)) {
-        updated.delete(id);
-      } else {
-        updated.add(id);
-      }
-      return updated;
-    });
+  const handleSearch = (term: string) => {
+    setSearchTerm(term);
+    const filtered = hongKongData.filter((item) =>
+      item.licenseName.toLowerCase().includes(term.toLowerCase())
+    );
+    setFilteredData(filtered);
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
-    <div className={styles.tableContainer}>
-      <table className={styles.table}>
-        <thead>
-          <tr>
-            <th>Select</th>
-            <th>ID</th>
-            <th>License Name</th>
-            <th>Address</th>
-            <th>Address Type</th>
-          </tr>
-        </thead>
-        <tbody>
-          {hongKongData.map((data) => (
-            <tr key={data.id}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={selectedRows.has(data.id)}
-                  onChange={() => toggleRowSelection(data.id)}
-                />
-              </td>
-              <td>{data.id}</td>
-              <td>{data.licenseName}</td>
-              <td>{data.address}</td>
-              <td>{data.addressType}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div>
+      <div
+        style={{
+          marginRight: "30px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "480px",
+        }}
+      >
+        <SearchBar size="medium" onSearch={(value) => handleSearch(value)} />
+        <Pagination />
+      </div>
+      {loading ? <TableSkeleton /> : <Table tableData={filteredData} />}
     </div>
   );
 };

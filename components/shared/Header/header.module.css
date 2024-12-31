@@ -7,11 +7,20 @@
 .userName {
   font-size: 30px;
 }
+.pageName {
+  font-size: 30px;
+  color: var(--green-color);
+}
 .logo {
   max-width: 70px;
   max-height: 70px;
 }
-.secondHeader {
+.firstBlockHeader {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+}
+.secondBlockHeader {
   display: flex;
   justify-content: space-between;
   width: 200px;

@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+:root {
+  --green-color: #05d69e;
+}
 body {
   color: var(--foreground);
   background: var(--background);

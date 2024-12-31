@@ -9,9 +9,9 @@
   align-items: center;
   margin: 25px;
 }
+
 .searchInput {
   align-items: center;
-  width: 500px;
   height: 25px;
   border: none;
   border-radius: 8px;
@@ -22,13 +22,31 @@
   font-style: italic;
   font-size: 17px;
 }
+
 .searchInput::placeholder {
   color: black;
   font-weight: 600;
   opacity: 0.7;
 }
+
 .searchIcon {
   position: relative;
-  right: 25px;
-  top: 4px;
+  right: 30px;
+  top: 1px;
+}
+
+.tiny {
+  width: 100px;
+}
+.small {
+  width: 200px;
+}
+
+.medium {
+  width: 350px;
+  height: 40px;
+}
+
+.large {
+  width: 500px;
 }
