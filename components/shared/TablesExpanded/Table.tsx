@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "@/app/hong-kong/hong-kong-list.module.css";
+import styles from "./table.module.css";
 import TableHeader from "./TableHeader";
 import { TableContent } from "./tableContent";
 import Image from "next/image";

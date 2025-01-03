@@ -9,7 +9,7 @@ function TableHeader() {
     <thead className={styles.tableHeader}>
       <tr>
         <th>
-          <input type="checkbox" />
+          <input type="checkbox" className={styles.customCheckbox} />
         </th>
         <th>
           <div

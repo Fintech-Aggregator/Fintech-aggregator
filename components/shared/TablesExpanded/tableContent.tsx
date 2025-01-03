@@ -1,5 +1,5 @@
 import React from "react";
-
+import styles from "./table.module.css";
 interface Props {
   id: number;
   licenseName: string;
@@ -26,15 +26,15 @@ export const TableContent: React.FC<Props> = ({
           type="checkbox"
           checked={selectedRows.has(id)}
           onChange={() => toggleRowSelection(id)}
+          className={styles.customCheckbox}
         />
       </td>
       <td
         style={{
           width: "26px",
-          paddingLeft: "17px",
         }}
       >
-        {id}
+        <div style={{ display: "flex", justifyContent: "center" }}>{id}</div>
       </td>
       <td style={{ width: "294px" }}>{licenseName}</td>
       <td style={{ width: "375px" }}>{address}</td>
