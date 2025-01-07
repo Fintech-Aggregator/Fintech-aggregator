@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "@/app/hong-kong/hong-kong-list.module.css";
+import styles from "./table.module.css";
 import TableHeader from "./TableHeader";
 import { TableContent } from "./tableContent";
 import Image from "next/image";
@@ -12,9 +12,21 @@ interface RowProps {
 
 interface Props {
   tableData: RowProps[];
+  onFilterById: (id: number | null) => void;
+  onFilterByLicenseName: (name: string) => void;
+  onFilterByAdress: (name: string) => void;
+  addressTypes: string[];
+  onFilterByAddressType: (addressType: string) => void;
 }
 
-export const Table: React.FC<Props> = ({ tableData }) => {
+export const Table: React.FC<Props> = ({
+  tableData,
+  onFilterById,
+  onFilterByLicenseName,
+  onFilterByAdress,
+  addressTypes,
+  onFilterByAddressType,
+}) => {
   const [selectedRows, setSelectedRows] = React.useState<Set<number>>(
     new Set()
   );
@@ -53,7 +65,13 @@ export const Table: React.FC<Props> = ({ tableData }) => {
     <div className={styles.centerTable}>
       <div className={styles.tableContainer}>
         <table className={styles.table}>
-          <TableHeader />
+          <TableHeader
+            onFilterById={onFilterById}
+            onFilterByLicenseName={onFilterByLicenseName}
+            onFilterByAdress={onFilterByAdress}
+            addressTypes={addressTypes}
+            onFilterByAddressType={onFilterByAddressType}
+          />
           <tbody>
             {currentData.map((data) => (
               <TableContent

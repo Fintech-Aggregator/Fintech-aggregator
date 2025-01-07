@@ -1,7 +1,7 @@
 import React from "react";
 import { Skeleton } from "../../ui/skeleton";
 import TableHeader from "./TableHeader";
-import styles from "@/app/hong-kong/hong-kong-list.module.css";
+import styles from "./table.module.css";
 export const TableSkeleton = () => {
   return (
     <div className={styles.centerTable}>
@@ -14,7 +14,7 @@ export const TableSkeleton = () => {
               .map((_, index) => (
                 <tr key={index}>
                   <td style={{ width: "26px" }}>
-                    <input type="checkbox" />
+                    <input type="checkbox" className={styles.customCheckbox} />
                   </td>
                   <td style={{ width: "26px" }}>
                     <Skeleton className="w-[30px] h-[50px] rounded-[10px]" />

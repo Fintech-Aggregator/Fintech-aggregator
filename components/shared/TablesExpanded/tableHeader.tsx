@@ -4,12 +4,43 @@ import SearchBar from "../HomeContentTemaplate/search-bar";
 import SelectField from "../../ui/selectField";
 import Image from "next/image";
 
-function TableHeader() {
+interface TableHeaderProps {
+  onFilterById: (id: number | null) => void;
+  onFilterByLicenseName: (name: string) => void;
+  onFilterByAdress: (name: string) => void;
+  addressTypes: string[];
+  onFilterByAddressType: (addressType: string) => void;
+}
+
+const TableHeader: React.FC<TableHeaderProps> = ({
+  onFilterById,
+  onFilterByLicenseName,
+  onFilterByAdress,
+  addressTypes,
+  onFilterByAddressType,
+}) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const id = value ? parseInt(value, 10) : null;
+    onFilterById(id);
+  };
+  const handleLicenseNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    onFilterByLicenseName(value);
+  };
+  const handleAdressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    onFilterByAdress(value);
+  };
+  const handleAddressTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    onFilterByAddressType(value);
+  };
   return (
     <thead className={styles.tableHeader}>
       <tr>
         <th>
-          <input type="checkbox" />
+          <input type="checkbox" className={styles.customCheckbox} />
         </th>
         <th>
           <div
@@ -24,6 +55,7 @@ function TableHeader() {
             <input
               className={`${styles.stylesForInput} ${styles.idInput}`}
               type="text"
+              onChange={handleInputChange}
             />
           </div>
         </th>
@@ -37,6 +69,7 @@ function TableHeader() {
               <input
                 className={`${styles.stylesForInput} ${styles.licenseeLength}`}
                 type="text"
+                onChange={handleLicenseNameChange}
               />
               <Image
                 className={styles.searchIcon}
@@ -55,7 +88,11 @@ function TableHeader() {
               <Image src="/chevron.svg" alt="Vector" width={8} height={8} />
             </div>
             <div className={styles.addIcon}>
-              <input className={styles.stylesForInput} type="text" />
+              <input
+                className={styles.stylesForInput}
+                type="text"
+                onChange={handleAdressChange}
+              />
               <Image
                 className={styles.searchIcon}
                 src="/search.svg"
@@ -85,13 +122,26 @@ function TableHeader() {
                 style={{ appearance: "none" }}
                 name=""
                 id=""
-              ></select>
+                onChange={handleAddressTypeChange}
+              >
+                {addressTypes &&
+                Array.isArray(addressTypes) &&
+                addressTypes.length > 0 ? (
+                  addressTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))
+                ) : (
+                  <option value=""></option>
+                )}
+              </select>
             </div>
           </div>
         </th>
       </tr>
     </thead>
   );
-}
+};
 
 export default TableHeader;

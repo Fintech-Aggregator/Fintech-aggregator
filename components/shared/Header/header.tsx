@@ -14,11 +14,7 @@ const Header = () => {
     <>
       <header className={styles.mainHeader}>
         <div className={styles.firstBlockHeader}>
-          <img
-            className={styles.logo}
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQFz_vC0EXRut6N5GePX35CaTWmQkzqrk1AtQ&s"
-            alt="Logo"
-          />
+          <img className={styles.logo} src="/Logo.svg" alt="Logo" />
           <Link href="/">
             <span className={styles.userName}>Home</span>
           </Link>
