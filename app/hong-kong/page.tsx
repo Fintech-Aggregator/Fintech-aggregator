@@ -71,7 +71,7 @@ const HongKong: React.FC = () => {
           item.address.toLowerCase().includes(filters.adress.toLowerCase())
         );
       }
-      if (filters.addressType) {
+      if (filters.addressType && filters.addressType !== "") {
         filtered = filtered.filter(
           (item) => item.addressType === filters.addressType
         );

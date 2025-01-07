@@ -124,6 +124,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 id=""
                 onChange={handleAddressTypeChange}
               >
+                <option value="">All</option>
                 {addressTypes &&
                 Array.isArray(addressTypes) &&
                 addressTypes.length > 0 ? (
