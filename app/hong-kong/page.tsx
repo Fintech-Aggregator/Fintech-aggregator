@@ -20,9 +20,10 @@ const HongKong: React.FC = () => {
   const [filters, setFilters] = useState({
     searchTerm: "",
     id: null as number | null,
+    licenseName: "",
+    adress: "",
   });
 
-  // Завантаження даних
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -39,12 +40,10 @@ const HongKong: React.FC = () => {
     fetchData();
   }, []);
 
-  // Застосування фільтрів
   useEffect(() => {
     const applyFilters = () => {
       let filtered = hongKongData;
 
-      // Фільтруємо за пошуковим терміном
       if (filters.searchTerm) {
         filtered = filtered.filter((item) =>
           Object.values(item).some((value) =>
@@ -55,27 +54,43 @@ const HongKong: React.FC = () => {
         );
       }
 
-      // Фільтруємо за ID
       if (filters.id !== null) {
         filtered = filtered.filter((item) => item.id === filters.id);
+      }
+
+      if (filters.licenseName) {
+        filtered = filtered.filter((item) =>
+          item.licenseName
+            .toLowerCase()
+            .includes(filters.licenseName.toLowerCase())
+        );
+      }
+      if (filters.adress) {
+        filtered = filtered.filter((item) =>
+          item.address.toLowerCase().includes(filters.adress.toLowerCase())
+        );
       }
 
       setFilteredData(filtered);
     };
 
     applyFilters();
-  }, [filters, hongKongData]); // Викликається при зміні фільтрів або даних
+  }, [filters, hongKongData]);
 
-  // Оновлення пошукового терміну
   const handleSearch = (term: string) => {
     setFilters((prev) => ({ ...prev, searchTerm: term }));
   };
 
-  // Оновлення фільтру за ID
   const handleFilterById = (id: number | null) => {
     setFilters((prev) => ({ ...prev, id }));
   };
 
+  const handleFilterByLicenseName = (name: string) => {
+    setFilters((prev) => ({ ...prev, licenseName: name }));
+  };
+  const handleFilterByAdress = (name: string) => {
+    setFilters((prev) => ({ ...prev, adress: name }));
+  };
   return (
     <div>
       <div className={styles.mains}>
@@ -85,7 +100,12 @@ const HongKong: React.FC = () => {
       {loading ? (
         <TableSkeleton />
       ) : (
-        <Table tableData={filteredData} onFilterById={handleFilterById} />
+        <Table
+          tableData={filteredData}
+          onFilterById={handleFilterById}
+          onFilterByLicenseName={handleFilterByLicenseName}
+          onFilterByAdress={handleFilterByAdress}
+        />
       )}
     </div>
   );

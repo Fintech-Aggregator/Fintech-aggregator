@@ -6,13 +6,27 @@ import Image from "next/image";
 
 interface TableHeaderProps {
   onFilterById: (id: number | null) => void;
+  onFilterByLicenseName: (name: string) => void;
+  onFilterByAdress: (name: string) => void;
 }
 
-const TableHeader: React.FC<TableHeaderProps> = ({ onFilterById }) => {
+const TableHeader: React.FC<TableHeaderProps> = ({
+  onFilterById,
+  onFilterByLicenseName,
+  onFilterByAdress,
+}) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const id = value ? parseInt(value, 10) : null;
     onFilterById(id);
+  };
+  const handleLicenseNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    onFilterByLicenseName(value);
+  };
+  const handleAdressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    onFilterByAdress(value);
   };
   return (
     <thead className={styles.tableHeader}>
@@ -47,6 +61,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({ onFilterById }) => {
               <input
                 className={`${styles.stylesForInput} ${styles.licenseeLength}`}
                 type="text"
+                onChange={handleLicenseNameChange}
               />
               <Image
                 className={styles.searchIcon}
@@ -65,7 +80,11 @@ const TableHeader: React.FC<TableHeaderProps> = ({ onFilterById }) => {
               <Image src="/chevron.svg" alt="Vector" width={8} height={8} />
             </div>
             <div className={styles.addIcon}>
-              <input className={styles.stylesForInput} type="text" />
+              <input
+                className={styles.stylesForInput}
+                type="text"
+                onChange={handleAdressChange}
+              />
               <Image
                 className={styles.searchIcon}
                 src="/search.svg"
