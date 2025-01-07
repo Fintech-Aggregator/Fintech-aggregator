@@ -1,4 +1,4 @@
-import styles from "./HomeContentTemaplate/main-page.module.css";
+import styles from "./main-page.module.css";
 import Image3 from "./images/image3.png";
 import Image2 from "./images/image2.jpg";
 
