@@ -8,12 +8,16 @@ interface TableHeaderProps {
   onFilterById: (id: number | null) => void;
   onFilterByLicenseName: (name: string) => void;
   onFilterByAdress: (name: string) => void;
+  addressTypes: string[];
+  onFilterByAddressType: (addressType: string) => void;
 }
 
 const TableHeader: React.FC<TableHeaderProps> = ({
   onFilterById,
   onFilterByLicenseName,
   onFilterByAdress,
+  addressTypes,
+  onFilterByAddressType,
 }) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
@@ -27,6 +31,10 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   const handleAdressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     onFilterByAdress(value);
+  };
+  const handleAddressTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    onFilterByAddressType(value);
   };
   return (
     <thead className={styles.tableHeader}>
@@ -114,7 +122,20 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 style={{ appearance: "none" }}
                 name=""
                 id=""
-              ></select>
+                onChange={handleAddressTypeChange}
+              >
+                {addressTypes &&
+                Array.isArray(addressTypes) &&
+                addressTypes.length > 0 ? (
+                  addressTypes.map((type) => (
+                    <option key={type} value={type}>
+                      {type}
+                    </option>
+                  ))
+                ) : (
+                  <option value=""></option>
+                )}
+              </select>
             </div>
           </div>
         </th>

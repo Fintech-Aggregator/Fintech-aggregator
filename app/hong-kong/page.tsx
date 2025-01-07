@@ -22,6 +22,7 @@ const HongKong: React.FC = () => {
     id: null as number | null,
     licenseName: "",
     adress: "",
+    addressType: "",
   });
 
   useEffect(() => {
@@ -70,7 +71,11 @@ const HongKong: React.FC = () => {
           item.address.toLowerCase().includes(filters.adress.toLowerCase())
         );
       }
-
+      if (filters.addressType) {
+        filtered = filtered.filter(
+          (item) => item.addressType === filters.addressType
+        );
+      }
       setFilteredData(filtered);
     };
 
@@ -88,9 +93,22 @@ const HongKong: React.FC = () => {
   const handleFilterByLicenseName = (name: string) => {
     setFilters((prev) => ({ ...prev, licenseName: name }));
   };
+
   const handleFilterByAdress = (name: string) => {
     setFilters((prev) => ({ ...prev, adress: name }));
   };
+
+  const handleFilterByAddressType = (addressType: string) => {
+    setFilters((prev) => ({ ...prev, addressType }));
+  };
+
+  const getUniqueAddressTypes = () => {
+    const uniqueTypes = Array.from(
+      new Set(hongKongData.map((item) => item.addressType))
+    );
+    return uniqueTypes;
+  };
+
   return (
     <div>
       <div className={styles.mains}>
@@ -105,6 +123,8 @@ const HongKong: React.FC = () => {
           onFilterById={handleFilterById}
           onFilterByLicenseName={handleFilterByLicenseName}
           onFilterByAdress={handleFilterByAdress}
+          addressTypes={getUniqueAddressTypes()}
+          onFilterByAddressType={handleFilterByAddressType}
         />
       )}
     </div>
