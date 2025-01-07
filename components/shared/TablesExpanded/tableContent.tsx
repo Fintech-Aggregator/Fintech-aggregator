@@ -29,11 +29,7 @@ export const TableContent: React.FC<Props> = ({
           className={styles.customCheckbox}
         />
       </td>
-      <td
-        style={{
-          width: "26px",
-        }}
-      >
+      <td style={{ width: "26px" }}>
         <div style={{ display: "flex", justifyContent: "center" }}>{id}</div>
       </td>
       <td style={{ width: "294px" }}>{licenseName}</td>

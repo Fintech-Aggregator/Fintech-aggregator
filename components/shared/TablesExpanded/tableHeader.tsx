@@ -4,7 +4,16 @@ import SearchBar from "../HomeContentTemaplate/search-bar";
 import SelectField from "../../ui/selectField";
 import Image from "next/image";
 
-function TableHeader() {
+interface TableHeaderProps {
+  onFilterById: (id: number | null) => void;
+}
+
+const TableHeader: React.FC<TableHeaderProps> = ({ onFilterById }) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const id = value ? parseInt(value, 10) : null;
+    onFilterById(id);
+  };
   return (
     <thead className={styles.tableHeader}>
       <tr>
@@ -24,6 +33,7 @@ function TableHeader() {
             <input
               className={`${styles.stylesForInput} ${styles.idInput}`}
               type="text"
+              onChange={handleInputChange}
             />
           </div>
         </th>
@@ -92,6 +102,6 @@ function TableHeader() {
       </tr>
     </thead>
   );
-}
+};
 
 export default TableHeader;

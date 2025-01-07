@@ -4,6 +4,7 @@ import SearchBar from "@/components/shared/HomeContentTemaplate/search-bar";
 import Pagination from "@/components/shared/TablesExpanded/pagination";
 import { Table } from "@/components/shared/TablesExpanded/Table";
 import { TableSkeleton } from "@/components/shared/TablesExpanded/TableSkeleton";
+import styles from "./hong-kong-list.module.css";
 
 interface Props {
   id: number;
@@ -16,8 +17,12 @@ const HongKong: React.FC = () => {
   const [hongKongData, setHongKongData] = useState<Props[]>([]);
   const [filteredData, setFilteredData] = useState<Props[]>([]);
   const [loading, setLoading] = useState(true);
-  const [searchTerm, setSearchTerm] = useState("");
+  const [filters, setFilters] = useState({
+    searchTerm: "",
+    id: null as number | null,
+  });
 
+  // Завантаження даних
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -34,29 +39,54 @@ const HongKong: React.FC = () => {
     fetchData();
   }, []);
 
+  // Застосування фільтрів
+  useEffect(() => {
+    const applyFilters = () => {
+      let filtered = hongKongData;
+
+      // Фільтруємо за пошуковим терміном
+      if (filters.searchTerm) {
+        filtered = filtered.filter((item) =>
+          Object.values(item).some((value) =>
+            String(value)
+              .toLowerCase()
+              .includes(filters.searchTerm.toLowerCase())
+          )
+        );
+      }
+
+      // Фільтруємо за ID
+      if (filters.id !== null) {
+        filtered = filtered.filter((item) => item.id === filters.id);
+      }
+
+      setFilteredData(filtered);
+    };
+
+    applyFilters();
+  }, [filters, hongKongData]); // Викликається при зміні фільтрів або даних
+
+  // Оновлення пошукового терміну
   const handleSearch = (term: string) => {
-    setSearchTerm(term);
-    const filtered = hongKongData.filter((item) =>
-      item.licenseName.toLowerCase().includes(term.toLowerCase())
-    );
-    setFilteredData(filtered);
+    setFilters((prev) => ({ ...prev, searchTerm: term }));
+  };
+
+  // Оновлення фільтру за ID
+  const handleFilterById = (id: number | null) => {
+    setFilters((prev) => ({ ...prev, id }));
   };
 
   return (
     <div>
-      <div
-        style={{
-          marginRight: "30px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          gap: "480px",
-        }}
-      >
+      <div className={styles.mains}>
         <SearchBar size="medium" onSearch={(value) => handleSearch(value)} />
         <Pagination />
       </div>
-      {loading ? <TableSkeleton /> : <Table tableData={filteredData} />}
+      {loading ? (
+        <TableSkeleton />
+      ) : (
+        <Table tableData={filteredData} onFilterById={handleFilterById} />
+      )}
     </div>
   );
 };

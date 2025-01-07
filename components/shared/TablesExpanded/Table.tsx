@@ -12,9 +12,10 @@ interface RowProps {
 
 interface Props {
   tableData: RowProps[];
+  onFilterById: (id: number | null) => void;
 }
 
-export const Table: React.FC<Props> = ({ tableData }) => {
+export const Table: React.FC<Props> = ({ tableData, onFilterById }) => {
   const [selectedRows, setSelectedRows] = React.useState<Set<number>>(
     new Set()
   );
@@ -53,7 +54,7 @@ export const Table: React.FC<Props> = ({ tableData }) => {
     <div className={styles.centerTable}>
       <div className={styles.tableContainer}>
         <table className={styles.table}>
-          <TableHeader />
+          <TableHeader onFilterById={onFilterById} />
           <tbody>
             {currentData.map((data) => (
               <TableContent
