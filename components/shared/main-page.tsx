@@ -1,4 +1,4 @@
-import styles from "../styles/main-page.module.css";
+import styles from "./main-page.module.css";
 import Image1 from "../images/image1.jpg";
 import Image2 from "../images/image2.jpg";
 

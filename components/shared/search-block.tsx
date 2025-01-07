@@ -1,4 +1,4 @@
-import styles from "../styles/search-block.module.css";
+import styles from "./search-block.module.css";
 
 export default function SearchBar() {
   const data = [
