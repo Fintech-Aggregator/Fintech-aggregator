@@ -1,7 +1,7 @@
 import React from "react";
-import InputField from "../ui/inputField";
-import SelectField from "../ui/selectField";
-import Button from "../ui/button";
+import InputField from "../../ui/inputField";
+import SelectField from "../../ui/selectField";
+import Button from "../../ui/button";
 
 const SearchForm: React.FC = () => {
   return (

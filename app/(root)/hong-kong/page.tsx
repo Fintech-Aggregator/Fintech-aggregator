@@ -1,9 +1,9 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import SearchBar from "@/components/shared/HomeContentTemaplate/search-bar";
-import Pagination from "@/components/shared/TablesExpanded/pagination";
-import { Table } from "@/components/shared/TablesExpanded/Table";
-import { TableSkeleton } from "@/components/shared/TablesExpanded/TableSkeleton";
+import SearchBar from "@/src/components/shared/HomeContentTemaplate/search-bar";
+import Pagination from "@/src/components/shared/TablesExpanded/pagination";
+import { Table } from "@/src/components/shared/TablesExpanded/Table";
+import { TableSkeleton } from "@/src/components/shared/TablesExpanded/TableSkeleton";
 import styles from "./hong-kong-list.module.css";
 
 interface Props {
@@ -47,11 +47,7 @@ const HongKong: React.FC = () => {
 
       if (filters.searchTerm) {
         filtered = filtered.filter((item) =>
-          Object.values(item).some((value) =>
-            String(value)
-              .toLowerCase()
-              .includes(filters.searchTerm.toLowerCase())
-          )
+          Object.values(item).some((value) => String(value).toLowerCase().includes(filters.searchTerm.toLowerCase()))
         );
       }
 
@@ -60,21 +56,13 @@ const HongKong: React.FC = () => {
       }
 
       if (filters.licenseName) {
-        filtered = filtered.filter((item) =>
-          item.licenseName
-            .toLowerCase()
-            .includes(filters.licenseName.toLowerCase())
-        );
+        filtered = filtered.filter((item) => item.licenseName.toLowerCase().includes(filters.licenseName.toLowerCase()));
       }
       if (filters.adress) {
-        filtered = filtered.filter((item) =>
-          item.address.toLowerCase().includes(filters.adress.toLowerCase())
-        );
+        filtered = filtered.filter((item) => item.address.toLowerCase().includes(filters.adress.toLowerCase()));
       }
       if (filters.addressType) {
-        filtered = filtered.filter(
-          (item) => item.addressType === filters.addressType
-        );
+        filtered = filtered.filter((item) => item.addressType === filters.addressType);
       }
       setFilteredData(filtered);
     };
@@ -103,9 +91,7 @@ const HongKong: React.FC = () => {
   };
 
   const getUniqueAddressTypes = () => {
-    const uniqueTypes = Array.from(
-      new Set(hongKongData.map((item) => item.addressType))
-    );
+    const uniqueTypes = Array.from(new Set(hongKongData.map((item) => item.addressType)));
     return uniqueTypes;
   };
 
