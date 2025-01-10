@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./table.module.css";
-import TableHeader from "./TableHeader";
+import TableHeader from "./tableHeader";
 import { TableContent } from "./tableContent";
 import Image from "next/image";
 interface RowProps {
@@ -93,7 +93,7 @@ export const Table: React.FC<Props> = ({
           disabled={currentPage === 0}
           className={styles.paginationButton}
         >
-          <Image src="/leftArrow.svg" alt="Vector" width={16} height={16} />
+          <Image src="/images/left-arrow.svg" alt="Vector" width={16} height={16} />
         </button>
         <span>
           Сторінка {currentPage + 1} із{" "}
@@ -104,7 +104,7 @@ export const Table: React.FC<Props> = ({
           disabled={(currentPage + 1) * rowsPerPage >= tableData.length}
           className={styles.paginationButton}
         >
-          <Image src="/rightArrow.svg" alt="Vector" width={16} height={16} />
+          <Image src="/images/right-arrow.svg" alt="right-arrow" width={16} height={16} />
         </button>
       </div>
     </div>

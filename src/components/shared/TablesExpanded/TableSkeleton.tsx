@@ -1,6 +1,6 @@
 import React from "react";
 import { Skeleton } from "../../ui/skeleton";
-import TableHeader from "./TableHeader";
+import TableHeader from "./tableHeader";
 import styles from "./table.module.css";
 export const TableSkeleton = () => {
   return (

@@ -6,7 +6,7 @@ export default function Content() {
   return (
     <div className={styles.template}>
       <div className="relative">
-        <h1 className="absolute inset-0 flex items-center justify-center text-white text-[clamp(1.3rem,_3vw,_3rem)] font-bold text-center z-10">
+        <h1 className="absolute inset-0 flex items-center justify-center text-white text-[clamp(1.3rem,_4vw,_3rem)] font-bold text-center z-10">
           Your key to fintech licenses <br /> Fast, Accurate, Convenient
         </h1>
         <Image

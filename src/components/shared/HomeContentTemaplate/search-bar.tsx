@@ -33,7 +33,7 @@ export default function SearchBar({
         {showIcon && (
           <Image
             className={styles.searchIcon}
-            src="/search.svg"
+            src="/images/search.svg"
             alt="Vector"
             width={20}
             height={20}

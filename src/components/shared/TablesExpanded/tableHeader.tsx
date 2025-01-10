@@ -63,7 +63,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           <div>
             <div className={styles.addIcon}>
               <p>Name of Licensee </p>
-              <Image src="/chevron.svg" alt="Vector" width={8} height={8} />
+              <Image src="/images/chevron.svg" alt="Vector" width={8} height={8} />
             </div>
             <div className={styles.addIcon}>
               <input
@@ -73,7 +73,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               />
               <Image
                 className={styles.searchIcon}
-                src="/search.svg"
+                src="/images/search.svg"
                 alt="Vector"
                 width={16}
                 height={16}
@@ -85,7 +85,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           <div>
             <div className={styles.addIcon}>
               <p>Adress </p>
-              <Image src="/chevron.svg" alt="Vector" width={8} height={8} />
+              <Image src="/images/chevron.svg" alt="Vector" width={8} height={8} />
             </div>
             <div className={styles.addIcon}>
               <input
@@ -95,7 +95,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               />
               <Image
                 className={styles.searchIcon}
-                src="/search.svg"
+                src="/images/search.svg"
                 alt="Vector"
                 width={16}
                 height={16}
@@ -107,12 +107,12 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           <div className={styles.content}>
             <div className={styles.addIcon}>
               <p>Adress type</p>
-              <Image src="/chevron.svg" alt="Vector" width={8} height={8} />
+              <Image src="/images/chevron.svg" alt="Vector" width={8} height={8} />
             </div>
             <div className="relative">
               <Image
                 className="absolute top-2.5 left-32"
-                src="/Vector.svg"
+                src="/images/vector.svg"
                 alt="Vector"
                 width={10}
                 height={10}

@@ -12,8 +12,8 @@ function Pagination() {
       <span>{selectedValue}</span>
       <Image
         className={styles.icon}
-        src="/Vector.svg"
-        alt="Vector"
+        src="/images/vector.svg"
+        alt="vector"
         width={10}
         height={10}
       />
