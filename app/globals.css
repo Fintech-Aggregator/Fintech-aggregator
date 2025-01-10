@@ -1,13 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root {
-  --green-color: #05d69e;
+
+* {
+  margin: 0;
+  padding: 0;
+  scroll-behavior: smooth;
+  font-family: var(--font-montserrat), sans-serif;
 }
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+
+:root {
+  --primary-color: #05D66D;
+  --secondary-font: var(--font-inter);
+}
+
+@layer base {
+  :root {
+    --primary-color: #05D66D;
+    --secondary-font: var(--font-inter);
+  }
 }
 
 @layer utilities {
