@@ -1,11 +1,4 @@
-.mainHeader {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  height: 70px;
-  margin: 0;
-  padding: 0;
-}
+
 .userName {
   font-size: 30px;
 }
@@ -24,7 +17,6 @@
 .secondBlockHeader {
   display: flex;
   justify-content: space-between;
-  width: 120px;
 }
 .iconButton {
   display: flex;
@@ -34,5 +26,4 @@
   border: none;
   height: 1px;
   background-color: #333;
-  margin: 10px 0;
 }
