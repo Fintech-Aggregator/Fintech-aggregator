@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./table.module.css";
 import TableHeader from "./TableHeader";
 import { TableContent } from "./tableContent";
 import Image from "next/image";
+
 interface RowProps {
   id: number;
   licenseName: string;
@@ -21,7 +22,6 @@ interface Props {
 
 export const Table: React.FC<Props> = ({
   tableData,
-  onFilterById,
   onFilterByLicenseName,
   onFilterByAdress,
   addressTypes,
@@ -31,7 +31,9 @@ export const Table: React.FC<Props> = ({
     new Set()
   );
   const [currentPage, setCurrentPage] = React.useState(0);
+  const [expandedRow, setExpandedRow] = useState<number | null>(null);
   const rowsPerPage = 10;
+
   const toggleRowSelection = (id: number) => {
     setSelectedRows((prev) => {
       const updated = new Set(prev);
@@ -42,6 +44,10 @@ export const Table: React.FC<Props> = ({
       }
       return updated;
     });
+  };
+
+  const toggleRowExpansion = (id: number) => {
+    setExpandedRow(expandedRow === id ? null : id);
   };
 
   const handleNextPage = () => {
@@ -66,7 +72,6 @@ export const Table: React.FC<Props> = ({
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <TableHeader
-            onFilterById={onFilterById}
             onFilterByLicenseName={onFilterByLicenseName}
             onFilterByAdress={onFilterByAdress}
             addressTypes={addressTypes}
@@ -86,6 +91,35 @@ export const Table: React.FC<Props> = ({
             ))}
           </tbody>
         </table>
+
+        <div className={styles.mobileTable}>
+          {currentData.map((data) => (
+            <div key={data.id} className={styles.mobileRow}>
+              <div
+                className={styles.rowHeader}
+                onClick={() => toggleRowExpansion(data.id)}
+              >
+                <span>{data.licenseName}</span>
+                <button className={styles.expandButton}>
+                  {expandedRow === data.id ? "-" : "+"}
+                </button>
+              </div>
+              {expandedRow === data.id && (
+                <div className={styles.rowDetails}>
+                  <p>
+                    <strong>ID:</strong> {data.id}
+                  </p>
+                  <p>
+                    <strong>Address:</strong> {data.address}
+                  </p>
+                  <p>
+                    <strong>Address Type:</strong> {data.addressType}
+                  </p>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
       <div className={styles.pagination}>
         <button

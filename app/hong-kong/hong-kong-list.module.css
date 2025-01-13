@@ -5,3 +5,12 @@
   align-items: center;
   gap: 480px;
 }
+@media (max-width: 1000px) {
+  .mains {
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 0px;
+  }
+}

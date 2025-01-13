@@ -117,3 +117,53 @@
 .table tr:nth-child(odd) {
   background-color: #ffffff;
 }
+
+.mobileTable {
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.mobileRow {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+
+.rowHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f9f9f9;
+  cursor: pointer;
+}
+
+.rowDetails {
+  padding: 10px;
+  background-color: #fff;
+}
+
+.expandButton {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+  .table {
+    display: none;
+  }
+
+  .mobileTable {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  .tableContainer {
+    width: 100%;
+  }
+}
