@@ -46,63 +46,59 @@ export const signUp = async ({ ...userData }: SignUpParams) => {
 };
 
 export const signIn = async ({ email, password }: SignInParams) => {
-  try {
-    const userData = await prisma.user.findUnique({
+  const userData = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
+
+  if (!userData) {
+    throw new Error("Invalid email or password");
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, userData.password);
+
+  if (!isPasswordValid) {
+    throw new Error("Invalid email or password");
+  }
+
+  const isTokenValid = jwt.verify(userData.token, JWT_SECRET);
+  const cookie = await cookies();
+
+  if (isTokenValid) {
+    cookie.set("fintech-aggregator-session", userData.token, {
+      path: "/",
+      httpOnly: true,
+      sameSite: "strict",
+      secure: true,
+    });
+  } else {
+    const payload = { fullName: userData.fullName, email: userData.email };
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "5d" });
+    const updatedUser = await prisma.user.update({
       where: {
-        email,
+        email: userData.email,
+      },
+      data: {
+        token,
       },
     });
 
-    if (!userData) {
-      throw new Error("Invalid email or password");
-    }
-
-    const isPasswordValid = await bcrypt.compare(password, userData.password);
-
-    if (!isPasswordValid) {
-      throw new Error("Invalid email or password");
-    }
-
-    const isTokenValid = jwt.verify(userData.token, JWT_SECRET);
-    const cookie = await cookies();
-
-    if (isTokenValid) {
-      cookie.set("fintech-aggregator-session", userData.token, {
-        path: "/",
-        httpOnly: true,
-        sameSite: "strict",
-        secure: true,
-      });
-    } else {
-      const payload = { fullName: userData.fullName, email: userData.email };
-      const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "5d" });
-      const updatedUser = await prisma.user.update({
-        where: {
-          email: userData.email,
-        },
-        data: {
-          token,
-        },
-      });
-
-      const { password: _, ...user } = updatedUser;
-
-      return user;
-    }
-
-    const { password: _, ...user } = userData;
+    const { password: _, ...user } = updatedUser;
 
     return user;
-  } catch (error) {
-    console.log("Error while sign in user:", error);
   }
+
+  const { password: _, ...user } = userData;
+
+  return user;
 };
 
 export const logOut = async () => {
   try {
     const cookie = await cookies();
 
-    cookie.delete("fintech-aggregator-session")
+    cookie.delete("fintech-aggregator-session");
   } catch (error) {
     console.log("Error while log out user:", error);
     throw new Error("Error logOut user");
