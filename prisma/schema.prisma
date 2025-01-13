@@ -26,21 +26,11 @@ model HongKong {
     addressType String
 }
 
-model UK {
-    id Int @id @default(autoincrement())
-    eMoneyFirms EMoneyFirms[]
-    firmPSDPermission FirmPSDPermission[]
-    
-} 
-
 model EMoneyFirms {
     FRN Int @id
     FirmName String
     EmoneyRegisterStatus String
     EmoneyStatusEffectiveDate String
-
-    uk UK @relation(fields: [ukId], references: [id])
-    ukId Int
 }
 
 model FirmPSDPermission {
@@ -48,9 +38,6 @@ model FirmPSDPermission {
     FirmName String
     PSDFirmStatus String
     PSDStatusEffectiveDate String
-
-    uk UK @relation(fields: [ukId], references: [id])
-    ukId Int
 }
 
 enum UserRole {

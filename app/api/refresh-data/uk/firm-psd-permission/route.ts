@@ -3,15 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const data = await req.json();
-  await prisma.$executeRaw`TRUNCATE TABLE "FirmPSDPermission" RESTART IDENTITY CASCADE`;
-
-    const chunkSize = 100;
-    for (let i = 0; i < data.length; i += chunkSize) {
-      const chunk = data.slice(i, i + chunkSize);
-      await prisma.firmPSDPermission.createMany({
-        data: chunk,
-      });
-    }
+  // await prisma.$executeRaw`TRUNCATE TABLE "FirmPSDPermission" RESTART IDENTITY CASCADE`;
+  await prisma.firmPSDPermission.createMany({
+    data: data
+  });
 
   return NextResponse.json("OK");
 }
