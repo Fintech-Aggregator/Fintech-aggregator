@@ -11,12 +11,12 @@ export default async function Home() {
   if (token) {
     const isTokenValid = jwt.verify(token, JWT_SECRET) 
 
-    console.log("isTokenValid: ", isTokenValid);
+    console.log("token: ", isTokenValid);
   }
   return (
     <>
       <MainPage />
-      <SearchBlock />
+      {/* <SearchBlock /> */}
     </>
   );
 }

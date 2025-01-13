@@ -19,7 +19,7 @@ async function up() {
       },
       {
         fullName: "Test User",
-        email: "admin@@gmail.com",
+        email: "admin@gmail.com",
         token: token2,
         password: hashSync("111111", 10),
         role: "ADMIN",

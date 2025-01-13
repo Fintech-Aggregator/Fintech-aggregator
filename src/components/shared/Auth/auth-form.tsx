@@ -22,6 +22,8 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
   const formSchema = authFormSchema(type);
+  const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
+  console.log("errorMessage: ", errorMessage);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,13 +52,19 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
       }
 
       if (type === "sign-in") {
-        await signIn({
+        const user = await signIn({
           email: data.email,
           password: data.password,
         });
-        router.push("/");
+        if (user) {
+          router.push("/");
+        }
       }
-    } catch (error) {
+    } catch (error: any) {
+      if (error.message === "Invalid email or password") {
+        console.log("value: ", error.message);
+        setErrorMessage("Invalid email or password. Please try again.");
+      }
       console.log("Error while auth submit:", error);
     } finally {
       setIsLoading(false);
@@ -94,6 +102,7 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
           {type === "sign-in" && (
             <>
               <h1 className="text-2xl font-bold mb-10">Log in to your Account</h1>
+              {errorMessage && <p className="text-red-500 text-sm mt-4">{errorMessage}</p>}
               <CustomInput control={form.control} name="email" type="email" placeholder="Email">
                 <Mail className="ml-4" color="#05D66D" />
               </CustomInput>
