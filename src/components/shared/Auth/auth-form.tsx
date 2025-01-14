@@ -7,11 +7,13 @@ import { useForm } from "react-hook-form";
 import { Form } from "@/src/components/ui/form";
 import { authFormSchema, cn } from "@/src/lib/utils";
 import { signIn, signUp } from "@/src/lib/actions/user.actions";
-import { CustomInput } from "../custom-input";
+import { CustomInput } from "../../ui/custom-input";
 import { Button } from "../../ui/button";
 import { Loader2, LockKeyhole, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { CustomCheckbox } from "../../ui/custom-checkbox";
+import { InvalidData, PasswordNotMatch, UserAlreadyExist } from "@/src/exeptions/errors";
 
 interface Props {
   type: string;
@@ -22,8 +24,9 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
   const formSchema = authFormSchema(type);
+  const [isRememberMe, setIsRememberMe] = React.useState<boolean>(true);
+  const [isAccept, setIsAccept] = React.useState<boolean>(false);
   const [errorMessage, setErrorMessage] = React.useState<string | null>(null);
-  console.log("errorMessage: ", errorMessage);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -44,6 +47,7 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
           fullName: data.firstName!.concat(" ", data.lastName!),
           email: data.email,
           password: data.password,
+          comfirmPassword: data.comfirmPassword!,
         };
         const user = await signUp(userData);
         if (user) {
@@ -61,40 +65,44 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
         }
       }
     } catch (error: any) {
-      if (error.message === "Invalid email or password") {
-        console.log("value: ", error.message);
-        setErrorMessage("Invalid email or password. Please try again.");
+      if (error.message === "User already exist!") {
+        setErrorMessage(error.message);
       }
-      console.log("Error while auth submit:", error);
+      else if (error.message === "Invalid email or password") {
+        setErrorMessage(error.message);
+      }
+      else if (error.message === "Passwords doesn't match. Please try again.") {
+        setErrorMessage(error.message);
+      } else {
+        console.log("error message: ", error.message);
+        setErrorMessage("Server Error, please try again later");
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <section className={cn("w-[clamp(15rem,_20vw,_25rem)] text-center", className)}>
+    <section className={cn("w-[clamp(20rem,_30vw,_30rem)] text-center", className)}>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           {type === "sign-up" && (
             <>
               <h1 className="text-2xl font-bold mb-10">Create an account</h1>
+              {errorMessage && <p className="text-destructive text-sm mt-4">{errorMessage}</p>}
               <CustomInput control={form.control} name="firstName" type="firstName" placeholder="Enter your first name" />
               <CustomInput control={form.control} name="lastName" type="lastName" placeholder="Enter your first name" />
               <CustomInput control={form.control} name="email" type="email" placeholder="Email">
                 <Mail className="ml-4" color="#05D66D" />
               </CustomInput>
-              <CustomInput control={form.control} name="password" type="password" placeholder="Enter Password">
+              <CustomInput control={form.control} name="password" type="password" placeholder="Password">
                 <LockKeyhole className="ml-4" color="#05D66D" />
               </CustomInput>
               <CustomInput control={form.control} name="comfirmPassword" type="password" placeholder="Comfirm Password">
                 <LockKeyhole className="ml-4" color="#05D66D" />
               </CustomInput>
               <div className="flex justify-between mt-4">
-                <label className="flex items-center gap-2">
-                  <input type="checkbox" className="peer hidden" />
-                  <div className="w-5 h-5 bg-gray-200 border-2 border-gray-400 rounded-md bg-primary"></div>
-                  <p className="text-sm">Accept the policy and terms</p>
-                </label>
+                <CustomCheckbox isChecked={isAccept} setChecked={setIsAccept} text="Accept the policy and terms" />
               </div>
             </>
           )}
@@ -102,19 +110,15 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
           {type === "sign-in" && (
             <>
               <h1 className="text-2xl font-bold mb-10">Log in to your Account</h1>
-              {errorMessage && <p className="text-red-500 text-sm mt-4">{errorMessage}</p>}
+              {errorMessage && <p className="text-destructive text-sm mt-4">{errorMessage}</p>}
               <CustomInput control={form.control} name="email" type="email" placeholder="Email">
-                <Mail className="ml-4" color="#05D66D" />
+                <Mail className="flex-shrink-0 ml-4" color="#05D66D" />
               </CustomInput>
-              <CustomInput control={form.control} name="password" type="password" placeholder="Enter Password">
-                <LockKeyhole className="ml-4" color="#05D66D" />
+              <CustomInput control={form.control} name="password" type="password" placeholder="Password">
+                <LockKeyhole className="flex-shrink-0 ml-4" color="#05D66D" />
               </CustomInput>
               <div className="flex justify-between mt-4">
-                <label className="flex items-center space-x-2">
-                  <input type="checkbox" className="peer hidden" />
-                  <div className="w-5 h-5 bg-gray-200 border-2 border-gray-400 rounded-md bg-primary"></div>
-                  <p className="font-medium">Remember me</p>
-                </label>
+                <CustomCheckbox isChecked={isRememberMe} setChecked={setIsRememberMe} text="Remember me" />
                 <p className="text-primary">Fongot password?</p>
               </div>
             </>

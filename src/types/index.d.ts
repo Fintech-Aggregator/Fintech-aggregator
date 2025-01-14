@@ -2,6 +2,7 @@ declare type SignUpParams = {
   fullName: string;
   email: string;
   password: string;
+  comfirmPassword: string;
 };
 
 declare type SignInParams = {

@@ -1,6 +1,7 @@
 "use server";
 
 import { prisma } from "@/prisma/prisma-client";
+import { InvalidData, PasswordNotMatch, UserAlreadyExist } from "@/src/exeptions/errors";
 import { hashSync } from "bcrypt";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -9,40 +10,49 @@ import { cookies } from "next/headers";
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export const signUp = async ({ ...userData }: SignUpParams) => {
-  const { fullName, email, password } = userData;
+  const { fullName, email, password, comfirmPassword } = userData;
+
+  if (password !== comfirmPassword) {
+    throw new PasswordNotMatch("Passwords doesn't match. Please try again.");
+  }
 
   const payload = { fullName, email };
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "5d" });
 
-  try {
-    const newUser = await prisma.user.create({
-      data: {
-        fullName,
-        token,
-        email,
-        password: hashSync(password, 10),
-      },
-    });
+  const isExist = await prisma.user.findUnique({
+    where: {
+      email,
+    },
+  });
 
-    if (!newUser) {
-      throw new Error("Error creating user");
-    }
+  if (isExist) {
+    throw new UserAlreadyExist("User already exist!");
+  }
 
-    const { password: _, ...userInfo } = newUser;
+  const newUser = await prisma.user.create({
+    data: {
+      fullName,
+      token,
+      email,
+      password: hashSync(password, 10),
+    },
+  });
 
-    const cookie = await cookies();
-    cookie.set("fintech-aggregator-session", token, {
-      path: "/",
-      httpOnly: true,
-      sameSite: "strict",
-      secure: true,
-    });
-
-    return userInfo;
-  } catch (error) {
-    console.log("Error while sign up user:", error);
+  if (!newUser) {
     throw new Error("Error creating user");
   }
+
+  const { password: _, ...userInfo } = newUser;
+
+  const cookie = await cookies();
+  cookie.set("fintech-aggregator-session", token, {
+    path: "/",
+    httpOnly: true,
+    sameSite: "strict",
+    secure: true,
+  });
+
+  return userInfo;
 };
 
 export const signIn = async ({ email, password }: SignInParams) => {
@@ -53,13 +63,13 @@ export const signIn = async ({ email, password }: SignInParams) => {
   });
 
   if (!userData) {
-    throw new Error("Invalid email or password");
+    throw new InvalidData("Invalid email or password");
   }
 
   const isPasswordValid = await bcrypt.compare(password, userData.password);
 
   if (!isPasswordValid) {
-    throw new Error("Invalid email or password");
+    throw new InvalidData("Invalid email or password");
   }
 
   const isTokenValid = jwt.verify(userData.token, JWT_SECRET);

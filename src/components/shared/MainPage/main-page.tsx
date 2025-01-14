@@ -37,8 +37,8 @@ export default function Content() {
         </div>
 
         <div className={styles.button_container}>
-            <button className={styles.button}>Find Licenses</button>
-          </div>
+          <button className={styles.button}>Find Licenses</button>
+        </div>
       </div>
 
       {/* Desktop */}
@@ -57,12 +57,18 @@ export default function Content() {
           </div>
 
           <div className={styles.button_container}>
-            <button className={cn('w-[clamp(15rem,_40vw,_25rem)]', styles.button)}>Find Licenses</button>
+            <button className={cn("w-[clamp(15rem,_40vw,_25rem)]", styles.button)}>Find Licenses</button>
           </div>
         </div>
 
         <div className={styles.containerImage}>
-          <Image className="w-[clamp(15rem,_40vw,_25rem)] items-center" src="/images/fintech.png" alt="fintech" width={500} height={300} />
+          <Image
+            className="w-[clamp(15rem,_40vw,_25rem)] items-center"
+            src="/images/fintech.png"
+            alt="fintech"
+            width={500}
+            height={300}
+          />
         </div>
       </div>
 
