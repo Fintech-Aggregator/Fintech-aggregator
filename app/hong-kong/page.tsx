@@ -24,7 +24,8 @@ const HongKong: React.FC = () => {
     adress: "",
     addressType: "",
   });
-
+  const [currentPage, setCurrentPage] = useState(0);
+  const rowsPerPage = 10;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -108,18 +109,29 @@ const HongKong: React.FC = () => {
     );
     return uniqueTypes;
   };
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
   return (
     <div>
       <div className={styles.mains}>
         <SearchBar size="medium" onSearch={(value) => handleSearch(value)} />
-        <Pagination />
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
       {loading ? (
         <TableSkeleton />
       ) : (
         <Table
           tableData={filteredData}
+          rowsPerPage={rowsPerPage}
+          currentPage={currentPage}
+          onPageChange={handlePageChange} // Передаємо колбек для синхронізації сторінки
           onFilterById={handleFilterById}
           onFilterByLicenseName={handleFilterByLicenseName}
           onFilterByAdress={handleFilterByAdress}

@@ -13,6 +13,9 @@ interface RowProps {
 
 interface Props {
   tableData: RowProps[];
+  rowsPerPage?: number;
+  currentPage?: number;
+  onPageChange?: (page: number) => void;
   onFilterById: (id: number | null) => void;
   onFilterByLicenseName: (name: string) => void;
   onFilterByAdress: (name: string) => void;
@@ -22,17 +25,27 @@ interface Props {
 
 export const Table: React.FC<Props> = ({
   tableData,
+  rowsPerPage = 10,
+  currentPage: externalPage,
+  onPageChange,
   onFilterByLicenseName,
   onFilterByAdress,
   addressTypes,
   onFilterByAddressType,
 }) => {
-  const [selectedRows, setSelectedRows] = React.useState<Set<number>>(
-    new Set()
-  );
-  const [currentPage, setCurrentPage] = React.useState(0);
+  const [localPage, setLocalPage] = useState(0);
+  const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
-  const rowsPerPage = 10;
+
+  const currentPage = externalPage !== undefined ? externalPage : localPage;
+
+  const handlePageChange = (newPage: number) => {
+    if (onPageChange) {
+      onPageChange(newPage);
+    } else {
+      setLocalPage(newPage);
+    }
+  };
 
   const toggleRowSelection = (id: number) => {
     setSelectedRows((prev) => {
@@ -52,13 +65,13 @@ export const Table: React.FC<Props> = ({
 
   const handleNextPage = () => {
     if ((currentPage + 1) * rowsPerPage < tableData.length) {
-      setCurrentPage(currentPage + 1);
+      handlePageChange(currentPage + 1);
     }
   };
 
   const handlePreviousPage = () => {
     if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
+      handlePageChange(currentPage - 1);
     }
   };
 

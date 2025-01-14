@@ -17,6 +17,10 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   addressTypes,
   onFilterByAddressType,
 }) => {
+  const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
+  };
+
   const handleLicenseNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     onFilterByLicenseName(value);
@@ -119,7 +123,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 addressTypes.length > 0 ? (
                   addressTypes.map((type) => (
                     <option key={type} value={type}>
-                      {type}
+                      {truncateText(type, 10)}
                     </option>
                   ))
                 ) : (

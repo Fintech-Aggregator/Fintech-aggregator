@@ -1,15 +1,24 @@
 import React, { useState } from "react";
 import styles from "./table.module.css";
 import Image from "next/image";
+interface PaginationProps {
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}
 
-function Pagination() {
-  const [selectedValue, setSelectedValue] = useState<number>(1);
-
-  const options = [5, 10, 15, 20, 25];
-
+const Pagination: React.FC<PaginationProps> = ({
+  totalPages,
+  currentPage,
+  onPageChange,
+}) => {
+  const handlePageChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const newPage = Number(e.target.value);
+    onPageChange(newPage);
+  };
   return (
     <div className={styles.container}>
-      <span>{selectedValue}</span>
+      <span>{currentPage + 1}</span>
       <Image
         className={styles.icon}
         src="/Vector.svg"
@@ -19,18 +28,18 @@ function Pagination() {
       />
 
       <select
-        value={selectedValue}
-        onChange={(e) => setSelectedValue(Number(e.target.value))}
+        value={currentPage}
+        onChange={handlePageChange}
         className={styles.select}
       >
-        {options.map((option) => (
-          <option key={option} value={option}>
-            {option}
+        {Array.from({ length: totalPages }, (_, index) => (
+          <option key={index} value={index}>
+            {index + 1}
           </option>
         ))}
       </select>
     </div>
   );
-}
+};
 
 export default Pagination;
