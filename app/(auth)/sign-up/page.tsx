@@ -6,4 +6,4 @@ export default async function SignUp() {
       <AuthForm type="sign-up" />
     </section>
   );
-}
+};
