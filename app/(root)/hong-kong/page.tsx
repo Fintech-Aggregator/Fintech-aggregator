@@ -24,7 +24,8 @@ const HongKong: React.FC = () => {
     adress: "",
     addressType: "",
   });
-
+  const [currentPage, setCurrentPage] = useState(0);
+  const rowsPerPage = 10;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -47,7 +48,11 @@ const HongKong: React.FC = () => {
 
       if (filters.searchTerm) {
         filtered = filtered.filter((item) =>
-          Object.values(item).some((value) => String(value).toLowerCase().includes(filters.searchTerm.toLowerCase()))
+          Object.values(item).some((value) =>
+            String(value)
+              .toLowerCase()
+              .includes(filters.searchTerm.toLowerCase())
+          )
         );
       }
 
@@ -56,13 +61,21 @@ const HongKong: React.FC = () => {
       }
 
       if (filters.licenseName) {
-        filtered = filtered.filter((item) => item.licenseName.toLowerCase().includes(filters.licenseName.toLowerCase()));
+        filtered = filtered.filter((item) =>
+          item.licenseName
+            .toLowerCase()
+            .includes(filters.licenseName.toLowerCase())
+        );
       }
       if (filters.adress) {
-        filtered = filtered.filter((item) => item.address.toLowerCase().includes(filters.adress.toLowerCase()));
+        filtered = filtered.filter((item) =>
+          item.address.toLowerCase().includes(filters.adress.toLowerCase())
+        );
       }
-      if (filters.addressType) {
-        filtered = filtered.filter((item) => item.addressType === filters.addressType);
+      if (filters.addressType && filters.addressType !== "") {
+        filtered = filtered.filter(
+          (item) => item.addressType === filters.addressType
+        );
       }
       setFilteredData(filtered);
     };
@@ -91,21 +104,34 @@ const HongKong: React.FC = () => {
   };
 
   const getUniqueAddressTypes = () => {
-    const uniqueTypes = Array.from(new Set(hongKongData.map((item) => item.addressType)));
+    const uniqueTypes = Array.from(
+      new Set(hongKongData.map((item) => item.addressType))
+    );
     return uniqueTypes;
   };
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
   return (
     <div>
       <div className={styles.mains}>
         <SearchBar size="medium" onSearch={(value) => handleSearch(value)} />
-        <Pagination />
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
       </div>
       {loading ? (
         <TableSkeleton />
       ) : (
         <Table
           tableData={filteredData}
+          rowsPerPage={rowsPerPage}
+          currentPage={currentPage}
+          onPageChange={handlePageChange} // Передаємо колбек для синхронізації сторінки
           onFilterById={handleFilterById}
           onFilterByLicenseName={handleFilterByLicenseName}
           onFilterByAdress={handleFilterByAdress}

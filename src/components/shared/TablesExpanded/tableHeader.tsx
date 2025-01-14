@@ -5,7 +5,6 @@ import SelectField from "../../ui/selectField";
 import Image from "next/image";
 
 interface TableHeaderProps {
-  onFilterById: (id: number | null) => void;
   onFilterByLicenseName: (name: string) => void;
   onFilterByAdress: (name: string) => void;
   addressTypes: string[];
@@ -13,17 +12,15 @@ interface TableHeaderProps {
 }
 
 const TableHeader: React.FC<TableHeaderProps> = ({
-  onFilterById,
   onFilterByLicenseName,
   onFilterByAdress,
   addressTypes,
   onFilterByAddressType,
 }) => {
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    const id = value ? parseInt(value, 10) : null;
-    onFilterById(id);
+  const truncateText = (text: string, maxLength: number) => {
+    return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
   };
+
   const handleLicenseNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     onFilterByLicenseName(value);
@@ -49,14 +46,10 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               flexDirection: "column",
               justifyContent: "start",
               alignItems: "center",
+              paddingBottom: "2px",
             }}
           >
             <span>ID</span>
-            <input
-              className={`${styles.stylesForInput} ${styles.idInput}`}
-              type="text"
-              onChange={handleInputChange}
-            />
           </div>
         </th>
         <th>
@@ -124,12 +117,13 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 id=""
                 onChange={handleAddressTypeChange}
               >
+                <option value="">All</option>
                 {addressTypes &&
                 Array.isArray(addressTypes) &&
                 addressTypes.length > 0 ? (
                   addressTypes.map((type) => (
                     <option key={type} value={type}>
-                      {type}
+                      {truncateText(type, 10)}
                     </option>
                   ))
                 ) : (
