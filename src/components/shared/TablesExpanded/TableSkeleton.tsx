@@ -17,16 +17,16 @@ export const TableSkeleton = () => {
                     <input type="checkbox" className={styles.customCheckbox} />
                   </td>
                   <td style={{ width: "26px" }}>
-                    <Skeleton className="w-[30px] h-[50px] rounded-[10px]" />
+                    <Skeleton className="w-[30px] h-[52px] rounded-[10px]" />
                   </td>
                   <td style={{ width: "294px" }}>
-                    <Skeleton className="w-[294px] h-[50px] rounded-[10px]" />
+                    <Skeleton className="w-[294px] h-[52px] rounded-[10px]" />
                   </td>
                   <td style={{ width: "375px" }}>
-                    <Skeleton className="w-[375px] h-[50px] rounded-[10px]" />
+                    <Skeleton className="w-[375px] h-[52px] rounded-[10px]" />
                   </td>
                   <td style={{ width: "125px" }}>
-                    <Skeleton className="w-[125px] h-[50px] rounded-[10px]" />
+                    <Skeleton className="w-[125px] h-[52px] rounded-[10px]" />
                   </td>
                 </tr>
               ))}

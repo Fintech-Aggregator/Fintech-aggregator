@@ -30,11 +30,11 @@ export const TableContent: React.FC<Props> = ({
         />
       </td>
       <td style={{ width: "26px" }}>
-        <div style={{ display: "flex", justifyContent: "center" }}>{id}</div>
+        <div className="font-semibold" style={{ display: "flex", justifyContent: "center" }}>{id}</div>
       </td>
-      <td style={{ width: "294px" }}>{licenseName}</td>
-      <td style={{ width: "375px" }}>{address}</td>
-      <td style={{ width: "125px" }}>{addressType}</td>
+      <td className="font-medium" style={{ width: "294px" }}>{licenseName}</td>
+      <td className="font-medium" style={{ width: "375px" }}>{address}</td>
+      <td className="font-medium text-base" style={{ width: "125px" }}>{addressType}</td>
     </tr>
   );
 };

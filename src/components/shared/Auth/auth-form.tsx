@@ -98,7 +98,7 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
               <CustomInput control={form.control} name="password" type="password" placeholder="Password">
                 <LockKeyhole className="ml-4" color="#05D66D" />
               </CustomInput>
-              <CustomInput control={form.control} name="comfirmPassword" type="password" placeholder="Comfirm Password">
+              <CustomInput control={form.control} name="comfirmPassword" type="password" placeholder="Confirm Password">
                 <LockKeyhole className="ml-4" color="#05D66D" />
               </CustomInput>
               <div className="flex justify-between mt-4">
@@ -119,7 +119,7 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
               </CustomInput>
               <div className="flex justify-between mt-4">
                 <CustomCheckbox isChecked={isRememberMe} setChecked={setIsRememberMe} text="Remember me" />
-                <p className="text-primary">Fongot password?</p>
+                <p className="text-primary">Forgot password?</p>
               </div>
             </>
           )}
