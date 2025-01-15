@@ -123,7 +123,7 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
               </div>
             </>
           )}
-
+          {/* Value */}
           <Button className="w-full my-8 rounded-lg text-lg" type="submit" disabled={isLoading}>
             {isLoading ? (
               <>
