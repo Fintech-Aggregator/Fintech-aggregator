@@ -131,7 +131,7 @@ const HongKong: React.FC = () => {
           tableData={filteredData}
           rowsPerPage={rowsPerPage}
           currentPage={currentPage}
-          onPageChange={handlePageChange} // Передаємо колбек для синхронізації сторінки
+          onPageChange={handlePageChange}
           onFilterById={handleFilterById}
           onFilterByLicenseName={handleFilterByLicenseName}
           onFilterByAdress={handleFilterByAdress}
