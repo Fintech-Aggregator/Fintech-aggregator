@@ -30,9 +30,6 @@ const Header = () => {
           <Link href="/login" id="launchModalBtn" className={styles.iconButton}>
             <Image src="/person.svg" alt="person" width={36} height={36} />
           </Link>
-          <button>
-            <Image src="/sun.svg" alt="sun" width={36} height={36} />
-          </button>
           <a href="/" className={styles.iconButton}>
             <Image src="/exit.svg" alt="exit" width={36} height={36} />
           </a>

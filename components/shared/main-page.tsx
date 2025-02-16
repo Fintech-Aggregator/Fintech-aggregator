@@ -1,8 +1,5 @@
 import styles from "./HomeContentTemaplate/main-page.module.css";
-import Image3 from "./images/image3.png";
-import Image2 from "./images/image2.jpg";
-import Image4 from "./images/image4.jpg";
-import Image5 from "./images/image5.png";
+
 
 export default function Content() {
   return (
@@ -34,14 +31,12 @@ export default function Content() {
         </div>
         
         <div className={styles.containerImage}>
-          <img src={Image3.src} className={styles.image3}/>
         </div>
         
       </div>
       
       <div className={styles.block2}>
-        
-        <img src={Image2.src} className={styles.image2} />
+
         
         <div className={styles.text_overlay2}>
         The project was completed by a team of 6 people with an average <br/>
@@ -52,9 +47,8 @@ export default function Content() {
       
       <div className={styles.text_between}>
       
-        <div className={styles.containerImage1}>
-          <img src={Image5.src} className={styles.image5}/>
-        </div>
+      <div className={styles.containerImage1}>
+      </div>
       
         <div className={styles.template_between}>
           <div className={styles.text_bet1}>
@@ -73,9 +67,7 @@ export default function Content() {
         
       </div>
       
-      <div className={styles.block2}>
-        
-        <img src={Image4.src} className={styles.image2} />
+      <div className={styles.block3}>
         
         <div className={styles.text_overlay2}>
           We are a team of enthusiasts who strive to make financial information <br/>
