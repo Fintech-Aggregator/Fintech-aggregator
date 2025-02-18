@@ -40,6 +40,17 @@ model FirmPSDPermission {
     PSDStatusEffectiveDate String
 }
 
+model Lithuania {
+    id Int @id @default(autoincrement())
+    FirmName String
+    Address String
+    Site String
+    Licence String
+    Date String
+    LicenceLink String
+    CompanyLink String
+}
+
 enum UserRole {
     USER
     ADMIN

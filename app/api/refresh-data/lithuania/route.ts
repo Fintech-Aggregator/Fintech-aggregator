@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const data = await req.json();
+  // await prisma.$executeRaw`TRUNCATE TABLE "Lithuania" RESTART IDENTITY CASCADE
 
-  // await prisma.$executeRaw`TRUNCATE TABLE "EMoneyFirms" RESTART IDENTITY CASCADE`;
-  await prisma.eMoneyFirms.createMany({
-    data: data
+  await prisma.lithuania.createMany({
+    data: data,
   });
 
   return NextResponse.json("OK");
