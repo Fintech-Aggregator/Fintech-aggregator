@@ -40,17 +40,6 @@ model FirmPSDPermission {
 }
 
 model Lithuania {
-  id          Int    @id @default(autoincrement())
-  FirmName    String
-  Address     String
-  Site        String
-  Licence     String
-  Date        String
-  LicenceLink String
-  CompanyLink String
-}
-
-model Lithuania {
     id Int @id @default(autoincrement())
     FirmName String
     Address String
