@@ -3,6 +3,7 @@ import styles from "./table.module.css";
 import SearchBar from "../HomeContentTemaplate/search-bar";
 import SelectField from "../../ui/selectField";
 import Image from "next/image";
+import { usePathname } from "next/navigation"; // Додано usePathname для отримання шляху
 
 interface TableHeaderProps {
   onFilterByLicenseName: (name: string) => void;
@@ -17,6 +18,8 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   addressTypes,
   onFilterByAddressType,
 }) => {
+  const pathname = usePathname(); // Отримуємо шлях
+
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
   };
@@ -25,37 +28,26 @@ const TableHeader: React.FC<TableHeaderProps> = ({
     const value = e.target.value;
     onFilterByLicenseName(value);
   };
+
   const handleAdressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     onFilterByAdress(value);
   };
+
   const handleAddressTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     onFilterByAddressType(value);
   };
+
   return (
     <thead className={styles.tableHeader}>
       <tr>
         <th>
-          <input type="checkbox" className={styles.customCheckbox} />
-        </th>
-        <th>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "start",
-              alignItems: "center",
-              paddingBottom: "2px",
-            }}
-          >
-            <span className="font-semibold">ID</span>
-          </div>
-        </th>
-        <th>
           <div>
             <div className={styles.addIcon}>
-              <p className="font-semibold">Name of Licensee </p>
+              <p className="font-semibold">
+                {pathname === "/uk" ? "FirmName" : "Name of Licensee"}
+              </p>
               <Image
                 className="ml-1"
                 src="/images/chevron.svg"
@@ -83,7 +75,9 @@ const TableHeader: React.FC<TableHeaderProps> = ({
         <th>
           <div>
             <div className={styles.addIcon}>
-              <p className="font-semibold">Adress </p>
+              <p className="font-semibold">
+                {pathname === "/uk" ? "EmoneyRegisterStatus" : "Address"}{" "}
+              </p>
               <Image
                 className="ml-1"
                 src="/images/chevron.svg"
@@ -111,7 +105,9 @@ const TableHeader: React.FC<TableHeaderProps> = ({
         <th>
           <div className={styles.content}>
             <div className={styles.addIcon}>
-              <p className="font-semibold">Adress type</p>
+              <p className="font-semibold">
+                {pathname === "/uk" ? "EmoneyStatusDate" : "Address Type"}
+              </p>
               <Image
                 className="ml-1"
                 src="/images/chevron.svg"
