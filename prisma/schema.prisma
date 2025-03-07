@@ -24,6 +24,7 @@ model HongKong {
     licenseName String
     address String
     addressType String
+    lastUpdatedDate DateTime
 }
 
 model EMoneyFirms {
@@ -31,6 +32,7 @@ model EMoneyFirms {
     FirmName String
     EmoneyRegisterStatus String
     EmoneyStatusEffectiveDate String
+    lastUpdatedDate DateTime
 }
 
 model FirmPSDPermission {
@@ -38,6 +40,7 @@ model FirmPSDPermission {
     FirmName String
     PSDFirmStatus String
     PSDStatusEffectiveDate String
+    lastUpdatedDate DateTime
 }
 
 model Lithuania {
@@ -49,6 +52,7 @@ model Lithuania {
     Date String
     LicenceLink String
     CompanyLink String
+    lastUpdatedDate DateTime
 }
 
 enum UserRole {
