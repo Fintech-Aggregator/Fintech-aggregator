@@ -56,10 +56,6 @@ const HongKong: React.FC = () => {
         );
       }
 
-      if (filters.id !== null) {
-        filtered = filtered.filter((item) => item.id === filters.id);
-      }
-
       if (filters.licenseName) {
         filtered = filtered.filter((item) =>
           item.licenseName
@@ -81,16 +77,11 @@ const HongKong: React.FC = () => {
     };
 
     applyFilters();
-  }, [filters, hongKongData]);
+  }, [filters]);
 
   const handleSearch = (term: string) => {
     setFilters((prev) => ({ ...prev, searchTerm: term }));
   };
-
-  const handleFilterById = (id: number | null) => {
-    setFilters((prev) => ({ ...prev, id }));
-  };
-
   const handleFilterByLicenseName = (name: string) => {
     setFilters((prev) => ({ ...prev, licenseName: name }));
   };
@@ -132,7 +123,6 @@ const HongKong: React.FC = () => {
           rowsPerPage={rowsPerPage}
           currentPage={currentPage}
           onPageChange={handlePageChange}
-          onFilterById={handleFilterById}
           onFilterByLicenseName={handleFilterByLicenseName}
           onFilterByAdress={handleFilterByAdress}
           addressTypes={getUniqueAddressTypes()}

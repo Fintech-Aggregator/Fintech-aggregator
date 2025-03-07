@@ -56,7 +56,13 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           <div>
             <div className={styles.addIcon}>
               <p className="font-semibold">Name of Licensee </p>
-              <Image className="ml-1" src="/images/chevron.svg" alt="Vector" width={10} height={10} />
+              <Image
+                className="ml-1"
+                src="/images/chevron.svg"
+                alt="Vector"
+                width={10}
+                height={10}
+              />
             </div>
             <div className={styles.addIcon}>
               <input
@@ -78,7 +84,13 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           <div>
             <div className={styles.addIcon}>
               <p className="font-semibold">Adress </p>
-              <Image className="ml-1" src="/images/chevron.svg" alt="Vector" width={10} height={10} />
+              <Image
+                className="ml-1"
+                src="/images/chevron.svg"
+                alt="Vector"
+                width={10}
+                height={10}
+              />
             </div>
             <div className={styles.addIcon}>
               <input
@@ -100,7 +112,13 @@ const TableHeader: React.FC<TableHeaderProps> = ({
           <div className={styles.content}>
             <div className={styles.addIcon}>
               <p className="font-semibold">Adress type</p>
-              <Image className="ml-1" src="/images/chevron.svg" alt="Vector" width={10} height={10} />
+              <Image
+                className="ml-1"
+                src="/images/chevron.svg"
+                alt="Vector"
+                width={10}
+                height={10}
+              />
             </div>
             <div className="relative">
               <Image
