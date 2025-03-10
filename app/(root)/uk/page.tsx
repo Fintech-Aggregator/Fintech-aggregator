@@ -60,7 +60,7 @@ const UkTable: React.FC = () => {
         filtered = filtered.filter((item) =>
           Object.values(item).some((value) =>
             String(value)
-              .toLowerCase()
+              .toLowerCase() //test
               .includes(filters.searchTerm.toLowerCase())
           )
         );
