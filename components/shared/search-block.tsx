@@ -2,11 +2,11 @@ import styles from "./HomeContentTemaplate/search-block.module.css";
 
 export default function SearchBar() {
   const data = [
-    { name: "Name1", country: "Country1", address: "Address1" },
-    { name: "Name2", country: "Country2", address: "Address2" },
-    { name: "Name3", country: "Country3", address: "Address3" },
-    { name: "Name4", country: "Country4", address: "Address4" },
-    { name: "Name5", country: "Country5", address: "Address5" },
+    { name: "Name", country: "Country", address: "Address" },
+    { name: "Name", country: "Country", address: "Address" },
+    { name: "Name", country: "Country", address: "Address" },
+    { name: "Name", country: "Country", address: "Address" },
+    { name: "Name", country: "Country", address: "Address" },
   ];
 
   return (

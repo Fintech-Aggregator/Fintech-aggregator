@@ -1,0 +1,65 @@
+/* .fullWidthLine {
+  border: none;
+  height: 0.3px;
+  background-color: #333;
+} */
+
+.mainFooter {
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  height: 200px;
+  margin: 0;
+  padding: 0;
+  gap: 60px;
+}
+
+
+.firstBlockFooter {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  margin: 50px;
+}
+
+.firstBlockImages {
+  display: flex;
+  gap: 40px;
+  margin: 10px;
+}
+.textRev,
+.linkReview {
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 100%;
+  letter-spacing: 0%;
+}
+
+.writeReviewBox {
+  border: 1px solid black;
+  width: 205px;
+  height: 60px;
+  border-radius: 20px;
+  text-align: center;
+  padding: 15px;
+}
+
+.secondBlockFooter {
+  display: flex;
+  gap: 80px;
+}
+
+.secondBlockText {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.styleText {
+  font-weight: 600;
+}
+.styleText2 {
+  color: #9F9F9F;
+}
