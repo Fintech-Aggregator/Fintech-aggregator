@@ -27,7 +27,9 @@
     "jsonwebtoken": "^9.0.2",
     "lucide-react": "^0.456.0",
     "next": "^15.1.4",
+    "prism-themes": "^1.9.0",
     "prisma": "^5.22.0",
+    "prismjs": "^1.29.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.54.2",
@@ -40,6 +42,7 @@
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^20",
+    "@types/prismjs": "^1.26.5",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "@types/selenium-webdriver": "^4.1.27",

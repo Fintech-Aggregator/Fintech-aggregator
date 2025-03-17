@@ -48,12 +48,17 @@ export const Header = ({ type }: HeaderProps) => {
                   Hong Kong
                 </span>
               </Link>
+              <Link href="/documentation">
+                <span className={cn("font-semibold", pathname === "documentation" && "text-primary", styles.pageName)}>
+                  Documentation
+                </span>
+              </Link>
             </div>
             <div className={cn("w-32", styles.secondBlockHeader)}>
               <Link href="/sign-up" id="launchModalBtn" className={styles.iconButton}>
                 <Image src="/images/user.png" alt="person" width={36} height={36} />
               </Link>
-              <Button onClick={logOut} variant={"ghost"} >
+              <Button onClick={logOut} variant={"ghost"}>
                 <Image src="/images/exit.svg" alt="exit" width={36} height={36} />
               </Button>
             </div>
