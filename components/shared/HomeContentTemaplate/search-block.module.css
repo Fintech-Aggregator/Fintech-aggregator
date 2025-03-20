@@ -88,7 +88,6 @@
 .tableContainer {
   width: 700px;
   display: grid;
-  /* grid-template-columns: 1fr; */
   border: 1px solid black;
   border-radius: 10px;
   overflow: hidden;
@@ -112,7 +111,6 @@
   gap: 5px;
   padding: 10px;
   text-align: center;
-  /* border-bottom: 1px solid #ddd; */
 }
 
 .row:last-child div {
@@ -132,7 +130,7 @@
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .IconAndInput {
-    width: ;
+    /* width: ; */
     justify-content: center;
     margin-right: 60px;
   }
@@ -154,7 +152,7 @@
   }
 }
 
-/* For large screens (min-width: 1025px) */
+
 @media (min-width: 1025px) {
   .IconAndInput {
     width: 700px;
@@ -179,6 +177,14 @@
   }
 }
 
-@media (min-width: 425px) and (max-width: 768px) {
-  
+@media (min-width: 450px) {
+  .searchInput {
+    width: 295px;
+  }
+  .IconAndInput {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 15px;
+  }
 }

@@ -19,9 +19,9 @@ export default function Content() {
             <h1>What exactly does our service do?</h1>
             
             <h2>
-            Our service enables users to efficiently<br/>
-            access accurate and up-to-date information<br/>
-            about fintech company licenses.
+              Our service empowers to quickly <br/>
+              find up-to-date information on <br/>
+              fintech company licenses 
             </h2>  
           </div>
           
@@ -36,16 +36,15 @@ export default function Content() {
       </div>
       
       <div className={styles.block2}>
-
         
         <div className={styles.text_overlay2}>
-        The project was completed by a team of 6 people with an average <br/>
+        The project was completed by a team of 6 people with an average
         of XX hours spent by each person. 
         </div>
         
       </div>
       
-      <div className={styles.text_between}>
+      <div className={styles.text_between1}>
       
       <div className={styles.containerImage1}>
       </div>
@@ -69,8 +68,8 @@ export default function Content() {
       
       <div className={styles.block3}>
         
-        <div className={styles.text_overlay2}>
-          We are a team of enthusiasts who strive to make financial information <br/>
+        <div className={styles.text_overlay3}>
+          We are a team of enthusiasts who strive to make financial information
           more accessible, transparent and user-friendly.
         </div>
         
