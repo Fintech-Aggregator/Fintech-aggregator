@@ -4,7 +4,7 @@ import SearchBar from "@/src/components/shared/HomeContentTemaplate/search-bar";
 import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
 import { TableSkeleton } from "@/src/components/shared/TablesExpanded/TableSkeleton";
-import styles from "./hong-kong-list.module.css";
+import styles from "../all-tables-style.module.css";
 
 interface Props {
   id: number;
@@ -116,10 +116,10 @@ const HongKong: React.FC = () => {
         />
       </div>
       {loading ? (
-        <TableSkeleton lables={["licenseName", "adress", "adressType"]} />
+        <TableSkeleton lables={["LicenseName", "Adress", "AdressType"]} />
       ) : (
         <Table
-          lables={["licenseName", "adress", "adressType"]}
+          lables={["LicenseName", "Adress", "AdressType"]}
           tableData={filteredData}
           rowsPerPage={rowsPerPage}
           currentPage={currentPage}

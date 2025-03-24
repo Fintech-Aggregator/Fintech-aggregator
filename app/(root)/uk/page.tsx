@@ -4,7 +4,7 @@ import SearchBar from "@/src/components/shared/HomeContentTemaplate/search-bar";
 import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
 import { TableSkeleton } from "@/src/components/shared/TablesExpanded/TableSkeleton";
-import styles from "@/app/(root)/hong-kong/hong-kong-list.module.css";
+import styles from "../all-tables-style.module.css";
 
 interface RowProps {
   licenseName: string;
