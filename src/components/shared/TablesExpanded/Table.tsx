@@ -13,6 +13,7 @@ interface RowProps {
 }
 
 interface Props {
+  lables: string[];
   tableData: RowProps[];
   rowsPerPage?: number;
   currentPage?: number;
@@ -24,6 +25,7 @@ interface Props {
 }
 
 export const Table: React.FC<Props> = ({
+  lables,
   tableData,
   rowsPerPage = 10,
   currentPage: externalPage,
@@ -87,6 +89,7 @@ export const Table: React.FC<Props> = ({
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <TableHeader
+            lables={lables}
             onFilterByLicenseName={onFilterByLicenseName}
             onFilterByAdress={onFilterByAdress}
             addressTypes={addressTypes}
@@ -94,12 +97,21 @@ export const Table: React.FC<Props> = ({
           />
           <tbody>
             {currentData.map((data: any) =>
-              pathname === "/uk" ? (
+              lables[0] === "EmoneyStatusEffectiveDate" ? (
                 <TableContent
                   key={data.FRN}
                   address={data.FirmName}
                   addressType={data.EmoneyRegisterStatus}
                   licenseName={data.EmoneyStatusEffectiveDate}
+                  selectedRows={selectedRows}
+                  toggleRowSelection={toggleRowSelection}
+                />
+              ) : lables[0] === "PSDStatusEffectiveDate" ? (
+                <TableContent
+                  key={data.FRN}
+                  address={data.FirmName}
+                  addressType={data.PSDFirmStatus}
+                  licenseName={data.PSDStatusEffectiveDate}
                   selectedRows={selectedRows}
                   toggleRowSelection={toggleRowSelection}
                 />

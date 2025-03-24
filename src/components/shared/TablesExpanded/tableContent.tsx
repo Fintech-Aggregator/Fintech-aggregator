@@ -18,11 +18,17 @@ export const TableContent: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <tr className={className}>
-      <td className="font-medium" style={{ width: "294px" }}>
+    <tr>
+      <td
+        className="font-medium"
+        style={{ width: "294px", paddingLeft: "25px" }}
+      >
         {licenseName}
       </td>
-      <td className="font-medium" style={{ width: "375px" }}>
+      <td
+        className="font-medium"
+        style={{ width: "375px", paddingLeft: "25px" }}
+      >
         {address}
       </td>
       <td className="font-medium text-base" style={{ width: "125px" }}>

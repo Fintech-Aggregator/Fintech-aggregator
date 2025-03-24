@@ -116,9 +116,10 @@ const HongKong: React.FC = () => {
         />
       </div>
       {loading ? (
-        <TableSkeleton />
+        <TableSkeleton lables={["licenseName", "adress", "adressType"]} />
       ) : (
         <Table
+          lables={["licenseName", "adress", "adressType"]}
           tableData={filteredData}
           rowsPerPage={rowsPerPage}
           currentPage={currentPage}

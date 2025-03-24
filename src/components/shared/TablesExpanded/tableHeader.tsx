@@ -3,22 +3,24 @@ import styles from "./table.module.css";
 import SearchBar from "../HomeContentTemaplate/search-bar";
 import SelectField from "../../ui/selectField";
 import Image from "next/image";
-import { usePathname } from "next/navigation"; // Додано usePathname для отримання шляху
+import { usePathname } from "next/navigation";
 
 interface TableHeaderProps {
-  onFilterByLicenseName: (name: string) => void;
-  onFilterByAdress: (name: string) => void;
-  addressTypes: string[];
-  onFilterByAddressType: (addressType: string) => void;
+  lables: string[];
+  onFilterByLicenseName?: (name: string) => void;
+  onFilterByAdress?: (name: string) => void;
+  addressTypes?: string[];
+  onFilterByAddressType?: (addressType: string) => void;
 }
 
 const TableHeader: React.FC<TableHeaderProps> = ({
+  lables,
   onFilterByLicenseName,
   onFilterByAdress,
   addressTypes,
   onFilterByAddressType,
 }) => {
-  const pathname = usePathname(); // Отримуємо шлях
+  const pathname = usePathname();
 
   const truncateText = (text: string, maxLength: number) => {
     return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
@@ -26,28 +28,26 @@ const TableHeader: React.FC<TableHeaderProps> = ({
 
   const handleLicenseNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    onFilterByLicenseName(value);
+    onFilterByLicenseName!(value);
   };
 
   const handleAdressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    onFilterByAdress(value);
+    onFilterByAdress!(value);
   };
 
   const handleAddressTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
-    onFilterByAddressType(value);
+    onFilterByAddressType!(value);
   };
-
+  console.log(lables?.[0]);
   return (
     <thead className={styles.tableHeader}>
       <tr>
         <th>
           <div>
             <div className={styles.addIcon}>
-              <p className="font-semibold">
-                {pathname === "/uk" ? "FirmName" : "Name of Licensee"}
-              </p>
+              <p className="font-semibold">{lables?.[0]}</p>
               <Image
                 className="ml-1"
                 src="/images/chevron.svg"
@@ -75,9 +75,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
         <th>
           <div>
             <div className={styles.addIcon}>
-              <p className="font-semibold">
-                {pathname === "/uk" ? "EmoneyRegisterStatus" : "Address"}{" "}
-              </p>
+              <p className="font-semibold">{lables?.[1]}</p>
               <Image
                 className="ml-1"
                 src="/images/chevron.svg"
@@ -105,9 +103,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
         <th>
           <div className={styles.content}>
             <div className={styles.addIcon}>
-              <p className="font-semibold">
-                {pathname === "/uk" ? "EmoneyStatusDate" : "Address Type"}
-              </p>
+              <p className="font-semibold">{lables?.[2]}</p>
               <Image
                 className="ml-1"
                 src="/images/chevron.svg"
@@ -118,7 +114,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             </div>
             <div className="relative">
               <Image
-                className="absolute top-2.5 left-32"
+                className="absolute top-2.5 left-40"
                 src="/images/vector.svg"
                 alt="Vector"
                 width={10}
