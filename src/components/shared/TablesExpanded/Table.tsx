@@ -7,6 +7,7 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 interface RowProps {
+  id: number;
   licenseName: string;
   address: string;
   addressType: string;
@@ -131,47 +132,55 @@ export const Table: React.FC<Props> = ({
 
         <div className={styles.mobileTable}>
           {currentData.map((data: any) => {
-            const isUk = pathname === "/uk";
-            const isHongKong = pathname === "/hong-kong";
-            const key = isHongKong ? data.id : data.FRN;
-
+            let id =
+              lables[0] === "EmoneyStatusEffectiveDate" ? data.FRN : data.id;
             return (
-              <div key={key} className={styles.mobileRow}>
+              <div key={id} className={styles.mobileRow}>
                 <div
                   className={styles.rowHeader}
-                  onClick={() => toggleRowExpansion(data.FRN)}
+                  onClick={() => toggleRowExpansion(id)}
                 >
-                  <span>{data.licenseName}</span>
+                  <span>
+                    {id === data.FRN ? data.FirmName : data.licenseName}
+                  </span>
                   <button className={styles.expandButton}>
-                    {expandedRow === data.FRN ? "-" : "+"}
+                    {expandedRow === id ? "-" : "+"}
                   </button>
                 </div>
-                {expandedRow === data.FRN && (
+                {expandedRow === id && (
                   <div className={styles.rowDetails}>
-                    {isUk ? (
-                      <>
-                        <p>
-                          <strong>Address:</strong> {data.FirmName}
-                        </p>
-                        <p>
-                          <strong>Address Type:</strong>{" "}
-                          {data.EmoneyRegisterStatus}
-                        </p>
-                      </>
-                    ) : isHongKong ? (
-                      <>
-                        <p>
-                          <strong>Address:</strong> {data.address}
-                        </p>
-                        <p>
-                          <strong>License Name:</strong> {data.licenseName}
-                        </p>
-                        <p>
-                          <strong>Address Type:</strong> {data.addressType}
-                        </p>
-                      </>
+                    {id === data.FRN ? (
+                      lables[0] === "EmoneyStatusEffectiveDate" ? (
+                        <>
+                          <p>
+                            <strong>{lables[0]}:</strong>{" "}
+                            {data.EmoneyStatusEffectiveDate}
+                          </p>
+                          <p>
+                            <strong>{lables[2]}:</strong>{" "}
+                            {data.EmoneyRegisterStatus}
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p>
+                            <strong>{lables[0]}:</strong>{" "}
+                            {data.PSDStatusEffectiveDate}
+                          </p>
+                          <p>
+                            <strong>{lables[2]}:</strong> {data.PSDFirmStatus}
+                          </p>
+                        </>
+                      )
                     ) : (
-                      <p>Invalid path</p>
+                      <>
+                        <p>
+                          <strong>{lables[0]}:</strong> {data.address}
+                        </p>
+                        <p>
+                          <strong>{lables[2]}:</strong> {data.addressType}
+                        </p>
+                      </>
                     )}
                   </div>
                 )}

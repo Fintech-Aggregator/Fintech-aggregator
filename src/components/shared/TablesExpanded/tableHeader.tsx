@@ -58,7 +58,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             </div>
             <div className={styles.addIcon}>
               <input
-                className={`${styles.stylesForInput} ${styles.licenseeLength}`}
+                className={`${styles.stylesForInput}`}
                 type="text"
                 onChange={handleLicenseNameChange}
               />
@@ -112,14 +112,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 height={10}
               />
             </div>
-            <div className="relative">
-              <Image
-                className="absolute top-2.5 left-40"
-                src="/images/vector.svg"
-                alt="Vector"
-                width={10}
-                height={10}
-              />
+            <div className={styles.addIcon}>
               <select
                 className={styles.stylesForInput}
                 style={{ appearance: "none" }}
@@ -140,6 +133,13 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                   <option value=""></option>
                 )}
               </select>
+              <Image
+                className={styles.searchIcon}
+                src="/images/vector.svg"
+                alt="Vector"
+                width={10}
+                height={10}
+              />
             </div>
           </div>
         </th>
