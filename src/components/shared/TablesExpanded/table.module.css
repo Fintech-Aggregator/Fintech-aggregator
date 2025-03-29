@@ -54,6 +54,13 @@
   position: relative;
   background-color: #fff;
 }
+@media (max-width: 1000px) {
+  .container {
+    width: 100px;
+    height: 30px;
+    margin-left: 220px;
+  }
+}
 .customCheckbox {
   appearance: none;
   width: 15px;
