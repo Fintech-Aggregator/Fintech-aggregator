@@ -4,7 +4,7 @@ import SearchBar from "@/src/components/shared/HomeContentTemaplate/search-bar";
 import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
 import { TableSkeleton } from "@/src/components/shared/TablesExpanded/TableSkeleton";
-import styles from "./hong-kong-list.module.css";
+import styles from "../all-tables-style.module.css";
 
 interface Props {
   id: number;
@@ -56,10 +56,6 @@ const HongKong: React.FC = () => {
         );
       }
 
-      if (filters.id !== null) {
-        filtered = filtered.filter((item) => item.id === filters.id);
-      }
-
       if (filters.licenseName) {
         filtered = filtered.filter((item) =>
           item.licenseName
@@ -81,16 +77,11 @@ const HongKong: React.FC = () => {
     };
 
     applyFilters();
-  }, [filters, hongKongData]);
+  }, [filters]);
 
   const handleSearch = (term: string) => {
     setFilters((prev) => ({ ...prev, searchTerm: term }));
   };
-
-  const handleFilterById = (id: number | null) => {
-    setFilters((prev) => ({ ...prev, id }));
-  };
-
   const handleFilterByLicenseName = (name: string) => {
     setFilters((prev) => ({ ...prev, licenseName: name }));
   };
@@ -117,7 +108,7 @@ const HongKong: React.FC = () => {
   return (
     <div>
       <div className={styles.mains}>
-        <SearchBar size="medium" onSearch={(value) => handleSearch(value)} />
+        <SearchBar onSearch={(value) => handleSearch(value)} />
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
@@ -125,14 +116,14 @@ const HongKong: React.FC = () => {
         />
       </div>
       {loading ? (
-        <TableSkeleton />
+        <TableSkeleton lables={["LicenseName", "Adress", "AdressType"]} />
       ) : (
         <Table
+          lables={["LicenseName", "Adress", "AdressType"]}
           tableData={filteredData}
           rowsPerPage={rowsPerPage}
           currentPage={currentPage}
-          onPageChange={handlePageChange} // Передаємо колбек для синхронізації сторінки
-          onFilterById={handleFilterById}
+          onPageChange={handlePageChange}
           onFilterByLicenseName={handleFilterByLicenseName}
           onFilterByAdress={handleFilterByAdress}
           addressTypes={getUniqueAddressTypes()}

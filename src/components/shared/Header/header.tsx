@@ -22,7 +22,14 @@ export const Header = ({ type }: HeaderProps) => {
           <>
             <div className={styles.firstBlockHeader}>
               <Link href="/">
-                <Image className={styles.logo} src="/images/logo.svg" alt="logo" width={100} height={100} priority />
+                <Image
+                  className={styles.logo}
+                  src="/images/logo.svg"
+                  alt="logo"
+                  width={100}
+                  height={100}
+                  priority
+                />
               </Link>
             </div>
             <div className={styles.secondBlockHeader}>
@@ -38,14 +45,45 @@ export const Header = ({ type }: HeaderProps) => {
           <>
             <div className={styles.firstBlockHeader}>
               <Link href="/">
-                <Image className={styles.logo} src="/images/logo.svg" alt="logo" width={100} height={100} />
+                <Image
+                  className={styles.logo}
+                  src="/images/logo.svg"
+                  alt="logo"
+                  width={100}
+                  height={100}
+                />
               </Link>
               <Link href="/">
-                <span className={cn("font-semibold", pathname === "" && "text-primary", styles.userName)}>Home</span>
+                <span
+                  className={cn(
+                    "font-semibold",
+                    pathname === "" && "text-primary",
+                    styles.userName
+                  )}
+                >
+                  Home
+                </span>
               </Link>
               <Link href="/hong-kong">
-                <span className={cn("font-semibold", pathname === "hong-kong" && "text-primary", styles.pageName)}>
+                <span
+                  className={cn(
+                    "font-semibold",
+                    pathname === "hong-kong" && "text-primary",
+                    styles.pageName
+                  )}
+                >
                   Hong Kong
+                </span>
+              </Link>
+              <Link href="/uk">
+                <span
+                  className={cn(
+                    "font-semibold",
+                    pathname === "uk" && "text-primary",
+                    styles.pageName
+                  )}
+                >
+                  UK
                 </span>
               </Link>
               <Link href="/documentation">
@@ -55,11 +93,27 @@ export const Header = ({ type }: HeaderProps) => {
               </Link>
             </div>
             <div className={cn("w-32", styles.secondBlockHeader)}>
-              <Link href="/sign-up" id="launchModalBtn" className={styles.iconButton}>
-                <Image src="/images/user.png" alt="person" width={36} height={36} />
+              <Link
+                href="/sign-up"
+                id="launchModalBtn"
+                className={styles.iconButton}
+              >
+                <Image
+                  src="/images/user.png"
+                  alt="person"
+                  width={36}
+                  height={36}
+                />
               </Link>
               <Button onClick={logOut} variant={"ghost"}>
                 <Image src="/images/exit.svg" alt="exit" width={36} height={36} />
+              <Button onClick={logOut} variant={"ghost"}>
+                <Image
+                  src="/images/exit.svg"
+                  alt="exit"
+                  width={36}
+                  height={36}
+                />
               </Button>
             </div>
           </>

@@ -12,10 +12,16 @@
   width: 30px;
   padding-left: 2px;
 }
+.content {
+  text-align: center;
+}
+.centeralization {
+  text-align: center;
+}
 .stylesForInput {
   align-items: center;
   height: 25px;
-  width: 150px;
+  width: 200px;
   border: none;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
@@ -48,6 +54,13 @@
   position: relative;
   background-color: #fff;
 }
+@media (max-width: 1000px) {
+  .container {
+    width: 100px;
+    height: 30px;
+    margin-left: 220px;
+  }
+}
 .customCheckbox {
   appearance: none;
   width: 15px;
@@ -78,9 +91,7 @@
   opacity: 0;
   cursor: pointer;
 }
-.licenseeLength {
-  width: 190px;
-}
+
 .tableContainer {
   width: 967px;
   overflow: auto;

@@ -1,8 +1,10 @@
+"use client";
 import React, { useState } from "react";
 import styles from "./table.module.css";
 import TableHeader from "./tableHeader";
 import { TableContent } from "./tableContent";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 
 interface RowProps {
   id: number;
@@ -12,11 +14,11 @@ interface RowProps {
 }
 
 interface Props {
+  lables: string[];
   tableData: RowProps[];
   rowsPerPage?: number;
   currentPage?: number;
   onPageChange?: (page: number) => void;
-  onFilterById: (id: number | null) => void;
   onFilterByLicenseName: (name: string) => void;
   onFilterByAdress: (name: string) => void;
   addressTypes: string[];
@@ -24,6 +26,7 @@ interface Props {
 }
 
 export const Table: React.FC<Props> = ({
+  lables,
   tableData,
   rowsPerPage = 10,
   currentPage: externalPage,
@@ -38,6 +41,8 @@ export const Table: React.FC<Props> = ({
   const [expandedRow, setExpandedRow] = useState<number | null>(null);
 
   const currentPage = externalPage !== undefined ? externalPage : localPage;
+
+  const pathname = usePathname();
 
   const handlePageChange = (newPage: number) => {
     if (onPageChange) {
@@ -85,53 +90,103 @@ export const Table: React.FC<Props> = ({
       <div className={styles.tableContainer}>
         <table className={styles.table}>
           <TableHeader
+            lables={lables}
             onFilterByLicenseName={onFilterByLicenseName}
             onFilterByAdress={onFilterByAdress}
             addressTypes={addressTypes}
             onFilterByAddressType={onFilterByAddressType}
           />
           <tbody>
-            {currentData.map((data) => (
-              <TableContent
-                key={data.id}
-                id={data.id}
-                address={data.address}
-                addressType={data.addressType}
-                licenseName={data.licenseName}
-                selectedRows={selectedRows}
-                toggleRowSelection={toggleRowSelection}
-              />
-            ))}
+            {currentData.map((data: any) =>
+              lables[0] === "EmoneyStatusEffectiveDate" ? (
+                <TableContent
+                  key={data.FRN}
+                  address={data.FirmName}
+                  addressType={data.EmoneyRegisterStatus}
+                  licenseName={data.EmoneyStatusEffectiveDate}
+                  selectedRows={selectedRows}
+                  toggleRowSelection={toggleRowSelection}
+                />
+              ) : lables[0] === "PSDStatusEffectiveDate" ? (
+                <TableContent
+                  key={data.FRN}
+                  address={data.FirmName}
+                  addressType={data.PSDFirmStatus}
+                  licenseName={data.PSDStatusEffectiveDate}
+                  selectedRows={selectedRows}
+                  toggleRowSelection={toggleRowSelection}
+                />
+              ) : (
+                <TableContent
+                  key={data.id}
+                  address={data.address}
+                  addressType={data.addressType}
+                  licenseName={data.licenseName}
+                  selectedRows={selectedRows}
+                  toggleRowSelection={toggleRowSelection}
+                />
+              )
+            )}
           </tbody>
         </table>
 
         <div className={styles.mobileTable}>
-          {currentData.map((data) => (
-            <div key={data.id} className={styles.mobileRow}>
-              <div
-                className={styles.rowHeader}
-                onClick={() => toggleRowExpansion(data.id)}
-              >
-                <span>{data.licenseName}</span>
-                <button className={styles.expandButton}>
-                  {expandedRow === data.id ? "-" : "+"}
-                </button>
-              </div>
-              {expandedRow === data.id && (
-                <div className={styles.rowDetails}>
-                  <p>
-                    <strong>ID:</strong> {data.id}
-                  </p>
-                  <p>
-                    <strong>Address:</strong> {data.address}
-                  </p>
-                  <p>
-                    <strong>Address Type:</strong> {data.addressType}
-                  </p>
+          {currentData.map((data: any) => {
+            let id =
+              lables[0] === "EmoneyStatusEffectiveDate" ? data.FRN : data.id;
+            return (
+              <div key={id} className={styles.mobileRow}>
+                <div
+                  className={styles.rowHeader}
+                  onClick={() => toggleRowExpansion(id)}
+                >
+                  <span>
+                    {id === data.FRN ? data.FirmName : data.licenseName}
+                  </span>
+                  <button className={styles.expandButton}>
+                    {expandedRow === id ? "-" : "+"}
+                  </button>
                 </div>
-              )}
-            </div>
-          ))}
+                {expandedRow === id && (
+                  <div className={styles.rowDetails}>
+                    {id === data.FRN ? (
+                      lables[0] === "EmoneyStatusEffectiveDate" ? (
+                        <>
+                          <p>
+                            <strong>{lables[0]}:</strong>{" "}
+                            {data.EmoneyStatusEffectiveDate}
+                          </p>
+                          <p>
+                            <strong>{lables[2]}:</strong>{" "}
+                            {data.EmoneyRegisterStatus}
+                          </p>
+                        </>
+                      ) : (
+                        <>
+                          <p>
+                            <strong>{lables[0]}:</strong>{" "}
+                            {data.PSDStatusEffectiveDate}
+                          </p>
+                          <p>
+                            <strong>{lables[2]}:</strong> {data.PSDFirmStatus}
+                          </p>
+                        </>
+                      )
+                    ) : (
+                      <>
+                        <p>
+                          <strong>{lables[0]}:</strong> {data.address}
+                        </p>
+                        <p>
+                          <strong>{lables[2]}:</strong> {data.addressType}
+                        </p>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className={styles.pagination}>
@@ -140,7 +195,12 @@ export const Table: React.FC<Props> = ({
           disabled={currentPage === 0}
           className={styles.paginationButton}
         >
-          <Image src="/images/left-arrow.svg" alt="Vector" width={16} height={16} />
+          <Image
+            src="/images/left-arrow.svg"
+            alt="Vector"
+            width={16}
+            height={16}
+          />
         </button>
         <span>
           Сторінка {currentPage + 1} із{" "}
@@ -151,7 +211,12 @@ export const Table: React.FC<Props> = ({
           disabled={(currentPage + 1) * rowsPerPage >= tableData.length}
           className={styles.paginationButton}
         >
-          <Image src="/images/right-arrow.svg" alt="right-arrow" width={16} height={16} />
+          <Image
+            src="/images/right-arrow.svg"
+            alt="right-arrow"
+            width={16}
+            height={16}
+          />
         </button>
       </div>
     </div>
