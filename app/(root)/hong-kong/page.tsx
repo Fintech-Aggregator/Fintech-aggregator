@@ -108,7 +108,7 @@ const HongKong: React.FC = () => {
   return (
     <div>
       <div className={styles.mains}>
-        <SearchBar size="medium" onSearch={(value) => handleSearch(value)} />
+        <SearchBar onSearch={(value) => handleSearch(value)} />
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}
