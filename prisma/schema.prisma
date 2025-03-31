@@ -19,24 +19,27 @@ model User {
 }
 
 model HongKong {
-  id          Int    @id @default(autoincrement())
-  licenseName String
-  address     String
-  addressType String
+    id Int @id @default(autoincrement())
+    licenseName String
+    address String
+    addressType String
+    lastUpdatedDate DateTime
 }
 
 model EMoneyFirms {
-  FRN                       Int    @id
-  FirmName                  String
-  EmoneyRegisterStatus      String
-  EmoneyStatusEffectiveDate String
+    FRN Int @id
+    FirmName String
+    EmoneyRegisterStatus String
+    EmoneyStatusEffectiveDate String
+    lastUpdatedDate DateTime
 }
 
 model FirmPSDPermission {
-  FRN                    Int    @id
-  FirmName               String
-  PSDFirmStatus          String
-  PSDStatusEffectiveDate String
+    FRN Int @id
+    FirmName String
+    PSDFirmStatus String
+    PSDStatusEffectiveDate String
+    lastUpdatedDate DateTime
 }
 
 model Lithuania {
@@ -48,6 +51,7 @@ model Lithuania {
     Date String
     LicenceLink String
     CompanyLink String
+    lastUpdatedDate DateTime
 }
 
 enum UserRole {
