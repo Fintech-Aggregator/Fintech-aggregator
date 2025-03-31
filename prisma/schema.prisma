@@ -52,7 +52,6 @@ model Lithuania {
     LicenceLink String
     CompanyLink String
     lastUpdatedDate DateTime
-    lastUpdatedDate DateTime
 }
 
 enum UserRole {
