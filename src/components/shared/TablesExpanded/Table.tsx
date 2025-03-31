@@ -115,12 +115,21 @@ export const Table: React.FC<Props> = ({
                   selectedRows={selectedRows}
                   toggleRowSelection={toggleRowSelection}
                 />
-              ) : (
+              ) : lables[0] === "LicenseName" ? (
                 <TableContent
                   key={data.id}
                   address={data.address}
                   addressType={data.addressType}
                   licenseName={data.licenseName}
+                  selectedRows={selectedRows}
+                  toggleRowSelection={toggleRowSelection}
+                />
+              ) : (
+                <TableContent
+                  key={data.id}
+                  address={data.FirmName}
+                  addressType={data.Address}
+                  licenseName={data.Licence}
                   selectedRows={selectedRows}
                   toggleRowSelection={toggleRowSelection}
                 />
