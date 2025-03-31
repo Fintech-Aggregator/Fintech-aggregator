@@ -40,21 +40,7 @@ const Lithuania: React.FC = () => {
 
     fetchData();
   }, []);
-  return (
-    <div>
-      Hello Lithuania
-      <Table
-        lables={["Licence", "FirmName", "Address"]}
-        tableData={filteredData}
-        rowsPerPage={rowsPerPage}
-        currentPage={currentPage}
-        onPageChange={() => {}}
-        onFilterByLicenseName={() => {}}
-        onFilterByAdress={() => {}}
-        addressTypes={[]}
-        onFilterByAddressType={() => {}}
-      />
-    </div>
-  );
+  console.log(LithuaniaData);
+  return <div></div>;
 };
 export default Lithuania;

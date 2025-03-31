@@ -86,6 +86,17 @@ export const Header = ({ type }: HeaderProps) => {
                   UK
                 </span>
               </Link>
+              <Link href="/lithuania">
+                <span
+                  className={cn(
+                    "font-semibold",
+                    pathname === "lithuania" && "text-primary",
+                    styles.pageName
+                  )}
+                >
+                  Lithuania
+                </span>
+              </Link>
             </div>
             <div className={cn("w-32", styles.secondBlockHeader)}>
               <Link
