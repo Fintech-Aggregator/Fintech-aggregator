@@ -16,6 +16,7 @@ interface Props1 {
   EmoneyStatusEffectiveDate: string;
   FirmName: string;
   EmoneyRegisterStatus: string;
+  lastUpdatedDate: string;
 }
 interface Props2 {
   FRN: number;
@@ -173,7 +174,9 @@ const UkTable: React.FC = () => {
   const handleFilterByEmoneyRegisterStatus = (addressType: string) => {
     setFilters1((prev) => ({ ...prev, EmoneyRegisterStatus: addressType }));
   };
-
+  const handleFilterByPSDStatusEffectiveDate = (name: string) => {
+    setFilters2((prev) => ({ ...prev, PSDStatusEffectiveDate: name }));
+  };
   const handleFilterByFirmName2 = (name: string) => {
     setFilters2((prev) => ({ ...prev, FirmName: name }));
   };
@@ -271,6 +274,7 @@ const UkTable: React.FC = () => {
           <Table
             lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]}
             tableData={filteredData2.map((data) => ({
+              FRN: data.FRN,
               PSDFirmStatus: data.PSDFirmStatus,
               PSDStatusEffectiveDate:
                 data.PSDStatusEffectiveDate === ""
@@ -281,11 +285,16 @@ const UkTable: React.FC = () => {
             rowsPerPage={rowsPerPage}
             currentPage={currentPage2}
             onPageChange={handlePageChange2}
-            onFilterByLicenseName={handleFilterByEmoneyStatusEffectiveDate}
+            onFilterByLicenseName={handleFilterByPSDStatusEffectiveDate}
             onFilterByAdress={handleFilterByFirmName2}
             addressTypes={getUniqueAddressTypes2()}
             onFilterByAddressType={handleFilterByPSDFirmStatus}
           />
+          <div className="relative mb-2 flex justify-center items-center">
+            <div className="text-lg">
+              Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}
+            </div>
+          </div>
         </>
       )}
     </div>

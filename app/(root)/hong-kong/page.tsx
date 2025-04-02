@@ -11,6 +11,7 @@ interface Props {
   licenseName: string;
   address: string;
   addressType: string;
+  lastUpdatedDate: string;
 }
 
 const HongKong: React.FC = () => {
@@ -118,17 +119,24 @@ const HongKong: React.FC = () => {
       {loading ? (
         <TableSkeleton lables={["LicenseName", "Adress", "AdressType"]} />
       ) : (
-        <Table
-          lables={["LicenseName", "Adress", "AdressType"]}
-          tableData={filteredData}
-          rowsPerPage={rowsPerPage}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-          onFilterByLicenseName={handleFilterByLicenseName}
-          onFilterByAdress={handleFilterByAdress}
-          addressTypes={getUniqueAddressTypes()}
-          onFilterByAddressType={handleFilterByAddressType}
-        />
+        <>
+          <Table
+            lables={["LicenseName", "Adress", "AdressType"]}
+            tableData={filteredData}
+            rowsPerPage={rowsPerPage}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+            onFilterByLicenseName={handleFilterByLicenseName}
+            onFilterByAdress={handleFilterByAdress}
+            addressTypes={getUniqueAddressTypes()}
+            onFilterByAddressType={handleFilterByAddressType}
+          />
+          <div className="relative mb-2 flex justify-center items-center">
+            <div className="text-lg">
+              Last Update: {hongKongData[0].lastUpdatedDate.slice(0, 10)}
+            </div>
+          </div>
+        </>
       )}
     </div>
   );

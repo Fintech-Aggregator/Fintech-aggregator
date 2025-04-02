@@ -129,8 +129,8 @@ export const Table: React.FC<Props> = ({
                 <TableContent
                   key={data.id}
                   address={data.FirmName}
-                  addressType={data.Address}
-                  licenseName={data.Licence}
+                  addressType={data.Licence}
+                  licenseName={data.Address}
                   selectedRows={selectedRows}
                   toggleRowSelection={toggleRowSelection}
                 />
@@ -142,7 +142,11 @@ export const Table: React.FC<Props> = ({
         <div className={styles.mobileTable}>
           {currentData.map((data: any) => {
             let id =
-              lables[0] === "EmoneyStatusEffectiveDate" ? data.FRN : data.id;
+              lables[0] === "EmoneyStatusEffectiveDate"
+                ? data.FRN
+                : lables[0] === "PSDStatusEffectiveDate"
+                ? data.FRN
+                : data.id;
             return (
               <div key={id} className={styles.mobileRow}>
                 <div
@@ -150,7 +154,11 @@ export const Table: React.FC<Props> = ({
                   onClick={() => toggleRowExpansion(id)}
                 >
                   <span>
-                    {id === data.FRN ? data.FirmName : data.licenseName}
+                    {id === data.FRN
+                      ? data.FirmName
+                      : lables[0] === "LicenseName"
+                      ? data.licenseName
+                      : data.FirmName}
                   </span>
                   <button className={styles.expandButton}>
                     {expandedRow === id ? "-" : "+"}
@@ -162,18 +170,18 @@ export const Table: React.FC<Props> = ({
                       lables[0] === "EmoneyStatusEffectiveDate" ? (
                         <>
                           <p>
-                            <strong>{lables[0]}:</strong>{" "}
+                            <strong>{lables[0]}:</strong>
                             {data.EmoneyStatusEffectiveDate}
                           </p>
                           <p>
-                            <strong>{lables[2]}:</strong>{" "}
+                            <strong>{lables[2]}:</strong>
                             {data.EmoneyRegisterStatus}
                           </p>
                         </>
                       ) : (
                         <>
                           <p>
-                            <strong>{lables[0]}:</strong>{" "}
+                            <strong>{lables[0]}:</strong>
                             {data.PSDStatusEffectiveDate}
                           </p>
                           <p>
@@ -181,13 +189,22 @@ export const Table: React.FC<Props> = ({
                           </p>
                         </>
                       )
-                    ) : (
+                    ) : lables[0] === "LicenseName" ? (
                       <>
                         <p>
                           <strong>{lables[0]}:</strong> {data.address}
                         </p>
                         <p>
                           <strong>{lables[2]}:</strong> {data.addressType}
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <p>
+                          <strong>{lables[0]}:</strong> {data.Address}
+                        </p>
+                        <p>
+                          <strong>{lables[2]}:</strong> {data.Licence}
                         </p>
                       </>
                     )}

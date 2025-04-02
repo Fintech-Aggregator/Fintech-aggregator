@@ -8,9 +8,9 @@ import styles from "../all-tables-style.module.css";
 
 interface Props {
   id: number;
-  Licence: string;
-  FirmName: string;
   Address: string;
+  FirmName: string;
+  Licence: string;
   lastUpdatedDate: string;
 }
 const Lithuania: React.FC = () => {
@@ -20,9 +20,9 @@ const Lithuania: React.FC = () => {
   const [filters, setFilters] = useState({
     searchTerm: "",
     id: null as number | null,
-    Licence: "",
-    FirmName: "",
     Address: "",
+    FirmName: "",
+    Licence: "",
   });
   const [currentPage, setCurrentPage] = useState(0);
   const rowsPerPage = 10;
@@ -43,16 +43,97 @@ const Lithuania: React.FC = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    const applyFilters = () => {
+      let filtered = LithuaniaData;
+
+      if (filters.searchTerm) {
+        filtered = filtered.filter((item) =>
+          Object.values(item).some((value) =>
+            String(value)
+              .toLowerCase()
+              .includes(filters.searchTerm.toLowerCase())
+          )
+        );
+      }
+
+      if (filters.Address) {
+        filtered = filtered.filter((item) =>
+          item.Address.toLowerCase().includes(filters.Address.toLowerCase())
+        );
+      }
+      if (filters.FirmName) {
+        filtered = filtered.filter((item) =>
+          item.FirmName.toLowerCase().includes(filters.FirmName.toLowerCase())
+        );
+      }
+      if (filters.Licence && filters.Licence !== "") {
+        filtered = filtered.filter((item) => item.Licence === filters.Licence);
+      }
+      setFilteredData(filtered);
+    };
+
+    applyFilters();
+  }, [filters]);
+
+  const handleSearch = (term: string) => {
+    setFilters((prev) => ({ ...prev, searchTerm: term }));
+  };
+  const handleFilterByAdress = (name: string) => {
+    setFilters((prev) => ({ ...prev, Address: name }));
+  };
+
+  const handleFilterByFirmName = (name: string) => {
+    setFilters((prev) => ({ ...prev, FirmName: name }));
+  };
+
+  const handleFilterByLicence = (Licence: string) => {
+    setFilters((prev) => ({ ...prev, Licence }));
+  };
+
+  const getUniqueLicence = () => {
+    const uniqueTypes = Array.from(
+      new Set(LithuaniaData.map((item) => item.Licence))
+    );
+    return uniqueTypes;
+  };
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
   return (
     <div>
-      <div>{LithuaniaData[0]?.lastUpdatedDate}</div>
-      {LithuaniaData.map((data) => (
-        <div className="mb-8" key={data.id}>
-          {data.FirmName}
-          {data.Address}
-          {data.Licence}
-        </div>
-      ))}
+      <div className={styles.mains}>
+        <SearchBar onSearch={(value) => handleSearch(value)} />
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={handlePageChange}
+        />
+      </div>
+      {loading ? (
+        <TableSkeleton lables={["Adress", "FirmName", "Licence"]} />
+      ) : (
+        <>
+          <Table
+            lables={["Adress", "FirmName", "Licence"]}
+            tableData={filteredData}
+            rowsPerPage={rowsPerPage}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+            onFilterByLicenseName={handleFilterByAdress}
+            onFilterByAdress={handleFilterByFirmName}
+            addressTypes={getUniqueLicence()}
+            onFilterByAddressType={handleFilterByLicence}
+          />
+          <div className="relative mb-2 flex justify-center items-center">
+            <div className="text-lg">
+              Last Update: {LithuaniaData[0].lastUpdatedDate.slice(0, 10)}
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
