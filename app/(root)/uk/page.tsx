@@ -12,11 +12,13 @@ interface RowProps {
   addressType: string;
 }
 interface Props1 {
+  FRN: number;
   EmoneyStatusEffectiveDate: string;
   FirmName: string;
   EmoneyRegisterStatus: string;
 }
 interface Props2 {
+  FRN: number;
   PSDStatusEffectiveDate: string;
   FirmName: string;
   PSDFirmStatus: string;
@@ -207,10 +209,7 @@ const UkTable: React.FC = () => {
       {loading1 && loading2 ? (
         <>
           <div className={styles.mains}>
-            <SearchBar
-              size="medium"
-              onSearch={(value) => handleSearch1(value)}
-            />
+            <SearchBar onSearch={(value) => handleSearch1(value)} />
             <Pagination
               totalPages={totalPages1}
               currentPage={currentPage1}
@@ -225,10 +224,7 @@ const UkTable: React.FC = () => {
             ]}
           />
           <div className={styles.mains}>
-            <SearchBar
-              size="medium"
-              onSearch={(value) => handleSearch2(value)}
-            />
+            <SearchBar onSearch={(value) => handleSearch2(value)} />
             <Pagination
               totalPages={totalPages2}
               currentPage={currentPage2}
@@ -242,10 +238,7 @@ const UkTable: React.FC = () => {
       ) : (
         <>
           <div className={styles.mains}>
-            <SearchBar
-              size="medium"
-              onSearch={(value) => handleSearch1(value)}
-            />
+            <SearchBar onSearch={(value) => handleSearch1(value)} />
             <Pagination
               totalPages={totalPages1}
               currentPage={currentPage1}
@@ -268,10 +261,7 @@ const UkTable: React.FC = () => {
             onFilterByAddressType={handleFilterByEmoneyRegisterStatus}
           />
           <div className={styles.mains}>
-            <SearchBar
-              size="medium"
-              onSearch={(value) => handleSearch2(value)}
-            />
+            <SearchBar onSearch={(value) => handleSearch2(value)} />
             <Pagination
               totalPages={totalPages2}
               currentPage={currentPage2}
@@ -280,7 +270,14 @@ const UkTable: React.FC = () => {
           </div>
           <Table
             lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]}
-            tableData={filteredData2}
+            tableData={filteredData2.map((data) => ({
+              PSDFirmStatus: data.PSDFirmStatus,
+              PSDStatusEffectiveDate:
+                data.PSDStatusEffectiveDate === ""
+                  ? "-"
+                  : data.PSDStatusEffectiveDate,
+              FirmName: data.FirmName,
+            }))}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage2}
             onPageChange={handlePageChange2}

@@ -3,19 +3,16 @@ import Image from "next/image";
 import styles from "./search-bar.module.css";
 
 interface SearchBarProps {
-  size?: "tiny" | "small" | "medium" | "large";
   showIcon?: boolean;
   showPlaceholder?: boolean;
   onSearch?: (value: string) => void;
 }
 
 export default function SearchBar({
-  size = "medium",
   showIcon = true,
   onSearch,
   showPlaceholder = true,
 }: SearchBarProps) {
-  const sizeClass = styles[size];
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (onSearch) {
       onSearch(event.target.value);
@@ -25,7 +22,7 @@ export default function SearchBar({
     <div className={styles.mainSearch}>
       <div className={styles.IconAndInput}>
         <input
-          className={`${styles.searchInput} ${sizeClass}`}
+          className={`${styles.searchInput}`}
           type="text"
           placeholder={showPlaceholder ? "Search" : ""}
           onChange={handleInputChange}
