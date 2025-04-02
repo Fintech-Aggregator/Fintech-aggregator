@@ -130,14 +130,6 @@ export const Header = ({ type }: HeaderProps) => {
                   height={36}
                 />
               </Button>
-              <Button onClick={logOut} variant={"ghost"}>
-                <Image
-                  src="/images/exit.svg"
-                  alt="exit"
-                  width={36}
-                  height={36}
-                />
-              </Button>
             </div>
           </>
         )}
