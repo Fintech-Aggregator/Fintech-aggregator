@@ -1,6 +1,8 @@
 import { cn } from "@/src/lib/utils";
 import styles from "./main-page.module.css";
 import Image from "next/image";
+import { Globe } from "../../ui/globe";
+import { GlobeDemo } from "../globe-demo";
 
 export default function Content() {
   return (
@@ -17,11 +19,20 @@ export default function Content() {
           height={450}
         />
       </div>
+      <div className="bg-black w-full relative">
+        <GlobeDemo />
+      </div>
 
       {/* Mobile */}
       <div className="block sm:hidden mt-6">
         <div className="flex justify-center">
-          <Image className="w-[clamp(15rem,_70vw,_25rem)]" src="/images/fintech.png" alt="fintech" width={500} height={300} />
+          <Image
+            className="w-[clamp(15rem,_70vw,_25rem)]"
+            src="/images/fintech.png"
+            alt="fintech"
+            width={500}
+            height={300}
+          />
         </div>
 
         <div className={styles.text_bet}>
@@ -77,7 +88,13 @@ export default function Content() {
           We are a team of enthusiasts who strive to make financial information <br />
           more accessible, transparent and user-friendly.
         </h1>
-        <Image className="w-full h-[500px] brightness-[0.5]" src="/images/city.png" alt="city" width={1600} height={500} />
+        <Image
+          className="w-full h-[500px] brightness-[0.5]"
+          src="/images/city.png"
+          alt="city"
+          width={1600}
+          height={500}
+        />
       </div>
     </div>
   );
