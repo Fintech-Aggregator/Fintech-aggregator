@@ -8,32 +8,32 @@ import styles from "../all-tables-style.module.css";
 
 interface Props {
   id: number;
-  licenseName: string;
-  address: string;
-  addressType: string;
+  Address: string;
+  FirmName: string;
+  Licence: string;
   lastUpdatedDate: string;
 }
-
-const HongKong: React.FC = () => {
-  const [hongKongData, setHongKongData] = useState<Props[]>([]);
+const Lithuania: React.FC = () => {
+  const [LithuaniaData, setLithuaniaData] = useState<Props[]>([]);
   const [filteredData, setFilteredData] = useState<Props[]>([]);
   const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     searchTerm: "",
     id: null as number | null,
-    licenseName: "",
-    adress: "",
-    addressType: "",
+    Address: "",
+    FirmName: "",
+    Licence: "",
   });
   const [currentPage, setCurrentPage] = useState(0);
   const rowsPerPage = 10;
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch("/api/hong-kong");
+        const res = await fetch("/api/lithuania");
         const data = await res.json();
-        setHongKongData(data["hongKongData"]);
-        setFilteredData(data["hongKongData"]);
+        setLithuaniaData(data["lithuania"]);
+        setFilteredData(data["lithuania"]);
+        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -45,7 +45,7 @@ const HongKong: React.FC = () => {
 
   useEffect(() => {
     const applyFilters = () => {
-      let filtered = hongKongData;
+      let filtered = LithuaniaData;
 
       if (filters.searchTerm) {
         filtered = filtered.filter((item) =>
@@ -57,22 +57,18 @@ const HongKong: React.FC = () => {
         );
       }
 
-      if (filters.licenseName) {
+      if (filters.Address) {
         filtered = filtered.filter((item) =>
-          item.licenseName
-            .toLowerCase()
-            .includes(filters.licenseName.toLowerCase())
+          item.Address.toLowerCase().includes(filters.Address.toLowerCase())
         );
       }
-      if (filters.adress) {
+      if (filters.FirmName) {
         filtered = filtered.filter((item) =>
-          item.address.toLowerCase().includes(filters.adress.toLowerCase())
+          item.FirmName.toLowerCase().includes(filters.FirmName.toLowerCase())
         );
       }
-      if (filters.addressType && filters.addressType !== "") {
-        filtered = filtered.filter(
-          (item) => item.addressType === filters.addressType
-        );
+      if (filters.Licence && filters.Licence !== "") {
+        filtered = filtered.filter((item) => item.Licence === filters.Licence);
       }
       setFilteredData(filtered);
     };
@@ -83,21 +79,21 @@ const HongKong: React.FC = () => {
   const handleSearch = (term: string) => {
     setFilters((prev) => ({ ...prev, searchTerm: term }));
   };
-  const handleFilterByLicenseName = (name: string) => {
-    setFilters((prev) => ({ ...prev, licenseName: name }));
-  };
-
   const handleFilterByAdress = (name: string) => {
-    setFilters((prev) => ({ ...prev, adress: name }));
+    setFilters((prev) => ({ ...prev, Address: name }));
   };
 
-  const handleFilterByAddressType = (addressType: string) => {
-    setFilters((prev) => ({ ...prev, addressType }));
+  const handleFilterByFirmName = (name: string) => {
+    setFilters((prev) => ({ ...prev, FirmName: name }));
   };
 
-  const getUniqueAddressTypes = () => {
+  const handleFilterByLicence = (Licence: string) => {
+    setFilters((prev) => ({ ...prev, Licence }));
+  };
+
+  const getUniqueLicence = () => {
     const uniqueTypes = Array.from(
-      new Set(hongKongData.map((item) => item.addressType))
+      new Set(LithuaniaData.map((item) => item.Licence))
     );
     return uniqueTypes;
   };
@@ -117,23 +113,23 @@ const HongKong: React.FC = () => {
         />
       </div>
       {loading ? (
-        <TableSkeleton lables={["LicenseName", "Adress", "AdressType"]} />
+        <TableSkeleton lables={["Adress", "FirmName", "Licence"]} />
       ) : (
         <>
           <Table
-            lables={["LicenseName", "Adress", "AdressType"]}
+            lables={["Adress", "FirmName", "Licence"]}
             tableData={filteredData}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage}
             onPageChange={handlePageChange}
-            onFilterByLicenseName={handleFilterByLicenseName}
-            onFilterByAdress={handleFilterByAdress}
-            addressTypes={getUniqueAddressTypes()}
-            onFilterByAddressType={handleFilterByAddressType}
+            onFilterByLicenseName={handleFilterByAdress}
+            onFilterByAdress={handleFilterByFirmName}
+            addressTypes={getUniqueLicence()}
+            onFilterByAddressType={handleFilterByLicence}
           />
           <div className="relative mb-2 flex justify-center items-center">
             <div className="text-lg">
-              Last Update: {hongKongData[0].lastUpdatedDate.slice(0, 10)}
+              Last Update: {LithuaniaData[0].lastUpdatedDate.slice(0, 10)}
             </div>
           </div>
         </>
@@ -141,5 +137,4 @@ const HongKong: React.FC = () => {
     </div>
   );
 };
-
-export default HongKong;
+export default Lithuania;

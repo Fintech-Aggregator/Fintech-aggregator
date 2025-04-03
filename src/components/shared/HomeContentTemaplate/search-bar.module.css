@@ -52,6 +52,7 @@
 }
 @media (max-width: 1000px) {
   .searchInput {
+    margin-left: 10px;
     width: 350px;
   }
 }
