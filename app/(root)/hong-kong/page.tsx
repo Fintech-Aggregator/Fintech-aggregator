@@ -50,18 +50,14 @@ const HongKong: React.FC = () => {
       if (filters.searchTerm) {
         filtered = filtered.filter((item) =>
           Object.values(item).some((value) =>
-            String(value)
-              .toLowerCase()
-              .includes(filters.searchTerm.toLowerCase())
+            String(value).toLowerCase().includes(filters.searchTerm.toLowerCase())
           )
         );
       }
 
       if (filters.licenseName) {
         filtered = filtered.filter((item) =>
-          item.licenseName
-            .toLowerCase()
-            .includes(filters.licenseName.toLowerCase())
+          item.licenseName.toLowerCase().includes(filters.licenseName.toLowerCase())
         );
       }
       if (filters.adress) {
@@ -70,9 +66,7 @@ const HongKong: React.FC = () => {
         );
       }
       if (filters.addressType && filters.addressType !== "") {
-        filtered = filtered.filter(
-          (item) => item.addressType === filters.addressType
-        );
+        filtered = filtered.filter((item) => item.addressType === filters.addressType);
       }
       setFilteredData(filtered);
     };
@@ -96,9 +90,7 @@ const HongKong: React.FC = () => {
   };
 
   const getUniqueAddressTypes = () => {
-    const uniqueTypes = Array.from(
-      new Set(hongKongData.map((item) => item.addressType))
-    );
+    const uniqueTypes = Array.from(new Set(hongKongData.map((item) => item.addressType)));
     return uniqueTypes;
   };
   const handlePageChange = (page: number) => {
@@ -106,15 +98,52 @@ const HongKong: React.FC = () => {
   };
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const getLink = async () => {
+    try {
+      const response = await fetch("/api/hong-kong/csv");
+
+      if (!response.ok) {
+        console.error("Download failed");
+        return;
+      }
+
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "hongKong.csv";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
+  };
   return (
     <div>
       <div className={styles.mains}>
         <SearchBar onSearch={(value) => handleSearch(value)} />
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
+        <div className="flex gap-4 relative">
+          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+          <button onClick={() => setIsDrawerOpen((prev) => !prev)} className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+            <div className="bg-black w-full h-[2px]"></div>
+            <div className="bg-black w-full h-[2px]"></div>
+            <div className="bg-black w-full h-[2px]"></div>
+          </button>
+          {/* Drawer */}
+          {isDrawerOpen && (
+            <div className="absolute right-0 mt-10 bg-white border border-black rounded p-2 shadow-md flex flex-col gap-2 w-44 z-20 items-center">
+              <h2 className="font-semibold ">Download</h2>
+              <hr />
+              <div></div>
+            </div>
+          )}
+        </div>
       </div>
       {loading ? (
         <TableSkeleton lables={["LicenseName", "Adress", "AdressType"]} />
@@ -132,9 +161,7 @@ const HongKong: React.FC = () => {
             onFilterByAddressType={handleFilterByAddressType}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">
-              Last Update: {hongKongData[0].lastUpdatedDate.slice(0, 10)}
-            </div>
+            <div className="text-lg">Last Update: {hongKongData[0].lastUpdatedDate.slice(0, 10)}</div>
           </div>
         </>
       )}
