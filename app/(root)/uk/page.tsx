@@ -31,7 +31,9 @@ const UkTable: React.FC = () => {
   const [filteredData1, setFilteredData1] = useState<Props1[]>([]);
 
   const [filteredData2, setFilteredData2] = useState<Props2[]>([]);
-  const [firmPsdPermissionData, setFirmPsdPermissionData] = useState<Props2[]>([]);
+  const [firmPsdPermissionData, setFirmPsdPermissionData] = useState<Props2[]>(
+    []
+  );
 
   const [filters1, setFilters1] = useState({
     searchTerm: "",
@@ -86,25 +88,36 @@ const UkTable: React.FC = () => {
 
       if (filters1.searchTerm) {
         filtered = filtered.filter((item) =>
-          Object.values(item).some((value) => String(value).toLowerCase().includes(filters1.searchTerm.toLowerCase()))
+          Object.values(item).some((value) =>
+            String(value)
+              .toLowerCase()
+              .includes(filters1.searchTerm.toLowerCase())
+          )
         );
       }
 
       if (filters1.EmoneyStatusEffectiveDate) {
         filtered = filtered.filter((item) =>
-          item.EmoneyStatusEffectiveDate.toLowerCase().includes(filters1.EmoneyStatusEffectiveDate.toLowerCase())
+          item.EmoneyStatusEffectiveDate.toLowerCase().includes(
+            filters1.EmoneyStatusEffectiveDate.toLowerCase()
+          )
         );
       }
       if (filters1.FirmName) {
-        filtered = filtered.filter((item) => item.FirmName.toLowerCase().includes(filters1.FirmName.toLowerCase()));
+        filtered = filtered.filter((item) =>
+          item.FirmName.toLowerCase().includes(filters1.FirmName.toLowerCase())
+        );
       }
       if (filters1.EmoneyRegisterStatus) {
-        filtered = filtered.filter((item) => item.EmoneyRegisterStatus === filters1.EmoneyRegisterStatus);
+        filtered = filtered.filter(
+          (item) => item.EmoneyRegisterStatus === filters1.EmoneyRegisterStatus
+        );
       }
       setFilteredData1(filtered);
     };
 
     applyFilters1();
+    setCurrentPage1(0);
   }, [filters1]);
 
   useEffect(() => {
@@ -113,22 +126,33 @@ const UkTable: React.FC = () => {
 
       if (filters2.searchTerm) {
         filtered = filtered.filter((item) =>
-          Object.values(item).some((value) => String(value).toLowerCase().includes(filters2.searchTerm.toLowerCase()))
+          Object.values(item).some((value) =>
+            String(value)
+              .toLowerCase()
+              .includes(filters2.searchTerm.toLowerCase())
+          )
         );
       }
 
       if (filters2.PSDStatusEffectiveDate) {
         filtered = filtered.filter((item) =>
-          item.PSDStatusEffectiveDate.toLowerCase().includes(filters2.PSDStatusEffectiveDate.toLowerCase())
+          item.PSDStatusEffectiveDate.toLowerCase().includes(
+            filters2.PSDStatusEffectiveDate.toLowerCase()
+          )
         );
       }
       if (filters2.FirmName) {
-        filtered = filtered.filter((item) => item.FirmName.toLowerCase().includes(filters2.FirmName.toLowerCase()));
+        filtered = filtered.filter((item) =>
+          item.FirmName.toLowerCase().includes(filters2.FirmName.toLowerCase())
+        );
       }
       if (filters2.PSDFirmStatus) {
-        filtered = filtered.filter((item) => item.PSDFirmStatus === filters2.PSDFirmStatus);
+        filtered = filtered.filter(
+          (item) => item.PSDFirmStatus === filters2.PSDFirmStatus
+        );
       }
       setFilteredData2(filtered);
+      setCurrentPage2(0);
     };
 
     applyFilters2();
@@ -165,11 +189,15 @@ const UkTable: React.FC = () => {
   };
 
   const getUniqueAddressTypes1 = () => {
-    const uniqueTypes = Array.from(new Set(eMoneyFirmsData.map((item: any) => item.EmoneyRegisterStatus)));
+    const uniqueTypes = Array.from(
+      new Set(eMoneyFirmsData.map((item: any) => item.EmoneyRegisterStatus))
+    );
     return uniqueTypes;
   };
   const getUniqueAddressTypes2 = () => {
-    const uniqueTypes = Array.from(new Set(firmPsdPermissionData.map((item: any) => item.PSDFirmStatus)));
+    const uniqueTypes = Array.from(
+      new Set(firmPsdPermissionData.map((item: any) => item.PSDFirmStatus))
+    );
     return uniqueTypes;
   };
 
@@ -186,37 +214,69 @@ const UkTable: React.FC = () => {
 
   return (
     <div>
-      {loading1 && loading2 ? (
+      {loading1 ? (
         <>
           <div className={styles.mains}>
             <SearchBar onSearch={(value) => handleSearch1(value)} />
-            <Pagination totalPages={totalPages1} currentPage={currentPage1} onPageChange={handlePageChange1} />
+            <div className="flex gap-4 relative items-center justify-center">
+              <Pagination
+                totalPages={totalPages1}
+                currentPage={currentPage1}
+                onPageChange={handlePageChange1}
+              />
+              <button
+                onClick={() => setIsDrawerOpen1((prev) => !prev)}
+                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+              >
+                <div className="bg-black w-full h-[2px]"></div>
+                <div className="bg-black w-full h-[2px]"></div>
+                <div className="bg-black w-full h-[2px]"></div>
+              </button>
+              <Drawer
+                register="uk/e-money-firms"
+                isDrawerOpen={isDrawerOpen1}
+              />
+            </div>
           </div>
-          <TableSkeleton lables={["EmoneyStatusEffectiveDate", "FirmName", "EmoneyRegisterStatus"]} />
-          <div className={styles.mains}>
-            <SearchBar onSearch={(value) => handleSearch2(value)} />
-            <Pagination totalPages={totalPages2} currentPage={currentPage2} onPageChange={handlePageChange2} />
-          </div>
-          <TableSkeleton lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]} />
+
+          <TableSkeleton
+            lables={[
+              "EmoneyStatusEffectiveDate",
+              "FirmName",
+              "EmoneyRegisterStatus",
+            ]}
+          />
         </>
       ) : (
         <>
           <div className={styles.mains}>
             <SearchBar onSearch={(value) => handleSearch1(value)} />
-            <div className="flex gap-4 relative">
-              <Pagination totalPages={totalPages1} currentPage={currentPage1} onPageChange={handlePageChange1} />{" "}
+            <div className="flex gap-4 relative items-center justify-center">
+              <Pagination
+                totalPages={totalPages1}
+                currentPage={currentPage1}
+                onPageChange={handlePageChange1}
+              />{" "}
               <button
                 onClick={() => setIsDrawerOpen1((prev) => !prev)}
-                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+              >
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
               </button>
-              <Drawer register="uk/e-money-firms" isDrawerOpen={isDrawerOpen1} />
+              <Drawer
+                register="uk/e-money-firms"
+                isDrawerOpen={isDrawerOpen1}
+              />
             </div>
           </div>
           <Table
-            lables={["EmoneyStatusEffectiveDate", "FirmName", "EmoneyRegisterStatus"]}
+            lables={[
+              "EmoneyStatusEffectiveDate",
+              "FirmName",
+              "EmoneyRegisterStatus",
+            ]}
             tableData={filteredData1}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage1}
@@ -226,18 +286,63 @@ const UkTable: React.FC = () => {
             addressTypes={getUniqueAddressTypes1()}
             onFilterByAddressType={handleFilterByEmoneyRegisterStatus}
           />
+          <div className="relative mb-2 flex justify-center items-center">
+            <div className="text-lg">
+              Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}
+            </div>
+          </div>
+        </>
+      )}
+      {loading2 ? (
+        <>
           <div className={styles.mains}>
             <SearchBar onSearch={(value) => handleSearch2(value)} />
-            <div className="flex gap-4 relative">
-              <Pagination totalPages={totalPages2} currentPage={currentPage2} onPageChange={handlePageChange2} />{" "}
+            <div className="flex gap-4 relative items-center justify-center">
+              <Pagination
+                totalPages={totalPages2}
+                currentPage={currentPage2}
+                onPageChange={handlePageChange2}
+              />
               <button
                 onClick={() => setIsDrawerOpen2((prev) => !prev)}
-                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+              >
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
               </button>
-              <Drawer register="uk/firm-psd-permission" isDrawerOpen={isDrawerOpen2} />
+              <Drawer
+                register="uk/firm-psd-permission"
+                isDrawerOpen={isDrawerOpen2}
+              />
+            </div>
+          </div>
+          <TableSkeleton
+            lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]}
+          />
+        </>
+      ) : (
+        <>
+          <div className={styles.mains}>
+            <SearchBar onSearch={(value) => handleSearch2(value)} />
+            <div className="flex gap-4 relative items-center justify-center">
+              <Pagination
+                totalPages={totalPages2}
+                currentPage={currentPage2}
+                onPageChange={handlePageChange2}
+              />
+              <button
+                onClick={() => setIsDrawerOpen2((prev) => !prev)}
+                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+              >
+                <div className="bg-black w-full h-[2px]"></div>
+                <div className="bg-black w-full h-[2px]"></div>
+                <div className="bg-black w-full h-[2px]"></div>
+              </button>
+              <Drawer
+                register="uk/firm-psd-permission"
+                isDrawerOpen={isDrawerOpen2}
+              />
             </div>
           </div>
           <Table
@@ -245,7 +350,10 @@ const UkTable: React.FC = () => {
             tableData={filteredData2.map((data) => ({
               FRN: data.FRN,
               PSDFirmStatus: data.PSDFirmStatus,
-              PSDStatusEffectiveDate: data.PSDStatusEffectiveDate === "" ? "-" : data.PSDStatusEffectiveDate,
+              PSDStatusEffectiveDate:
+                data.PSDStatusEffectiveDate === ""
+                  ? "-"
+                  : data.PSDStatusEffectiveDate,
               FirmName: data.FirmName,
             }))}
             rowsPerPage={rowsPerPage}
@@ -257,7 +365,9 @@ const UkTable: React.FC = () => {
             onFilterByAddressType={handleFilterByPSDFirmStatus}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}</div>
+            <div className="text-lg">
+              Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}
+            </div>
           </div>
         </>
       )}
