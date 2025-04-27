@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "@/src/components/shared/HomeContentTemaplate/search-bar";
 import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
@@ -27,6 +27,8 @@ const Lithuania: React.FC = () => {
   });
   const [currentPage, setCurrentPage] = useState(0);
   const rowsPerPage = 10;
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -51,9 +53,7 @@ const Lithuania: React.FC = () => {
       if (filters.searchTerm) {
         filtered = filtered.filter((item) =>
           Object.values(item).some((value) =>
-            String(value)
-              .toLowerCase()
-              .includes(filters.searchTerm.toLowerCase())
+            String(value).toLowerCase().includes(filters.searchTerm.toLowerCase())
           )
         );
       }
@@ -76,7 +76,25 @@ const Lithuania: React.FC = () => {
     };
 
     applyFilters();
-  }, [filters]);
+  }, [filters, LithuaniaData]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+        setIsDrawerOpen(false);
+      }
+    };
+
+    if (isDrawerOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDrawerOpen]);
 
   const handleSearch = (term: string) => {
     setFilters((prev) => ({ ...prev, searchTerm: term }));
@@ -94,9 +112,7 @@ const Lithuania: React.FC = () => {
   };
 
   const getUniqueLicence = () => {
-    const uniqueTypes = Array.from(
-      new Set(LithuaniaData.map((item) => item.Licence))
-    );
+    const uniqueTypes = Array.from(new Set(LithuaniaData.map((item) => item.Licence)));
     return uniqueTypes;
   };
   const handlePageChange = (page: number) => {
@@ -104,28 +120,22 @@ const Lithuania: React.FC = () => {
   };
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   return (
     <div>
       <div className={styles.mains}>
         <SearchBar onSearch={(value) => handleSearch(value)} />
         <div className="flex gap-4 relative items-center justify-center">
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
+          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
 
           <div className={styles.drawer}>
             <button
               onClick={() => setIsDrawerOpen((prev) => !prev)}
-              className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
-            >
+              className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
               <div className="bg-black w-full h-[2px]"></div>
               <div className="bg-black w-full h-[2px]"></div>
               <div className="bg-black w-full h-[2px]"></div>
             </button>
-            <Drawer register="lithuania" isDrawerOpen={isDrawerOpen} />
+            <Drawer register="lithuania" isDrawerOpen={isDrawerOpen} ref={drawerRef} />
           </div>
         </div>
       </div>
@@ -145,9 +155,7 @@ const Lithuania: React.FC = () => {
             onFilterByAddressType={handleFilterByLicence}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">
-              Last Update: {LithuaniaData[0].lastUpdatedDate.slice(0, 10)}
-            </div>
+            <div className="text-lg">Last Update: {LithuaniaData[0].lastUpdatedDate.slice(0, 10)}</div>
           </div>
         </>
       )}

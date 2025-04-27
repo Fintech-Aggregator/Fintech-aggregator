@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "@/src/components/shared/HomeContentTemaplate/search-bar";
 import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
@@ -27,8 +27,12 @@ const HongKong: React.FC = () => {
     adress: "",
     addressType: "",
   });
-  const [currentPage, setCurrentPage] = useState(0);
   const rowsPerPage = 10;
+  
+  const [currentPage, setCurrentPage] = useState(0);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -81,7 +85,25 @@ const HongKong: React.FC = () => {
     };
 
     applyFilters();
-  }, [filters]);
+  }, [filters, hongKongData]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+        setIsDrawerOpen(false);
+      }
+    };
+
+    if (isDrawerOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDrawerOpen]);
 
   const handleSearch = (term: string) => {
     setFilters((prev) => ({ ...prev, searchTerm: term }));
@@ -109,7 +131,7 @@ const HongKong: React.FC = () => {
   };
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   return (
     <div>
       <div className={styles.mains}>
@@ -128,7 +150,7 @@ const HongKong: React.FC = () => {
             <div className="bg-black w-full h-[2px]"></div>
             <div className="bg-black w-full h-[2px]"></div>
           </button>
-          <Drawer register="hong-kong" isDrawerOpen={isDrawerOpen} />
+          <Drawer register="hong-kong" isDrawerOpen={isDrawerOpen} ref={drawerRef} />
         </div>
       </div>
       {loading ? (
@@ -148,7 +170,7 @@ const HongKong: React.FC = () => {
           />
           <div className="relative mb-2 flex justify-center items-center">
             <div className="text-lg">
-              Last Update: {hongKongData[0].lastUpdatedDate.slice(0, 10)}
+              Last Update: {hongKongData[0]?.lastUpdatedDate.slice(0, 10)}
             </div>
           </div>
         </>

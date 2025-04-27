@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "@/src/components/shared/HomeContentTemaplate/search-bar";
 import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
@@ -31,9 +31,9 @@ const UkTable: React.FC = () => {
   const [filteredData1, setFilteredData1] = useState<Props1[]>([]);
 
   const [filteredData2, setFilteredData2] = useState<Props2[]>([]);
-  const [firmPsdPermissionData, setFirmPsdPermissionData] = useState<Props2[]>(
-    []
-  );
+  const [firmPsdPermissionData, setFirmPsdPermissionData] = useState<Props2[]>([]);
+  const [loading1, setLoading1] = useState(true);
+  const [loading2, setLoading2] = useState(true);
 
   const [filters1, setFilters1] = useState({
     searchTerm: "",
@@ -48,13 +48,14 @@ const UkTable: React.FC = () => {
     FirmName: "",
     PSDFirmStatus: "",
   });
+  const rowsPerPage = 10;
 
   const [currentPage1, setCurrentPage1] = useState(0);
   const [currentPage2, setCurrentPage2] = useState(0);
-  const rowsPerPage = 10;
-
-  const [loading1, setLoading1] = useState(true);
-  const [loading2, setLoading2] = useState(true);
+  const [isDrawerOpen1, setIsDrawerOpen1] = useState(false);
+  const [isDrawerOpen2, setIsDrawerOpen2] = useState(false);
+  const drawerRef1 = useRef<HTMLDivElement>(null);
+  const drawerRef2 = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -89,9 +90,7 @@ const UkTable: React.FC = () => {
       if (filters1.searchTerm) {
         filtered = filtered.filter((item) =>
           Object.values(item).some((value) =>
-            String(value)
-              .toLowerCase()
-              .includes(filters1.searchTerm.toLowerCase())
+            String(value).toLowerCase().includes(filters1.searchTerm.toLowerCase())
           )
         );
       }
@@ -109,9 +108,7 @@ const UkTable: React.FC = () => {
         );
       }
       if (filters1.EmoneyRegisterStatus) {
-        filtered = filtered.filter(
-          (item) => item.EmoneyRegisterStatus === filters1.EmoneyRegisterStatus
-        );
+        filtered = filtered.filter((item) => item.EmoneyRegisterStatus === filters1.EmoneyRegisterStatus);
       }
       setFilteredData1(filtered);
     };
@@ -127,18 +124,14 @@ const UkTable: React.FC = () => {
       if (filters2.searchTerm) {
         filtered = filtered.filter((item) =>
           Object.values(item).some((value) =>
-            String(value)
-              .toLowerCase()
-              .includes(filters2.searchTerm.toLowerCase())
+            String(value).toLowerCase().includes(filters2.searchTerm.toLowerCase())
           )
         );
       }
 
       if (filters2.PSDStatusEffectiveDate) {
         filtered = filtered.filter((item) =>
-          item.PSDStatusEffectiveDate.toLowerCase().includes(
-            filters2.PSDStatusEffectiveDate.toLowerCase()
-          )
+          item.PSDStatusEffectiveDate.toLowerCase().includes(filters2.PSDStatusEffectiveDate.toLowerCase())
         );
       }
       if (filters2.FirmName) {
@@ -147,9 +140,7 @@ const UkTable: React.FC = () => {
         );
       }
       if (filters2.PSDFirmStatus) {
-        filtered = filtered.filter(
-          (item) => item.PSDFirmStatus === filters2.PSDFirmStatus
-        );
+        filtered = filtered.filter((item) => item.PSDFirmStatus === filters2.PSDFirmStatus);
       }
       setFilteredData2(filtered);
       setCurrentPage2(0);
@@ -157,6 +148,42 @@ const UkTable: React.FC = () => {
 
     applyFilters2();
   }, [filters2]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (drawerRef1.current && !drawerRef1.current.contains(event.target as Node)) {
+        setIsDrawerOpen1(false);
+      }
+    };
+
+    if (isDrawerOpen1) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDrawerOpen1]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (drawerRef2.current && !drawerRef2.current.contains(event.target as Node)) {
+        setIsDrawerOpen2(false);
+      }
+    };
+
+    if (isDrawerOpen2) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDrawerOpen2]);
 
   const handleSearch1 = (term: string) => {
     setFilters1((prev) => ({ ...prev, searchTerm: term }));
@@ -189,15 +216,11 @@ const UkTable: React.FC = () => {
   };
 
   const getUniqueAddressTypes1 = () => {
-    const uniqueTypes = Array.from(
-      new Set(eMoneyFirmsData.map((item: any) => item.EmoneyRegisterStatus))
-    );
+    const uniqueTypes = Array.from(new Set(eMoneyFirmsData.map((item: any) => item.EmoneyRegisterStatus)));
     return uniqueTypes;
   };
   const getUniqueAddressTypes2 = () => {
-    const uniqueTypes = Array.from(
-      new Set(firmPsdPermissionData.map((item: any) => item.PSDFirmStatus))
-    );
+    const uniqueTypes = Array.from(new Set(firmPsdPermissionData.map((item: any) => item.PSDFirmStatus)));
     return uniqueTypes;
   };
 
@@ -209,8 +232,6 @@ const UkTable: React.FC = () => {
   };
   const totalPages1 = Math.ceil(filteredData1.length / rowsPerPage);
   const totalPages2 = Math.ceil(filteredData2.length / rowsPerPage);
-  const [isDrawerOpen1, setIsDrawerOpen1] = useState(false);
-  const [isDrawerOpen2, setIsDrawerOpen2] = useState(false);
 
   return (
     <div>
@@ -226,26 +247,16 @@ const UkTable: React.FC = () => {
               />
               <button
                 onClick={() => setIsDrawerOpen1((prev) => !prev)}
-                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
-              >
+                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
               </button>
-              <Drawer
-                register="uk/e-money-firms"
-                isDrawerOpen={isDrawerOpen1}
-              />
+              <Drawer register="uk/e-money-firms" isDrawerOpen={isDrawerOpen1} ref={drawerRef1} />
             </div>
           </div>
 
-          <TableSkeleton
-            lables={[
-              "EmoneyStatusEffectiveDate",
-              "FirmName",
-              "EmoneyRegisterStatus",
-            ]}
-          />
+          <TableSkeleton lables={["EmoneyStatusEffectiveDate", "FirmName", "EmoneyRegisterStatus"]} />
         </>
       ) : (
         <>
@@ -259,24 +270,16 @@ const UkTable: React.FC = () => {
               />{" "}
               <button
                 onClick={() => setIsDrawerOpen1((prev) => !prev)}
-                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
-              >
+                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
               </button>
-              <Drawer
-                register="uk/e-money-firms"
-                isDrawerOpen={isDrawerOpen1}
-              />
+              <Drawer register="uk/e-money-firms" isDrawerOpen={isDrawerOpen1} ref={drawerRef1} />
             </div>
           </div>
           <Table
-            lables={[
-              "EmoneyStatusEffectiveDate",
-              "FirmName",
-              "EmoneyRegisterStatus",
-            ]}
+            lables={["EmoneyStatusEffectiveDate", "FirmName", "EmoneyRegisterStatus"]}
             tableData={filteredData1}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage1}
@@ -287,9 +290,7 @@ const UkTable: React.FC = () => {
             onFilterByAddressType={handleFilterByEmoneyRegisterStatus}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">
-              Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}
-            </div>
+            <div className="text-lg">Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}</div>
           </div>
         </>
       )}
@@ -305,21 +306,15 @@ const UkTable: React.FC = () => {
               />
               <button
                 onClick={() => setIsDrawerOpen2((prev) => !prev)}
-                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
-              >
+                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
               </button>
-              <Drawer
-                register="uk/firm-psd-permission"
-                isDrawerOpen={isDrawerOpen2}
-              />
+              <Drawer register="uk/firm-psd-permission" isDrawerOpen={isDrawerOpen2} ref={drawerRef2} />
             </div>
           </div>
-          <TableSkeleton
-            lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]}
-          />
+          <TableSkeleton lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]} />
         </>
       ) : (
         <>
@@ -333,16 +328,12 @@ const UkTable: React.FC = () => {
               />
               <button
                 onClick={() => setIsDrawerOpen2((prev) => !prev)}
-                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
-              >
+                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
                 <div className="bg-black w-full h-[2px]"></div>
               </button>
-              <Drawer
-                register="uk/firm-psd-permission"
-                isDrawerOpen={isDrawerOpen2}
-              />
+              <Drawer register="uk/firm-psd-permission" isDrawerOpen={isDrawerOpen2} ref={drawerRef2} />
             </div>
           </div>
           <Table
@@ -350,10 +341,7 @@ const UkTable: React.FC = () => {
             tableData={filteredData2.map((data) => ({
               FRN: data.FRN,
               PSDFirmStatus: data.PSDFirmStatus,
-              PSDStatusEffectiveDate:
-                data.PSDStatusEffectiveDate === ""
-                  ? "-"
-                  : data.PSDStatusEffectiveDate,
+              PSDStatusEffectiveDate: data.PSDStatusEffectiveDate === "" ? "-" : data.PSDStatusEffectiveDate,
               FirmName: data.FirmName,
             }))}
             rowsPerPage={rowsPerPage}
@@ -365,9 +353,7 @@ const UkTable: React.FC = () => {
             onFilterByAddressType={handleFilterByPSDFirmStatus}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">
-              Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}
-            </div>
+            <div className="text-lg">Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}</div>
           </div>
         </>
       )}
