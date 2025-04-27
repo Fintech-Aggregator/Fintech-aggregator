@@ -50,20 +50,29 @@ const Lithuania: React.FC = () => {
 
       if (filters.searchTerm) {
         filtered = filtered.filter((item) =>
-          Object.values(item).some((value) => String(value).toLowerCase().includes(filters.searchTerm.toLowerCase()))
+          Object.values(item).some((value) =>
+            String(value)
+              .toLowerCase()
+              .includes(filters.searchTerm.toLowerCase())
+          )
         );
       }
 
       if (filters.Address) {
-        filtered = filtered.filter((item) => item.Address.toLowerCase().includes(filters.Address.toLowerCase()));
+        filtered = filtered.filter((item) =>
+          item.Address.toLowerCase().includes(filters.Address.toLowerCase())
+        );
       }
       if (filters.FirmName) {
-        filtered = filtered.filter((item) => item.FirmName.toLowerCase().includes(filters.FirmName.toLowerCase()));
+        filtered = filtered.filter((item) =>
+          item.FirmName.toLowerCase().includes(filters.FirmName.toLowerCase())
+        );
       }
       if (filters.Licence && filters.Licence !== "") {
         filtered = filtered.filter((item) => item.Licence === filters.Licence);
       }
       setFilteredData(filtered);
+      setCurrentPage(0);
     };
 
     applyFilters();
@@ -85,7 +94,9 @@ const Lithuania: React.FC = () => {
   };
 
   const getUniqueLicence = () => {
-    const uniqueTypes = Array.from(new Set(LithuaniaData.map((item) => item.Licence)));
+    const uniqueTypes = Array.from(
+      new Set(LithuaniaData.map((item) => item.Licence))
+    );
     return uniqueTypes;
   };
   const handlePageChange = (page: number) => {
@@ -98,16 +109,24 @@ const Lithuania: React.FC = () => {
     <div>
       <div className={styles.mains}>
         <SearchBar onSearch={(value) => handleSearch(value)} />
-        <div className="flex gap-4 relative">
-          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
-          <button
-            onClick={() => setIsDrawerOpen((prev) => !prev)}
-            className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
-            <div className="bg-black w-full h-[2px]"></div>
-            <div className="bg-black w-full h-[2px]"></div>
-            <div className="bg-black w-full h-[2px]"></div>
-          </button>
-          <Drawer register="lithuania" isDrawerOpen={isDrawerOpen} />
+        <div className="flex gap-4 relative items-center justify-center">
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+
+          <div className={styles.drawer}>
+            <button
+              onClick={() => setIsDrawerOpen((prev) => !prev)}
+              className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+            >
+              <div className="bg-black w-full h-[2px]"></div>
+              <div className="bg-black w-full h-[2px]"></div>
+              <div className="bg-black w-full h-[2px]"></div>
+            </button>
+            <Drawer register="lithuania" isDrawerOpen={isDrawerOpen} />
+          </div>
         </div>
       </div>
       {loading ? (
@@ -126,7 +145,9 @@ const Lithuania: React.FC = () => {
             onFilterByAddressType={handleFilterByLicence}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">Last Update: {LithuaniaData[0].lastUpdatedDate.slice(0, 10)}</div>
+            <div className="text-lg">
+              Last Update: {LithuaniaData[0].lastUpdatedDate.slice(0, 10)}
+            </div>
           </div>
         </>
       )}
