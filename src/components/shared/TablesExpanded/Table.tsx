@@ -42,8 +42,6 @@ export const Table: React.FC<Props> = ({
 
   const currentPage = externalPage !== undefined ? externalPage : localPage;
 
-  const pathname = usePathname();
-
   const handlePageChange = (newPage: number) => {
     if (onPageChange) {
       onPageChange(newPage);
