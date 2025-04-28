@@ -5,7 +5,6 @@ import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
 import { TableSkeleton } from "@/src/components/shared/TablesExpanded/TableSkeleton";
 import styles from "../all-tables-style.module.css";
-import Image from "next/image";
 import { Drawer } from "@/src/components/ui/drawer";
 
 interface Props {

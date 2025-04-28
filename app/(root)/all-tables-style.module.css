@@ -5,16 +5,22 @@
   align-items: center;
   gap: 438px;
 }
+.pagination {
+  align-items: center;
+}
+@media (max-width: 590px) {
+  .mains {
+    margin: 20px;
+    flex-direction: column-reverse;
+    gap: 0px;
+  }
+}
 @media (max-width: 1000px) {
   .mains {
     display: flex;
-    margin: 20px;
-    flex-direction: column-reverse;
-    justify-content: center;
+
+    justify-content: space-between;
     align-items: center;
     gap: 0px;
-  }
-  .pagination {
-    align-items: center;
   }
 }
