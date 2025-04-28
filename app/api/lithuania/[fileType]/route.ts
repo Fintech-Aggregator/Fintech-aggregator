@@ -66,7 +66,7 @@ export async function GET(req: NextRequest, { params }: { params: { fileType: st
         let y = height - 50;
         const fontSize = 10;
 
-        const fieldsToInclude = ["firmName", "address", "licence"];
+        const fieldsToInclude = ["FirmName", "Address", "Licence"];
         const headersPretty = ["Firm Name", "Address", "Licence"];
 
         const slimData = lithuania.map((row) => {
@@ -117,9 +117,9 @@ export async function GET(req: NextRequest, { params }: { params: { fileType: st
 
         for (const row of slimData) {
           const wrapped = [
-            wrapText(String(row["firmName"]), licenseNameWidth, customFont, fontSize),
-            wrapText(String(row["address"]), addressWidth, customFont, fontSize),
-            wrapText(String(row["licence"]), addressTypeWidth, customFont, fontSize),
+            wrapText(String(row["FirmName"]), licenseNameWidth, customFont, fontSize),
+            wrapText(String(row["Address"]), addressWidth, customFont, fontSize),
+            wrapText(String(row["Licence"]), addressTypeWidth, customFont, fontSize),
           ];
 
           const maxLines = Math.max(...wrapped.map((lines) => lines.length));
