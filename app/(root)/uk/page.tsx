@@ -21,9 +21,18 @@ interface Props1 {
 }
 interface Props2 {
   FRN: number;
-  PSDStatusEffectiveDate: string;
   FirmName: string;
+  PSDStatusEffectiveDate: string;
   PSDFirmStatus: string;
+  lastUpdatedDate: string;
+}
+
+interface EMoneyFirmsData {
+  eMoneyFirms: Props1[];
+}
+
+interface FirmPSDPermissionData {
+  firmPSDPermission: Props2[];
 }
 
 const UkTable: React.FC = () => {
@@ -32,8 +41,7 @@ const UkTable: React.FC = () => {
 
   const [filteredData2, setFilteredData2] = useState<Props2[]>([]);
   const [firmPsdPermissionData, setFirmPsdPermissionData] = useState<Props2[]>([]);
-  const [loading1, setLoading1] = useState(true);
-  const [loading2, setLoading2] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   const [filters1, setFilters1] = useState({
     searchTerm: "",
@@ -59,25 +67,21 @@ const UkTable: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      const urls = ["/api/uk/e-money-firms", "/api/uk/firm-psd-permission"];
       try {
-        const res = await fetch("/api/uk/e-money-firms");
-        const data = await res.json();
-        setEMoneyFirmsData(data["eMoneyFirms"]);
-        setFilteredData1(data["eMoneyFirms"]);
-      } catch (error) {
-        console.log(error);
-      }
-      setLoading1(false);
+        const data = await Promise.all(urls.map((url) => fetch(url).then((res) => res.json())));
+        const eMoneyFirmsData = data[0] as EMoneyFirmsData;
+        const firmPSDPermission = data[1] as FirmPSDPermissionData;
+        setEMoneyFirmsData(eMoneyFirmsData.eMoneyFirms);
+        setFirmPsdPermissionData(firmPSDPermission.firmPSDPermission);
 
-      try {
-        const res = await fetch("/api/uk/firm-psd-permission");
-        const data = await res.json();
-        setFirmPsdPermissionData(data["firmPSDPermission"]);
-        setFilteredData2(data["firmPSDPermission"]);
+        setFilteredData1(eMoneyFirmsData.eMoneyFirms);
+        setFilteredData2(firmPSDPermission.firmPSDPermission);
       } catch (error) {
-        console.log(error);
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
-      setLoading2(false);
     };
 
     fetchData();
@@ -115,7 +119,7 @@ const UkTable: React.FC = () => {
 
     applyFilters1();
     setCurrentPage1(0);
-  }, [filters1]);
+  }, [filters1, eMoneyFirmsData]);
 
   useEffect(() => {
     const applyFilters2 = () => {
@@ -147,7 +151,7 @@ const UkTable: React.FC = () => {
     };
 
     applyFilters2();
-  }, [filters2]);
+  }, [filters2, firmPsdPermissionData]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -235,7 +239,7 @@ const UkTable: React.FC = () => {
 
   return (
     <div>
-      {loading1 ? (
+      {loading ? (
         <>
           <div className={styles.mains}>
             <SearchBar onSearch={(value) => handleSearch1(value)} />
@@ -294,7 +298,7 @@ const UkTable: React.FC = () => {
           </div>
         </>
       )}
-      {loading2 ? (
+      {loading ? (
         <>
           <div className={styles.mains}>
             <SearchBar onSearch={(value) => handleSearch2(value)} />

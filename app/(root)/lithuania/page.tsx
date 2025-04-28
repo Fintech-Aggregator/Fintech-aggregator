@@ -36,9 +36,8 @@ const Lithuania: React.FC = () => {
         const data = await res.json();
         setLithuaniaData(data["lithuania"]);
         setFilteredData(data["lithuania"]);
-        console.log(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
       setLoading(false);
     };

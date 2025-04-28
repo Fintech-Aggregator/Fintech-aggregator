@@ -40,7 +40,7 @@ const HongKong: React.FC = () => {
         setHongKongData(data["hongKongData"]);
         setFilteredData(data["hongKongData"]);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
       setLoading(false);
     };

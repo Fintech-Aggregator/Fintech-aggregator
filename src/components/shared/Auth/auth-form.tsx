@@ -74,7 +74,6 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
       ) {
         setErrorMessage(error.message);
       } else {
-        console.log("error message: ", error.message);
         setErrorMessage("Server Error, please try again later");
       }
     } finally {
