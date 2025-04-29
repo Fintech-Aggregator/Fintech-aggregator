@@ -1,16 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "@/src/components/shared/HomeContentTemaplate/search-bar";
 import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
 import { TableSkeleton } from "@/src/components/shared/TablesExpanded/TableSkeleton";
 import styles from "../all-tables-style.module.css";
+import { Drawer } from "@/src/components/ui/drawer";
+import type { RowProps } from "@/src/components/shared/TablesExpanded/Table";
 
-interface RowProps {
-  licenseName: string;
-  address: string;
-  addressType: string;
-}
 interface Props1 {
   FRN: number;
   EmoneyStatusEffectiveDate: string;
@@ -20,9 +17,18 @@ interface Props1 {
 }
 interface Props2 {
   FRN: number;
-  PSDStatusEffectiveDate: string;
   FirmName: string;
+  PSDStatusEffectiveDate: string;
   PSDFirmStatus: string;
+  lastUpdatedDate: string;
+}
+
+interface EMoneyFirmsData {
+  eMoneyFirms: Props1[];
+}
+
+interface FirmPSDPermissionData {
+  firmPSDPermission: Props2[];
 }
 
 const UkTable: React.FC = () => {
@@ -33,6 +39,7 @@ const UkTable: React.FC = () => {
   const [firmPsdPermissionData, setFirmPsdPermissionData] = useState<Props2[]>(
     []
   );
+  const [loading, setLoading] = useState(true);
 
   const [filters1, setFilters1] = useState({
     searchTerm: "",
@@ -47,35 +54,49 @@ const UkTable: React.FC = () => {
     FirmName: "",
     PSDFirmStatus: "",
   });
+  const rowsPerPage = 10;
 
   const [currentPage1, setCurrentPage1] = useState(0);
   const [currentPage2, setCurrentPage2] = useState(0);
-  const rowsPerPage = 10;
+  const [isDrawerOpen1, setIsDrawerOpen1] = useState(false);
+  const [isDrawerOpen2, setIsDrawerOpen2] = useState(false);
+  const drawerRef1 = useRef<HTMLDivElement>(null);
+  const drawerRef2 = useRef<HTMLDivElement>(null);
 
-  const [loading1, setLoading1] = useState(true);
-  const [loading2, setLoading2] = useState(true);
+  const tableRows1: RowProps[] = filteredData1.map((item) => ({
+    id: item.FRN,
+    address: item.FirmName,
+    addressType: item.EmoneyRegisterStatus,
+    licenseName: item.EmoneyStatusEffectiveDate,
+  }));
+
+  const tableRows2: RowProps[] = filteredData2.map((item) => ({
+    id: item.FRN,
+    address: item.FirmName,
+    addressType: item.PSDFirmStatus,
+    licenseName:
+      item.PSDStatusEffectiveDate === "" ? "-" : item.PSDStatusEffectiveDate,
+  }));
 
   useEffect(() => {
     const fetchData = async () => {
+      const urls = ["/api/uk/e-money-firms", "/api/uk/firm-psd-permission"];
       try {
-        const res = await fetch("/api/uk/e-money-firms");
-        const data = await res.json();
-        setEMoneyFirmsData(data["eMoneyFirms"]);
-        setFilteredData1(data["eMoneyFirms"]);
-      } catch (error) {
-        console.log(error);
-      }
-      setLoading1(false);
+        const data = await Promise.all(
+          urls.map((url) => fetch(url).then((res) => res.json()))
+        );
+        const eMoneyFirmsData = data[0] as EMoneyFirmsData;
+        const firmPSDPermission = data[1] as FirmPSDPermissionData;
+        setEMoneyFirmsData(eMoneyFirmsData.eMoneyFirms);
+        setFirmPsdPermissionData(firmPSDPermission.firmPSDPermission);
 
-      try {
-        const res = await fetch("/api/uk/firm-psd-permission");
-        const data = await res.json();
-        setFirmPsdPermissionData(data["firmPSDPermission"]);
-        setFilteredData2(data["firmPSDPermission"]);
+        setFilteredData1(eMoneyFirmsData.eMoneyFirms);
+        setFilteredData2(firmPSDPermission.firmPSDPermission);
       } catch (error) {
-        console.log(error);
+        console.error(error);
+      } finally {
+        setLoading(false);
       }
-      setLoading2(false);
     };
 
     fetchData();
@@ -116,7 +137,8 @@ const UkTable: React.FC = () => {
     };
 
     applyFilters1();
-  }, [filters1]);
+    setCurrentPage1(0);
+  }, [filters1, eMoneyFirmsData]);
 
   useEffect(() => {
     const applyFilters2 = () => {
@@ -150,10 +172,53 @@ const UkTable: React.FC = () => {
         );
       }
       setFilteredData2(filtered);
+      setCurrentPage2(0);
     };
 
     applyFilters2();
-  }, [filters2]);
+  }, [filters2, firmPsdPermissionData]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        drawerRef1.current &&
+        !drawerRef1.current.contains(event.target as Node)
+      ) {
+        setIsDrawerOpen1(false);
+      }
+    };
+
+    if (isDrawerOpen1) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDrawerOpen1]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        drawerRef2.current &&
+        !drawerRef2.current.contains(event.target as Node)
+      ) {
+        setIsDrawerOpen2(false);
+      }
+    };
+
+    if (isDrawerOpen2) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDrawerOpen2]);
 
   const handleSearch1 = (term: string) => {
     setFilters1((prev) => ({ ...prev, searchTerm: term }));
@@ -209,16 +274,34 @@ const UkTable: React.FC = () => {
 
   return (
     <div>
-      {loading1 && loading2 ? (
+      {loading ? (
         <>
           <div className={styles.mains}>
             <SearchBar onSearch={(value) => handleSearch1(value)} />
-            <Pagination
-              totalPages={totalPages1}
-              currentPage={currentPage1}
-              onPageChange={handlePageChange1}
-            />
+            <div className="flex gap-4 relative items-center justify-center">
+              <Pagination
+                totalPages={totalPages1}
+                currentPage={currentPage1}
+                onPageChange={handlePageChange1}
+              />
+              <div className={styles.drawer}>
+                <button
+                  onClick={() => setIsDrawerOpen1((prev) => !prev)}
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+                >
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                </button>
+                <Drawer
+                  register="uk/e-money-firms"
+                  isDrawerOpen={isDrawerOpen1}
+                  ref={drawerRef1}
+                />
+              </div>
+            </div>
           </div>
+
           <TableSkeleton
             lables={[
               "EmoneyStatusEffectiveDate",
@@ -226,27 +309,33 @@ const UkTable: React.FC = () => {
               "EmoneyRegisterStatus",
             ]}
           />
-          <div className={styles.mains}>
-            <SearchBar onSearch={(value) => handleSearch2(value)} />
-            <Pagination
-              totalPages={totalPages2}
-              currentPage={currentPage2}
-              onPageChange={handlePageChange2}
-            />
-          </div>
-          <TableSkeleton
-            lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]}
-          />
         </>
       ) : (
         <>
           <div className={styles.mains}>
             <SearchBar onSearch={(value) => handleSearch1(value)} />
-            <Pagination
-              totalPages={totalPages1}
-              currentPage={currentPage1}
-              onPageChange={handlePageChange1}
-            />
+            <div className="flex gap-4 relative items-center justify-center">
+              <Pagination
+                totalPages={totalPages1}
+                currentPage={currentPage1}
+                onPageChange={handlePageChange1}
+              />
+              <div className={styles.drawer}>
+                <button
+                  onClick={() => setIsDrawerOpen1((prev) => !prev)}
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+                >
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                </button>
+                <Drawer
+                  register="uk/e-money-firms"
+                  isDrawerOpen={isDrawerOpen1}
+                  ref={drawerRef1}
+                />
+              </div>
+            </div>
           </div>
           <Table
             lables={[
@@ -254,7 +343,7 @@ const UkTable: React.FC = () => {
               "FirmName",
               "EmoneyRegisterStatus",
             ]}
-            tableData={filteredData1}
+            tableData={tableRows1}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage1}
             onPageChange={handlePageChange1}
@@ -263,25 +352,74 @@ const UkTable: React.FC = () => {
             addressTypes={getUniqueAddressTypes1()}
             onFilterByAddressType={handleFilterByEmoneyRegisterStatus}
           />
+          <div className="relative mb-2 flex justify-center items-center">
+            <div className="text-lg">
+              Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}
+            </div>
+          </div>
+        </>
+      )}
+      {loading ? (
+        <>
           <div className={styles.mains}>
             <SearchBar onSearch={(value) => handleSearch2(value)} />
-            <Pagination
-              totalPages={totalPages2}
-              currentPage={currentPage2}
-              onPageChange={handlePageChange2}
-            />
+            <div className="flex gap-4 relative items-center justify-center">
+              <Pagination
+                totalPages={totalPages2}
+                currentPage={currentPage2}
+                onPageChange={handlePageChange2}
+              />
+              <div className={styles.drawer}>
+                <button
+                  onClick={() => setIsDrawerOpen2((prev) => !prev)}
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+                >
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                </button>
+                <Drawer
+                  register="uk/firm-psd-permission"
+                  isDrawerOpen={isDrawerOpen2}
+                  ref={drawerRef2}
+                />
+              </div>
+            </div>
+          </div>
+          <TableSkeleton
+            lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]}
+          />
+        </>
+      ) : (
+        <>
+          <div className={styles.mains}>
+            <SearchBar onSearch={(value) => handleSearch2(value)} />
+            <div className="flex gap-4 relative items-center justify-center">
+              <Pagination
+                totalPages={totalPages2}
+                currentPage={currentPage2}
+                onPageChange={handlePageChange2}
+              />
+              <div className={styles.drawer}>
+                <button
+                  onClick={() => setIsDrawerOpen2((prev) => !prev)}
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+                >
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                </button>
+                <Drawer
+                  register="uk/firm-psd-permission"
+                  isDrawerOpen={isDrawerOpen2}
+                  ref={drawerRef2}
+                />
+              </div>
+            </div>
           </div>
           <Table
             lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]}
-            tableData={filteredData2.map((data) => ({
-              FRN: data.FRN,
-              PSDFirmStatus: data.PSDFirmStatus,
-              PSDStatusEffectiveDate:
-                data.PSDStatusEffectiveDate === ""
-                  ? "-"
-                  : data.PSDStatusEffectiveDate,
-              FirmName: data.FirmName,
-            }))}
+            tableData={tableRows2}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage2}
             onPageChange={handlePageChange2}

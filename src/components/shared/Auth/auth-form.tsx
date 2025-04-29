@@ -13,12 +13,8 @@ import { Loader2, LockKeyhole, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { CustomCheckbox } from "../../ui/custom-checkbox";
-import {
-  InvalidData,
-  PasswordNotMatch,
-  UserAlreadyExist,
-} from "@/src/exeptions/errors";
 import Image from "next/image";
+
 interface Props {
   type: string;
   className?: string;
@@ -78,7 +74,6 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
       ) {
         setErrorMessage(error.message);
       } else {
-        console.log("error message: ", error.message);
         setErrorMessage("Server Error, please try again later");
       }
     } finally {

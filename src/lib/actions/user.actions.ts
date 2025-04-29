@@ -110,7 +110,7 @@ export const logOut = async () => {
 
     cookie.delete("fintech-aggregator-session");
   } catch (error) {
-    console.log("Error while log out user:", error);
+    console.error("Error while log out user:", error);
     throw new Error("Error logOut user");
   }
 };

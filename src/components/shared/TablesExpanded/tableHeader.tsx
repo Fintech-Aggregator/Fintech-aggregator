@@ -40,7 +40,6 @@ const TableHeader: React.FC<TableHeaderProps> = ({
     const value = e.target.value;
     onFilterByAddressType!(value);
   };
-  console.log(lables?.[0]);
   return (
     <thead className={styles.tableHeader}>
       <tr>

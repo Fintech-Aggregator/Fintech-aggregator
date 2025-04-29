@@ -1,10 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import SearchBar from "@/src/components/shared/HomeContentTemaplate/search-bar";
 import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
 import { TableSkeleton } from "@/src/components/shared/TablesExpanded/TableSkeleton";
 import styles from "../all-tables-style.module.css";
+import { Drawer } from "@/src/components/ui/drawer";
+import type { RowProps } from "@/src/components/shared/TablesExpanded/Table";
 
 interface Props {
   id: number;
@@ -26,6 +28,16 @@ const Lithuania: React.FC = () => {
   });
   const [currentPage, setCurrentPage] = useState(0);
   const rowsPerPage = 10;
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const drawerRef = useRef<HTMLDivElement>(null);
+
+  const tableRows: RowProps[] = filteredData.map((item) => ({
+    id: item.id,
+    address: item.FirmName,
+    licenseName: item.Address,
+    addressType: item.Licence,
+  }));
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -33,9 +45,8 @@ const Lithuania: React.FC = () => {
         const data = await res.json();
         setLithuaniaData(data["lithuania"]);
         setFilteredData(data["lithuania"]);
-        console.log(data);
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
       setLoading(false);
     };
@@ -71,10 +82,32 @@ const Lithuania: React.FC = () => {
         filtered = filtered.filter((item) => item.Licence === filters.Licence);
       }
       setFilteredData(filtered);
+      setCurrentPage(0);
     };
 
     applyFilters();
-  }, [filters]);
+  }, [filters, LithuaniaData]);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        drawerRef.current &&
+        !drawerRef.current.contains(event.target as Node)
+      ) {
+        setIsDrawerOpen(false);
+      }
+    };
+
+    if (isDrawerOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isDrawerOpen]);
 
   const handleSearch = (term: string) => {
     setFilters((prev) => ({ ...prev, searchTerm: term }));
@@ -102,15 +135,34 @@ const Lithuania: React.FC = () => {
   };
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
   return (
     <div>
       <div className={styles.mains}>
         <SearchBar onSearch={(value) => handleSearch(value)} />
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          onPageChange={handlePageChange}
-        />
+        <div className="flex gap-4 relative items-center justify-center">
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
+
+          <div className={styles.drawer}>
+            <button
+              onClick={() => setIsDrawerOpen((prev) => !prev)}
+              className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+            >
+              <div className="bg-black w-full h-[2px]"></div>
+              <div className="bg-black w-full h-[2px]"></div>
+              <div className="bg-black w-full h-[2px]"></div>
+            </button>
+            <Drawer
+              register="lithuania"
+              isDrawerOpen={isDrawerOpen}
+              ref={drawerRef}
+            />
+          </div>
+        </div>
       </div>
       {loading ? (
         <TableSkeleton lables={["Adress", "FirmName", "Licence"]} />
@@ -118,7 +170,7 @@ const Lithuania: React.FC = () => {
         <>
           <Table
             lables={["Adress", "FirmName", "Licence"]}
-            tableData={filteredData}
+            tableData={tableRows}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage}
             onPageChange={handlePageChange}

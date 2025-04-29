@@ -10,7 +10,6 @@ export default async function Home() {
   const token = cookie.get("fintech-aggregator-session")?.value;
   if (token) {
     const isTokenValid = jwt.verify(token, JWT_SECRET) 
-
     console.log("token: ", isTokenValid);
   }
   return (
