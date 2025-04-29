@@ -1,11 +1,12 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import SearchBar from "@/src/components/shared/HomeContentTemaplate/search-bar";
 import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
 import { TableSkeleton } from "@/src/components/shared/TablesExpanded/TableSkeleton";
 import styles from "../all-tables-style.module.css";
 import { Drawer } from "@/src/components/ui/drawer";
+import type { RowProps } from "@/src/components/shared/TablesExpanded/Table";
 
 interface Props {
   id: number;
@@ -29,6 +30,14 @@ const Lithuania: React.FC = () => {
   const rowsPerPage = 10;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
+
+  const tableRows: RowProps[] = filteredData.map((item) => ({
+    id: item.id,
+    address: item.FirmName,
+    licenseName: item.Address,
+    addressType: item.Licence,
+  }));
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -52,7 +61,9 @@ const Lithuania: React.FC = () => {
       if (filters.searchTerm) {
         filtered = filtered.filter((item) =>
           Object.values(item).some((value) =>
-            String(value).toLowerCase().includes(filters.searchTerm.toLowerCase())
+            String(value)
+              .toLowerCase()
+              .includes(filters.searchTerm.toLowerCase())
           )
         );
       }
@@ -79,7 +90,10 @@ const Lithuania: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+      if (
+        drawerRef.current &&
+        !drawerRef.current.contains(event.target as Node)
+      ) {
         setIsDrawerOpen(false);
       }
     };
@@ -111,7 +125,9 @@ const Lithuania: React.FC = () => {
   };
 
   const getUniqueLicence = () => {
-    const uniqueTypes = Array.from(new Set(LithuaniaData.map((item) => item.Licence)));
+    const uniqueTypes = Array.from(
+      new Set(LithuaniaData.map((item) => item.Licence))
+    );
     return uniqueTypes;
   };
   const handlePageChange = (page: number) => {
@@ -119,22 +135,32 @@ const Lithuania: React.FC = () => {
   };
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
+
   return (
     <div>
       <div className={styles.mains}>
         <SearchBar onSearch={(value) => handleSearch(value)} />
         <div className="flex gap-4 relative items-center justify-center">
-          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
 
           <div className={styles.drawer}>
             <button
               onClick={() => setIsDrawerOpen((prev) => !prev)}
-              className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+              className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+            >
               <div className="bg-black w-full h-[2px]"></div>
               <div className="bg-black w-full h-[2px]"></div>
               <div className="bg-black w-full h-[2px]"></div>
             </button>
-            <Drawer register="lithuania" isDrawerOpen={isDrawerOpen} ref={drawerRef} />
+            <Drawer
+              register="lithuania"
+              isDrawerOpen={isDrawerOpen}
+              ref={drawerRef}
+            />
           </div>
         </div>
       </div>
@@ -144,7 +170,7 @@ const Lithuania: React.FC = () => {
         <>
           <Table
             lables={["Adress", "FirmName", "Licence"]}
-            tableData={filteredData}
+            tableData={tableRows}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage}
             onPageChange={handlePageChange}
@@ -154,7 +180,9 @@ const Lithuania: React.FC = () => {
             onFilterByAddressType={handleFilterByLicence}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">Last Update: {LithuaniaData[0].lastUpdatedDate.slice(0, 10)}</div>
+            <div className="text-lg">
+              Last Update: {LithuaniaData[0].lastUpdatedDate.slice(0, 10)}
+            </div>
           </div>
         </>
       )}
