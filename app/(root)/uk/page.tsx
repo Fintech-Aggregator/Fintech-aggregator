@@ -249,14 +249,16 @@ const UkTable: React.FC = () => {
                 currentPage={currentPage1}
                 onPageChange={handlePageChange1}
               />
-              <button
-                onClick={() => setIsDrawerOpen1((prev) => !prev)}
-                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
-                <div className="bg-black w-full h-[2px]"></div>
-                <div className="bg-black w-full h-[2px]"></div>
-                <div className="bg-black w-full h-[2px]"></div>
-              </button>
-              <Drawer register="uk/e-money-firms" isDrawerOpen={isDrawerOpen1} ref={drawerRef1} />
+              <div className={styles.drawer}>
+                <button
+                  onClick={() => setIsDrawerOpen1((prev) => !prev)}
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                </button>
+                <Drawer register="uk/e-money-firms" isDrawerOpen={isDrawerOpen1} ref={drawerRef1} />
+              </div>
             </div>
           </div>
 
@@ -271,15 +273,17 @@ const UkTable: React.FC = () => {
                 totalPages={totalPages1}
                 currentPage={currentPage1}
                 onPageChange={handlePageChange1}
-              />{" "}
-              <button
-                onClick={() => setIsDrawerOpen1((prev) => !prev)}
-                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
-                <div className="bg-black w-full h-[2px]"></div>
-                <div className="bg-black w-full h-[2px]"></div>
-                <div className="bg-black w-full h-[2px]"></div>
-              </button>
-              <Drawer register="uk/e-money-firms" isDrawerOpen={isDrawerOpen1} ref={drawerRef1} />
+              />
+              <div className={styles.drawer}>
+                <button
+                  onClick={() => setIsDrawerOpen1((prev) => !prev)}
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                </button>
+                <Drawer register="uk/e-money-firms" isDrawerOpen={isDrawerOpen1} ref={drawerRef1} />
+              </div>
             </div>
           </div>
           <Table
@@ -308,14 +312,16 @@ const UkTable: React.FC = () => {
                 currentPage={currentPage2}
                 onPageChange={handlePageChange2}
               />
-              <button
-                onClick={() => setIsDrawerOpen2((prev) => !prev)}
-                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
-                <div className="bg-black w-full h-[2px]"></div>
-                <div className="bg-black w-full h-[2px]"></div>
-                <div className="bg-black w-full h-[2px]"></div>
-              </button>
-              <Drawer register="uk/firm-psd-permission" isDrawerOpen={isDrawerOpen2} ref={drawerRef2} />
+              <div className={styles.drawer}>
+                <button
+                  onClick={() => setIsDrawerOpen2((prev) => !prev)}
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                </button>
+                <Drawer register="uk/firm-psd-permission" isDrawerOpen={isDrawerOpen2} ref={drawerRef2} />
+              </div>
             </div>
           </div>
           <TableSkeleton lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]} />
@@ -330,14 +336,16 @@ const UkTable: React.FC = () => {
                 currentPage={currentPage2}
                 onPageChange={handlePageChange2}
               />
-              <button
-                onClick={() => setIsDrawerOpen2((prev) => !prev)}
-                className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
-                <div className="bg-black w-full h-[2px]"></div>
-                <div className="bg-black w-full h-[2px]"></div>
-                <div className="bg-black w-full h-[2px]"></div>
-              </button>
-              <Drawer register="uk/firm-psd-permission" isDrawerOpen={isDrawerOpen2} ref={drawerRef2} />
+              <div className={styles.drawer}>
+                <button
+                  onClick={() => setIsDrawerOpen2((prev) => !prev)}
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                  <div className="bg-black w-full h-[2px]"></div>
+                </button>
+                <Drawer register="uk/firm-psd-permission" isDrawerOpen={isDrawerOpen2} ref={drawerRef2} />
+              </div>
             </div>
           </div>
           <Table

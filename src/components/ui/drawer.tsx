@@ -39,7 +39,7 @@ export const Drawer = forwardRef<HTMLDivElement, Props>(
         {isDrawerOpen && (
           <div
             ref={ref}
-            className="absolute right-0 mt-10 bg-white border border-black rounded p-2 shadow-md flex flex-col gap-2 w-44 z-20 items-center"
+            className="absolute right-0 mt-4 bg-white border border-black rounded p-2 shadow-md flex flex-col gap-2 w-44 z-20 items-center"
           >
             <h2 className="font-semibold">Download</h2>
             <div className="mb-4 border-b-2 w-full h-1 border-b-black" />
