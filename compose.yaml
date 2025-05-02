@@ -1,0 +1,12 @@
+services:
+  fintech-aggregator:
+    image: bering152/fintech-aggregator:latest
+    container_name: fintech-aggregator
+    build:
+      context: .
+    env_file:
+      - .env
+
+    ports:
+      - "3000:3000"
+    restart: unless-stopped

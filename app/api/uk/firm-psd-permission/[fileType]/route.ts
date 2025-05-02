@@ -8,7 +8,7 @@ import { readFile } from "fs/promises";
 import fontkit from "@pdf-lib/fontkit";
 
 export async function GET(req: NextRequest, { params }: { params: { fileType: string } }) {
-  const { fileType } = await params;
+  const { fileType } = params;
   const firmPSDPermission = await prisma.firmPSDPermission.findMany();
   try {
     if (firmPSDPermission.length === 0) {

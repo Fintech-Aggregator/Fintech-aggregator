@@ -7,8 +7,11 @@ import { join } from "path";
 import { readFile } from "fs/promises";
 import fontkit from "@pdf-lib/fontkit";
 
-export async function GET(req: NextRequest, { params }: { params: { fileType: string } }) {
-  const { fileType } = await params;
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { fileType: string } }
+) {
+  const { fileType } = params;
   const lithuania = await prisma.lithuania.findMany();
   try {
     if (lithuania.length === 0) {

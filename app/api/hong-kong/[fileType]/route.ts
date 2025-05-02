@@ -8,7 +8,7 @@ import { readFile } from "fs/promises";
 import fontkit from "@pdf-lib/fontkit";
 
 export async function GET(req: NextRequest, { params }: { params: { fileType: string } }) {
-  const { fileType } = await params;
+  const { fileType } = params;
   const hongKong = await prisma.hongKong.findMany();
   try {
     if (hongKong.length === 0) {
@@ -121,36 +121,42 @@ export async function GET(req: NextRequest, { params }: { params: { fileType: st
             wrapText(String(row["address"]), addressWidth, customFont, fontSize),
             wrapText(String(row["addressType"]), addressTypeWidth, customFont, fontSize),
           ];
-        
+
           const maxLines = Math.max(...wrapped.map((lines) => lines.length));
-          const rowHeight = maxLines * (fontSize + 4); 
-        
+          const rowHeight = maxLines * (fontSize + 4);
+
           for (let lineIdx = 0; lineIdx < maxLines; lineIdx++) {
             for (let colIdx = 0; colIdx < wrapped.length; colIdx++) {
               const lines = wrapped[colIdx];
               const textLine = lines[lineIdx] ?? "";
-              
+
               page.drawText(textLine, {
                 x: colX[colIdx],
-                y: y - (lineIdx * (fontSize + 4)),
+                y: y - lineIdx * (fontSize + 4),
                 size: fontSize,
                 font: customFont,
                 color: rgb(0.1, 0.1, 0.1),
               });
             }
           }
-        
+
           y -= rowHeight + 8;
-        
+
           if (y < 100) {
             const newPage = pdfDoc.addPage([595, 842]);
             page = newPage;
             y = height - 50;
-        
+
             headersPretty.forEach((header, i) => {
-              page.drawText(header, { x: colX[i], y, size: fontSize + 2, font: customFont, color: rgb(0, 0, 0) });
+              page.drawText(header, {
+                x: colX[i],
+                y,
+                size: fontSize + 2,
+                font: customFont,
+                color: rgb(0, 0, 0),
+              });
             });
-        
+
             y -= 24;
           }
         }

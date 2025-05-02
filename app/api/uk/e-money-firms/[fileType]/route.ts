@@ -7,8 +7,11 @@ import { join } from "path";
 import { readFile } from "fs/promises";
 import fontkit from "@pdf-lib/fontkit";
 
-export async function GET(req: NextRequest, { params }: { params: { fileType: string } }) {
-  const { fileType } = await params;
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { fileType: string } }
+) {
+  const { fileType } = params;
   const eMoneyFirms = await prisma.eMoneyFirms.findMany();
   try {
     if (eMoneyFirms.length === 0) {
