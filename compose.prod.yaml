@@ -1,0 +1,12 @@
+services:
+  fintech-aggregator:
+    image: bering152/fintech-aggregator-prod:latest
+    container_name: fintech-aggregator-prod
+    build:
+      context: .
+      target: production
+    env_file:
+      - .env.production
+
+    ports:
+      - "3000:3000"

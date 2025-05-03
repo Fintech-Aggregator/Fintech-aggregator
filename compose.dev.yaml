@@ -1,0 +1,22 @@
+services:
+  fintech-aggregator:
+    image: bering152/fintech-aggregator-dev:latest
+    container_name: fintech-aggregator-dev
+    build:
+      context: .
+      target: development
+    env_file:
+      - .env
+    develop:
+      watch:
+        - path: ./
+          target: /app
+          action: sync
+        - path: ./package.json
+          action: rebuild
+        - path: ./package-lock.json
+          action: rebuild
+
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
