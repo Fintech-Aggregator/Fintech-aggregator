@@ -118,6 +118,20 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
               )}
               <CustomInput
                 control={form.control}
+                name="firstName"
+                type="firstName"
+                placeholder="First Name"
+              >
+              </CustomInput>
+              <CustomInput
+                control={form.control}
+                name="lastName"
+                type="lastName"
+                placeholder="Last Name"
+              >
+              </CustomInput>
+              <CustomInput
+                control={form.control}
                 name="email"
                 type="email"
                 placeholder="Email"
