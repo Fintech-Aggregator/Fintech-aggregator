@@ -1,13 +1,22 @@
 "use client";
 
 import React from "react";
-import styles from "./header.module.css";
 import Link from "next/link";
 import Image from "next/image";
 import { cn } from "@/src/lib/utils";
 import { usePathname } from "next/navigation";
 import { Button } from "../../ui/button";
 import { logOut } from "@/src/lib/actions/user.actions";
+import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "../../ui/drawer";
 
 interface HeaderProps {
   type?: string;
@@ -17,13 +26,13 @@ export const Header = ({ type }: HeaderProps) => {
   const pathname = usePathname().replace("/", "");
   return (
     <>
-      <header className="flex h-20 items-center mx-[clamp(5rem,_10vw,_60rem)] justify-between">
+      <header className="flex flex-col sm:flex-row justify-center sm:justify-between h-16 sm:20 w-full px-4 sm:px-16">
         {type === "auth" ? (
           <>
-            <div className={styles.firstBlockHeader}>
+            <div className="flex gap-12 items-center">
               <Link href="/">
                 <Image
-                  className={styles.logo}
+                  className="max-w-16 max-h-16"
                   src="/images/logo.svg"
                   alt="logo"
                   width={100}
@@ -32,21 +41,21 @@ export const Header = ({ type }: HeaderProps) => {
                 />
               </Link>
             </div>
-            <div className={styles.secondBlockHeader}>
+            <div className="flex justify-between">
               <Link
                 className="border border-black rounded-md font-medium w-44 h-10 flex justify-center items-center "
-                href={pathname === "sign-up" ? "/sign-in" : "/sign-up"}
-              >
+                href={pathname === "sign-up" ? "/sign-in" : "/sign-up"}>
                 {pathname === "sign-up" ? "Log in" : "Register"}
               </Link>
             </div>
           </>
         ) : (
           <>
-            <div className={styles.firstBlockHeader}>
+            {/* Desktop */}
+            <div className="hidden sm:flex gap-12 items-center">
               <Link href="/">
                 <Image
-                  className={styles.logo}
+                  className="max-w-16 max-h-16"
                   src="/images/logo.svg"
                   alt="logo"
                   width={100}
@@ -54,87 +63,129 @@ export const Header = ({ type }: HeaderProps) => {
                 />
               </Link>
               <Link href="/">
-                <span
-                  className={cn(
-                    "font-semibold",
-                    pathname === "" && "text-primary",
-                    styles.userName
-                  )}
-                >
+                <span className={cn("font-semibold text-3xl", pathname === "" && "text-primary text-3xl")}>
                   Home
                 </span>
               </Link>
               <Link href="/hong-kong">
-                <span
-                  className={cn(
-                    "font-semibold",
-                    pathname === "hong-kong" && "text-primary",
-                    styles.pageName
-                  )}
-                >
+                <span className={cn("font-semibold text-3xl", pathname === "hong-kong" && "text-primary")}>
                   Hong Kong
                 </span>
               </Link>
               <Link href="/uk">
-                <span
-                  className={cn(
-                    "font-semibold",
-                    pathname === "uk" && "text-primary",
-                    styles.pageName
-                  )}
-                >
+                <span className={cn("font-semibold text-3xl", pathname === "uk" && "text-primary text-3xl")}>
                   UK
                 </span>
               </Link>
               <Link href="/lithuania">
-                <span
-                  className={cn(
-                    "font-semibold",
-                    pathname === "lithuania" && "text-primary",
-                    styles.pageName
-                  )}
-                >
+                <span className={cn("font-semibold text-3xl", pathname === "lithuania" && "text-primary")}>
                   Lithuania
                 </span>
               </Link>
               <Link href="/documentation">
                 <span
-                  className={cn(
-                    "font-semibold",
-                    pathname === "documentation" && "text-primary",
-                    styles.pageName
-                  )}
-                >
+                  className={cn("font-semibold text-3xl", pathname === "documentation" && "text-primary")}>
                   Documentation
                 </span>
               </Link>
             </div>
-            <div className={cn("w-32", styles.secondBlockHeader)}>
-              <Link
-                href="/sign-up"
-                id="launchModalBtn"
-                className={styles.iconButton}
-              >
+            {/* Mobile */}
+            <div className="flex sm:hidden justify-between">
+              <Drawer direction="top">
+                <DrawerTrigger asChild>
+                  <Button className="p-0" variant={"ghost"}>
+                    <Image src="/images/menu.png" alt="exit" width={36} height={36} />
+                  </Button>
+                </DrawerTrigger>
+                <DrawerContent>
+                  <div className="mx-auto w-full max-w-sm">
+                    <DrawerHeader>
+                      <DrawerTitle></DrawerTitle>
+                      <DrawerDescription></DrawerDescription>
+                    </DrawerHeader>
+                    <div className="pb-0 flex flex-col ml-4 gap-2">
+                      <Link href="/">
+                        <span className={cn("font-semibold text-2xl", pathname === "" && "text-primary")}>
+                          Home
+                        </span>
+                      </Link>
+                      <Link href="/hong-kong">
+                        <span
+                          className={cn(
+                            "font-semibold text-2xl",
+                            pathname === "hong-kong" && "text-primary"
+                          )}>
+                          Hong Kong
+                        </span>
+                      </Link>
+                      <Link href="/uk">
+                        <span className={cn("font-semibold text-2xl", pathname === "uk" && "text-primary")}>
+                          UK
+                        </span>
+                      </Link>
+                      <Link href="/lithuania">
+                        <span
+                          className={cn(
+                            "font-semibold text-2xl",
+                            pathname === "lithuania" && "text-primary"
+                          )}>
+                          Lithuania
+                        </span>
+                      </Link>
+                      <Link href="/documentation">
+                        <span
+                          className={cn(
+                            "font-semibold text-2xl",
+                            pathname === "documentation" && "text-primary"
+                          )}>
+                          Documentation
+                        </span>
+                      </Link>
+                    </div>
+                    <DrawerFooter>
+                      <DrawerClose asChild>
+                        <Button variant="outline">Cancel</Button>
+                      </DrawerClose>
+                    </DrawerFooter>
+                  </div>
+                </DrawerContent>
+              </Drawer>
+              <Link className={cn("hidden", pathname === "" && "block")} href="/">
                 <Image
-                  src="/images/user.png"
-                  alt="person"
-                  width={36}
-                  height={36}
+                  className="max-w-16 max-h-16"
+                  src="/images/logo.svg"
+                  alt="logo"
+                  width={100}
+                  height={100}
                 />
               </Link>
-              <Button onClick={logOut} variant={"ghost"}>
-                <Image
-                  src="/images/exit.svg"
-                  alt="exit"
-                  width={36}
-                  height={36}
-                />
+              <Link className={cn("mr-20 min-w-32", pathname === "" && "hidden")} href="/">
+                <span className={cn("font-semibold text-2xl", pathname === "" && "hidden")}>
+                  {pathname === "hong-kong"
+                    ? "Hong Kong"
+                    : pathname === "uk"
+                    ? "UK"
+                    : pathname === "lithuania"
+                    ? "Lithuania"
+                    : "Documentaion"}
+                </span>
+              </Link>
+              <Link href="/sign-up" id="launchModalBtn" className="flex items-center">
+                <Image src="/images/user.png" alt="person" width={36} height={36} />
+              </Link>
+            </div>
+            <div className={cn("hidden w-28 sm:flex justify-between items-center")}>
+              <Link href="/sign-up" id="launchModalBtn" className="flex items-center">
+                <Image src="/images/user.png" alt="person" width={36} height={36} />
+              </Link>
+              <Button className="p-0" onClick={logOut} variant={"ghost"}>
+                <Image src="/images/exit.svg" alt="exit" width={36} height={36} />
               </Button>
             </div>
           </>
         )}
       </header>
-      <hr className={styles.divider} />
+      <hr className="border-none h-[1px] bg-[#333]" />
     </>
   );
 };

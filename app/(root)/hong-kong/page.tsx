@@ -5,7 +5,7 @@ import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
 import { TableSkeleton } from "@/src/components/shared/TablesExpanded/TableSkeleton";
 import styles from "../all-tables-style.module.css";
-import { Drawer } from "@/src/components/ui/drawer";
+import { FileDrawer } from "@/src/components/ui/file-drawer";
 
 interface Props {
   id: number;
@@ -137,7 +137,7 @@ const HongKong: React.FC = () => {
               <div className="bg-black w-full h-[2px]"></div>
               <div className="bg-black w-full h-[2px]"></div>
             </button>
-            <Drawer register="hong-kong" isDrawerOpen={isDrawerOpen} ref={drawerRef} />
+            <FileDrawer register="hong-kong" isDrawerOpen={isDrawerOpen} ref={drawerRef} />
           </div>
         </div>
       </div>

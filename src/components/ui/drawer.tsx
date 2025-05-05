@@ -1,79 +1,93 @@
-import React, { forwardRef } from "react";
+import * as React from "react";
+import { Drawer as DrawerPrimitive } from "vaul";
+
 import { cn } from "@/src/lib/utils";
-import Image from "next/image";
 
-interface Props {
-  className?: string;
-  isDrawerOpen: boolean;
-  register: string;
-}
-
-export const Drawer = forwardRef<HTMLDivElement, Props>(
-  ({ className, isDrawerOpen, register }, ref) => {
-    const getLink = async (type: string) => {
-      try {
-        const response = await fetch(`/api/${register}/${type}`);
-        if (!response.ok) {
-          console.error("Download failed");
-          return;
-        }
-
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = `${register}.${type}`;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
-        URL.revokeObjectURL(url);
-      } catch (error) {
-        console.error("Error downloading file:", error);
-      }
-    };
-
-    return (
-      <>
-        {isDrawerOpen && (
-          <div
-            ref={ref}
-            className="absolute right-0 mt-4 bg-white border border-black rounded p-2 shadow-md flex flex-col gap-2 w-44 z-20 items-center"
-          >
-            <h2 className="font-semibold">Download</h2>
-            <div className="mb-4 border-b-2 w-full h-1 border-b-black" />
-            <div className="flex w-full justify-evenly">
-              <Image
-                onClick={() => getLink("csv")}
-                className="w-8 h-8 cursor-pointer"
-                width={50}
-                height={50}
-                src="/images/CSV.png"
-                alt="csv"
-              />
-              <Image
-                onClick={() => getLink("xlsx")}
-                className="w-8 h-8 cursor-pointer"
-                width={50}
-                height={50}
-                src="/images/XLSX.png"
-                alt="xlsx"
-              />
-              <Image
-                onClick={() => getLink("pdf")}
-                className="w-8 h-8 cursor-pointer"
-                width={50}
-                height={50}
-                src="/images/PDF.png"
-                alt="pdf"
-              />
-            </div>
-          </div>
-        )}
-      </>
-    );
-  }
+const Drawer = ({
+  shouldScaleBackground = true,
+  ...props
+}: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
+  <DrawerPrimitive.Root shouldScaleBackground={shouldScaleBackground} {...props} />
 );
-
 Drawer.displayName = "Drawer";
+
+const DrawerTrigger = DrawerPrimitive.Trigger;
+
+const DrawerPortal = DrawerPrimitive.Portal;
+
+const DrawerClose = DrawerPrimitive.Close;
+
+const DrawerOverlay = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Overlay>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Overlay>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Overlay ref={ref} className={cn("fixed inset-0 z-50 bg-black/80", className)} {...props} />
+));
+DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
+
+const DrawerContent = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
+>(({ className, children, ...props }, ref) => (
+  <DrawerPortal>
+    <DrawerOverlay />
+    <DrawerPrimitive.Content
+      ref={ref}
+      className={cn(
+        "fixed inset-x-0 top-0 z-50 flex h-auto flex-col rounded-b-[10px] border bg-white",
+        className
+      )}
+      {...props}>
+      <div className="mx-auto mt-4 h-2 w-[100px] rounded-full bg-muted" />
+      {children}
+    </DrawerPrimitive.Content>
+  </DrawerPortal>
+));
+DrawerContent.displayName = "DrawerContent";
+
+const DrawerHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn("grid gap-1.5 text-center sm:text-left", className)} {...props} />
+);
+DrawerHeader.displayName = "DrawerHeader";
+
+const DrawerFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
+  <div className={cn("mt-auto flex flex-col gap-2 p-4", className)} {...props} />
+);
+DrawerFooter.displayName = "DrawerFooter";
+
+const DrawerTitle = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Title>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Title>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Title
+    ref={ref}
+    className={cn("text-lg font-semibold leading-none tracking-tight", className)}
+    {...props}
+  />
+));
+DrawerTitle.displayName = DrawerPrimitive.Title.displayName;
+
+const DrawerDescription = React.forwardRef<
+  React.ElementRef<typeof DrawerPrimitive.Description>,
+  React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Description>
+>(({ className, ...props }, ref) => (
+  <DrawerPrimitive.Description
+    ref={ref}
+    className={cn("text-sm text-muted-foreground", className)}
+    {...props}
+  />
+));
+DrawerDescription.displayName = DrawerPrimitive.Description.displayName;
+
+export {
+  Drawer,
+  DrawerPortal,
+  DrawerOverlay,
+  DrawerTrigger,
+  DrawerClose,
+  DrawerContent,
+  DrawerHeader,
+  DrawerFooter,
+  DrawerTitle,
+  DrawerDescription,
+};
