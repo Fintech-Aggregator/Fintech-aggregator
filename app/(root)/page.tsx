@@ -1,4 +1,3 @@
-import SearchBlock from "@/src/components/shared/SearchBlock/search-block";
 import MainPage from "@/src/components/shared/MainPage/main-page";
 import { cookies } from "next/headers";
 import jwt from "jsonwebtoken";
@@ -13,10 +12,5 @@ export default async function Home() {
     const isTokenValid = jwt.verify(token, JWT_SECRET);
     console.log("token: ", isTokenValid);
   }
-  return (
-    <>
-      <MainPage />
-      {/* <SearchBlock /> */}
-    </>
-  );
+  return <MainPage />;
 }

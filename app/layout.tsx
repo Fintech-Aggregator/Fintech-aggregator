@@ -14,6 +14,13 @@ const montserrat = Montserrat({
   weight: ["200", "300", "400", "500", "600", "700", "800"],
 });
 
+export const metadata = {
+  title: "Fintech Aggregator",
+  icons: {
+    icon: "/logo.ico",
+  },
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -22,9 +29,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <link data-rh="true" rel="icon" href="/logo.svg" />
+        <link rel="icon" href="/logo.ico" type="image/x-icon" />
       </head>
-      <body className={(inter.variable, montserrat.variable)}>{children}</body>
+      <body className={`${inter.variable} ${montserrat.variable}`}>{children}</body>
     </html>
   );
 }
