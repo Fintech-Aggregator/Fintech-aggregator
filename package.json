@@ -20,7 +20,7 @@
     "@pdf-lib/fontkit": "^1.1.1",
     "@prisma/client": "^5.22.0",
     "@radix-ui/react-checkbox": "^1.1.3",
-    "@radix-ui/react-dialog": "^1.1.11",
+    "@radix-ui/react-dialog": "^1.1.13",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-slot": "^1.1.2",
     "@types/bcrypt": "^5.0.2",
