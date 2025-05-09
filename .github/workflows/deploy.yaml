@@ -39,7 +39,7 @@ jobs:
           key: ${{ secrets.VPS_KEY }}
           script: |
             cd /root/fintech-aggregator
-            docker compose -f compose.prod-yaml down
+            docker compose -f compose.prod.yaml down
             docker rmi bering152/fintech-aggragator-frontend-prod:latest || true
             docker login -u ${{ secrets.REGISTRY_USER }} -p ${{ secrets.REGISTRY_PASSWORD }}
             docker pull bering152/fintech-aggragator-frontend-prod:latest
