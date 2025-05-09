@@ -55,7 +55,7 @@ export const Header = ({ type }: HeaderProps) => {
             <div className="hidden sm:flex gap-12 items-center">
               <Link href="/">
                 <Image
-                  className="max-w-16 max-h-16"
+                  className="max-w-12 max-h-12"
                   src="/images/logo.svg"
                   alt="logo"
                   width={100}
@@ -63,28 +63,47 @@ export const Header = ({ type }: HeaderProps) => {
                 />
               </Link>
               <Link href="/">
-                <span className={cn("font-semibold text-3xl", pathname === "" && "text-primary text-3xl")}>
+                <span
+                  className={cn(
+                    "font-semibold text-md md:text-xl lg:text-2xl",
+                    pathname === "" && "text-primary"
+                  )}>
                   Home
                 </span>
               </Link>
               <Link href="/hong-kong">
-                <span className={cn("font-semibold text-3xl", pathname === "hong-kong" && "text-primary")}>
+                <span
+                  className={cn(
+                    "font-semibold text-md md:text-xl lg:text-2xl",
+                    pathname === "hong-kong" && "text-primary"
+                  )}>
                   Hong Kong
                 </span>
               </Link>
               <Link href="/uk">
-                <span className={cn("font-semibold text-3xl", pathname === "uk" && "text-primary text-3xl")}>
+                <span
+                  className={cn(
+                    "font-semibold text-md md:text-xl lg:text-2xl",
+                    pathname === "uk" && "text-primary"
+                  )}>
                   UK
                 </span>
               </Link>
               <Link href="/lithuania">
-                <span className={cn("font-semibold text-3xl", pathname === "lithuania" && "text-primary")}>
+                <span
+                  className={cn(
+                    "font-semibold text-md md:text-xl lg:text-2xl",
+                    pathname === "lithuania" && "text-primary"
+                  )}>
                   Lithuania
                 </span>
               </Link>
               <Link href="/documentation">
                 <span
-                  className={cn("font-semibold text-3xl", pathname === "documentation" && "text-primary")}>
+                  className={cn(
+                    "font-semibold text-md md:text-xl lg:text-2xl",
+                    pathname === "documentation" && "text-primary"
+                  )}>
                   Documentation
                 </span>
               </Link>
@@ -174,12 +193,24 @@ export const Header = ({ type }: HeaderProps) => {
                 <Image src="/images/user.png" alt="person" width={36} height={36} />
               </Link>
             </div>
-            <div className={cn("hidden w-28 sm:flex justify-between items-center")}>
-              <Link href="/sign-up" id="launchModalBtn" className="flex items-center">
-                <Image src="/images/user.png" alt="person" width={36} height={36} />
+            <div className={cn("hidden w-24 sm:flex justify-between items-center")}>
+              <Link href="/sign-up" id="launchModalBtn" className="flex items-center max-w-12 max-h-12">
+                <Image
+                  className="w-8 h-8"
+                  src="/images/user.png"
+                  alt="person"
+                  width={100}
+                  height={100}
+                />
               </Link>
-              <Button className="p-0" onClick={logOut} variant={"ghost"}>
-                <Image src="/images/exit.svg" alt="exit" width={36} height={36} />
+              <Button className="p-0 max-w-12 max-h-12" onClick={logOut} variant={"ghost"}>
+                <Image
+                  className="w-8 h-8"
+                  src="/images/exit.svg"
+                  alt="exit"
+                  width={100}
+                  height={100}
+                />
               </Button>
             </div>
           </>
