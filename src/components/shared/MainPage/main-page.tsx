@@ -1,6 +1,14 @@
 import { cn } from "@/src/lib/utils";
 import styles from "./main-page.module.css";
 import Image from "next/image";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../../ui/dialog";
 import Footer from "../Footer/footer";
 
 export default function Content() {
@@ -68,14 +76,17 @@ export default function Content() {
                 about fintech company licenses.
               </h2>
             </div>
-
-            <button
-              className={cn("w-[clamp(15rem,_40vw,_25rem)]", styles.button)}
-            >
+            <Dialog>
+            <DialogTrigger className={cn("w-[clamp(15rem,_40vw,_25rem)]", styles.button)}>
               Find Licenses
-            </button>
+            </DialogTrigger>
+            <DialogContent className="bg-white">
+              <DialogHeader>
+                <DialogTitle>Are you absolutely sure?</DialogTitle>
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
           </div>
-
           <div className={styles.containerImage}>
             <Image
               className="w-[clamp(15rem,_40vw,_25rem)] items-center"
