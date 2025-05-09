@@ -45,3 +45,4 @@ jobs:
             docker pull bering152/fintech-aggragator-prod-frontend:latest
             docker compose -f compose.prod.yaml up
             docker system prune -a --volumes
+            
