@@ -9,17 +9,20 @@
   font-family: var(--font-montserrat), sans-serif;
 }
 
+body {
+  font-family: "Inter", sans-serif;
+}
+
 :root {
-  --primary-color: #05D66D;
+  --primary-color: #05d66d;
   --secondary-font: var(--font-inter);
 }
 
-
 @layer base {
   :root {
-    --primary-color: #05D66D;
+    --primary-color: #05d66d;
     --secondary-font: var(--font-inter);
-    
+
     --foreground: 0 0% 3.9%;
 
     --card: 0 0% 100%;
