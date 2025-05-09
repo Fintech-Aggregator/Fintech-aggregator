@@ -4,20 +4,22 @@
 # For more help, visit the .dockerignore file reference guide at
 # https://docs.docker.com/go/build-context-dockerignore/
 
+**/.DS_Store
+**/__pycache__
+**/.venv
 **/.classpath
 **/.dockerignore
 **/.git
-**/.env
 **/.gitignore
 **/.project
 **/.settings
 **/.toolstarget
 **/.vs
 **/.vscode
-**/.cache
 **/*.*proj.user
 **/*.dbmdl
 **/*.jfm
+**/bin
 **/charts
 **/docker-compose*
 **/compose.y*ml
@@ -27,7 +29,5 @@
 **/obj
 **/secrets.dev.yaml
 **/values.dev.yaml
-**/build
-**/dist
 LICENSE
 README.md
