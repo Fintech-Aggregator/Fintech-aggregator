@@ -24,9 +24,9 @@ jobs:
         with:
           context: .
           push: true
-          tags: bering152/fintech-aggragator-frontend-prod:latest
-          target: production
           no-cache: true
+          target: production
+          tags: bering152/fintech-aggragator-frontend-prod:latest
 
   deploy:
     needs: build-and-push
