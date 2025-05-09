@@ -24,7 +24,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: bering152/fintech-aggragator-prod-frontend:latest
+          tags: bering152/fintech-aggragator-frontend-prod:latest
 
   deploy:
     needs: build-and-push
@@ -38,11 +38,10 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
           script: |
-            cd fintech-aggragator
-            docker compose down
-            docker rmi bering152/fintech-aggragator-prod-frontend:latest || true
+            cd /root/fintech-aggregator
+            docker compose -f compose.prod-yaml down
+            docker rmi bering152/fintech-aggragator-frontend-prod:latest || true
             docker login -u ${{ secrets.REGISTRY_USER }} -p ${{ secrets.REGISTRY_PASSWORD }}
-            docker pull bering152/fintech-aggragator-prod-frontend:latest
+            docker pull bering152/fintech-aggragator-frontend-prod:latest
             docker compose -f compose.prod.yaml up
             docker system prune -a --volumes
-            
