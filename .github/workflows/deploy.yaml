@@ -38,11 +38,10 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_KEY }}
           script: |
-            cd fintech-aggragator
+            cd /root/fintech-aggregator
             docker compose -f compose.prod-yaml down
             docker rmi bering152/fintech-aggragator-frontend-prod:latest || true
             docker login -u ${{ secrets.REGISTRY_USER }} -p ${{ secrets.REGISTRY_PASSWORD }}
             docker pull bering152/fintech-aggragator-frontend-prod:latest
             docker compose -f compose.prod.yaml up
             docker system prune -a --volumes
-            
