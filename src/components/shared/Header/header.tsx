@@ -41,7 +41,7 @@ export const Header = ({ type }: HeaderProps) => {
                 />
               </Link>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <Link
                 className="border border-black rounded-md font-medium w-44 h-10 flex justify-center items-center "
                 href={pathname === "sign-up" ? "/sign-in" : "/sign-up"}>
