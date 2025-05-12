@@ -28,8 +28,8 @@ export const Header = ({ type }: HeaderProps) => {
     <>
       <header className="flex flex-col sm:flex-row justify-center sm:justify-between h-16 sm:20 w-full px-4 sm:px-16">
         {type === "auth" ? (
-          <>
-            <div className="flex gap-12 items-center">
+          <div className="flex justify-between w-full">
+            <div className="flex items-center">
               <Link href="/">
                 <Image
                   className="max-w-16 max-h-16"
@@ -48,7 +48,7 @@ export const Header = ({ type }: HeaderProps) => {
                 {pathname === "sign-up" ? "Log in" : "Register"}
               </Link>
             </div>
-          </>
+          </div>
         ) : (
           <>
             {/* Desktop */}
@@ -108,6 +108,7 @@ export const Header = ({ type }: HeaderProps) => {
                 </span>
               </Link>
             </div>
+
             {/* Mobile */}
             <div className="flex sm:hidden justify-between">
               <Drawer direction="top">
