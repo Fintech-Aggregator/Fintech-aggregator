@@ -23,8 +23,9 @@ export default async function Home() {
         console.error("Error while execution root/Home:", error);
       }
     }
-  } else {
-    redirect("/sign-up");
-  }
+  } 
+  // else {
+  //   redirect("/sign-up");
+  // }
   return <MainPage />;
 }
