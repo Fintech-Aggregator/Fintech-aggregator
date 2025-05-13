@@ -33,7 +33,7 @@ export const Header = ({ type }: HeaderProps) => {
               <Link href="/">
                 <Image
                   className="max-w-16 max-h-16"
-                  src="/images/logo.svg"
+                  src="/images/main-logo.png"
                   alt="logo"
                   width={100}
                   height={100}
