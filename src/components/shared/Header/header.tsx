@@ -55,8 +55,8 @@ export const Header = ({ type }: HeaderProps) => {
             <div className="hidden sm:flex gap-12 items-center">
               <Link href="/">
                 <Image
-                  className="max-w-12 max-h-12"
-                  src="/images/logo.svg"
+                  className="max-w-16 max-h-16"
+                  src="/images/main-logo.png"
                   alt="logo"
                   width={100}
                   height={100}
@@ -110,7 +110,7 @@ export const Header = ({ type }: HeaderProps) => {
             </div>
 
             {/* Mobile */}
-            <div className="flex sm:hidden justify-between">
+            <div className="flex sm:hidden justify-between items-center">
               <Drawer direction="top">
                 <DrawerTrigger asChild>
                   <Button className="p-0" variant={"ghost"}>
@@ -173,7 +173,7 @@ export const Header = ({ type }: HeaderProps) => {
               <Link className={cn("hidden", pathname === "" && "block")} href="/">
                 <Image
                   className="max-w-16 max-h-16"
-                  src="/images/logo.svg"
+                  src="/images/main-logo.png"
                   alt="logo"
                   width={100}
                   height={100}
