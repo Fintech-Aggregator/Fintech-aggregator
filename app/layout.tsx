@@ -10,7 +10,7 @@ const inter = Inter({
 export const metadata = {
   title: "Fintech Agreggator",
   icons: {
-    icon: "/logo.ico",
+    icon: "/main-logo.ico",
   },
 };
 
