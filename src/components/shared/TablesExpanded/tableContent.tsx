@@ -18,7 +18,7 @@ export const TableContent: React.FC<Props> = ({
   className,
 }) => {
   return (
-    <tr>
+    <tr className={styles.tableRow}>
       <td
         className="font-medium"
         style={{ width: "294px", paddingLeft: "25px" }}
@@ -28,8 +28,8 @@ export const TableContent: React.FC<Props> = ({
       <td
         className="font-medium"
         style={{
-          width: "375px",
-          paddingLeft: "25px",
+          width: "320px",
+
           paddingTop: "20px",
           display: "flex",
           justifyContent: "center",

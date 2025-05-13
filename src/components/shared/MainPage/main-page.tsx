@@ -57,7 +57,7 @@ export default function Content() {
           </div>
 
           <button className={cn(styles.button, "w-[80%] my-8 !h-12 !text-lg")}>
-            Find Licenses
+            Fintech Licenses
           </button>
         </div>
 

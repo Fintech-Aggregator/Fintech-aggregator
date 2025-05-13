@@ -44,7 +44,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   return (
     <thead className={styles.tableHeader}>
       <tr>
-        <th>
+        <th style={{ width: "294px" }}>
           <div className="my-2">
             <div className={cn(styles.addIcon, "mb-1")}>
               <p className="font-semibold">{lables?.[0]}</p>
@@ -72,7 +72,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             </div>
           </div>
         </th>
-        <th>
+        <th style={{ width: "300px" }}>
           <div>
             <div className={cn(styles.addIcon, "mb-1")}>
               <p className="font-semibold">{lables?.[1]}</p>
@@ -100,7 +100,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             </div>
           </div>
         </th>
-        <th>
+        <th style={{ width: "200px" }}>
           <div className={styles.content}>
             <div className={cn(styles.addIcon, "mb-1")}>
               <p className="font-semibold">{lables?.[2]}</p>

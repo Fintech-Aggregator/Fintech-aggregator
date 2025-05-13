@@ -121,15 +121,13 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
                 name="firstName"
                 type="firstName"
                 placeholder="First Name"
-              >
-              </CustomInput>
+              ></CustomInput>
               <CustomInput
                 control={form.control}
                 name="lastName"
                 type="lastName"
                 placeholder="Last Name"
-              >
-              </CustomInput>
+              ></CustomInput>
               <CustomInput
                 control={form.control}
                 name="email"
@@ -158,7 +156,7 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
                 <CustomCheckbox
                   isChecked={isAccept}
                   setChecked={setIsAccept}
-                  text="Accept the policy and terms"
+                  text="I accept the Terms and Privacy Policy"
                 />
               </div>
             </>
@@ -242,11 +240,11 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
           {type === "sign-up" ? (
             <Link className="mt-6" href={"/sign-in"}>
               Already have an account?{" "}
-              <span className="text-primary">Login</span>
+              <span className="text-primary">Log in</span>
             </Link>
           ) : (
             <Link className="mt-6" href={"/sign-up"}>
-              Don&apos;t have account?{" "}
+              Don&apos;t have an account?{" "}
               <span className="text-primary">Sign up</span>
             </Link>
           )}
@@ -273,7 +271,7 @@ export const AuthForm: React.FC<Props> = ({ type, className }) => {
                       Loading...
                     </>
                   ) : (
-                    <span className="font-bold">Login with Google</span>
+                    <span className="font-bold">Log in with Google</span>
                   )}
                 </button>
               )}
