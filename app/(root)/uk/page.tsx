@@ -36,7 +36,9 @@ const UkTable: React.FC = () => {
   const [filteredData1, setFilteredData1] = useState<Props1[]>([]);
 
   const [filteredData2, setFilteredData2] = useState<Props2[]>([]);
-  const [firmPsdPermissionData, setFirmPsdPermissionData] = useState<Props2[]>([]);
+  const [firmPsdPermissionData, setFirmPsdPermissionData] = useState<Props2[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
 
   const [filters1, setFilters1] = useState({
@@ -63,23 +65,26 @@ const UkTable: React.FC = () => {
 
   const tableRows1: RowProps[] = filteredData1.map((item) => ({
     id: item.FRN,
-    address: item.FirmName,
+    address: item.EmoneyStatusEffectiveDate,
     addressType: item.EmoneyRegisterStatus,
-    licenseName: item.EmoneyStatusEffectiveDate,
+    licenseName: item.FirmName,
   }));
 
   const tableRows2: RowProps[] = filteredData2.map((item) => ({
     id: item.FRN,
-    address: item.FirmName,
+    address:
+      item.PSDStatusEffectiveDate === "" ? "-" : item.PSDStatusEffectiveDate,
     addressType: item.PSDFirmStatus,
-    licenseName: item.PSDStatusEffectiveDate === "" ? "-" : item.PSDStatusEffectiveDate,
+    licenseName: item.FirmName,
   }));
 
   useEffect(() => {
     const fetchData = async () => {
       const urls = ["/api/uk/e-money-firms", "/api/uk/firm-psd-permission"];
       try {
-        const data = await Promise.all(urls.map((url) => fetch(url).then((res) => res.json())));
+        const data = await Promise.all(
+          urls.map((url) => fetch(url).then((res) => res.json()))
+        );
         const eMoneyFirmsData = data[0] as EMoneyFirmsData;
         const firmPSDPermission = data[1] as FirmPSDPermissionData;
         setEMoneyFirmsData(eMoneyFirmsData.eMoneyFirms);
@@ -104,7 +109,9 @@ const UkTable: React.FC = () => {
       if (filters1.searchTerm) {
         filtered = filtered.filter((item) =>
           Object.values(item).some((value) =>
-            String(value).toLowerCase().includes(filters1.searchTerm.toLowerCase())
+            String(value)
+              .toLowerCase()
+              .includes(filters1.searchTerm.toLowerCase())
           )
         );
       }
@@ -122,7 +129,9 @@ const UkTable: React.FC = () => {
         );
       }
       if (filters1.EmoneyRegisterStatus) {
-        filtered = filtered.filter((item) => item.EmoneyRegisterStatus === filters1.EmoneyRegisterStatus);
+        filtered = filtered.filter(
+          (item) => item.EmoneyRegisterStatus === filters1.EmoneyRegisterStatus
+        );
       }
       setFilteredData1(filtered);
     };
@@ -138,14 +147,18 @@ const UkTable: React.FC = () => {
       if (filters2.searchTerm) {
         filtered = filtered.filter((item) =>
           Object.values(item).some((value) =>
-            String(value).toLowerCase().includes(filters2.searchTerm.toLowerCase())
+            String(value)
+              .toLowerCase()
+              .includes(filters2.searchTerm.toLowerCase())
           )
         );
       }
 
       if (filters2.PSDStatusEffectiveDate) {
         filtered = filtered.filter((item) =>
-          item.PSDStatusEffectiveDate.toLowerCase().includes(filters2.PSDStatusEffectiveDate.toLowerCase())
+          item.PSDStatusEffectiveDate.toLowerCase().includes(
+            filters2.PSDStatusEffectiveDate.toLowerCase()
+          )
         );
       }
       if (filters2.FirmName) {
@@ -154,7 +167,9 @@ const UkTable: React.FC = () => {
         );
       }
       if (filters2.PSDFirmStatus) {
-        filtered = filtered.filter((item) => item.PSDFirmStatus === filters2.PSDFirmStatus);
+        filtered = filtered.filter(
+          (item) => item.PSDFirmStatus === filters2.PSDFirmStatus
+        );
       }
       setFilteredData2(filtered);
       setCurrentPage2(0);
@@ -165,7 +180,10 @@ const UkTable: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (drawerRef1.current && !drawerRef1.current.contains(event.target as Node)) {
+      if (
+        drawerRef1.current &&
+        !drawerRef1.current.contains(event.target as Node)
+      ) {
         setIsDrawerOpen1(false);
       }
     };
@@ -183,7 +201,10 @@ const UkTable: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (drawerRef2.current && !drawerRef2.current.contains(event.target as Node)) {
+      if (
+        drawerRef2.current &&
+        !drawerRef2.current.contains(event.target as Node)
+      ) {
         setIsDrawerOpen2(false);
       }
     };
@@ -230,11 +251,15 @@ const UkTable: React.FC = () => {
   };
 
   const getUniqueAddressTypes1 = () => {
-    const uniqueTypes = Array.from(new Set(eMoneyFirmsData.map((item: any) => item.EmoneyRegisterStatus)));
+    const uniqueTypes = Array.from(
+      new Set(eMoneyFirmsData.map((item: any) => item.EmoneyRegisterStatus))
+    );
     return uniqueTypes;
   };
   const getUniqueAddressTypes2 = () => {
-    const uniqueTypes = Array.from(new Set(firmPsdPermissionData.map((item: any) => item.PSDFirmStatus)));
+    const uniqueTypes = Array.from(
+      new Set(firmPsdPermissionData.map((item: any) => item.PSDFirmStatus))
+    );
     return uniqueTypes;
   };
 
@@ -262,17 +287,22 @@ const UkTable: React.FC = () => {
               <div className={styles.drawer}>
                 <button
                   onClick={() => setIsDrawerOpen1((prev) => !prev)}
-                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+                >
                   <div className="bg-black w-full h-[2px]"></div>
                   <div className="bg-black w-full h-[2px]"></div>
                   <div className="bg-black w-full h-[2px]"></div>
                 </button>
-                <FileDrawer register="uk/e-money-firms" isDrawerOpen={isDrawerOpen1} ref={drawerRef1} />
+                <FileDrawer
+                  register="uk/e-money-firms"
+                  isDrawerOpen={isDrawerOpen1}
+                  ref={drawerRef1}
+                />
               </div>
             </div>
           </div>
 
-          <TableSkeleton lables={["EmoneyStatusEffectiveDate", "FirmName", "EmoneyRegisterStatus"]} />
+          <TableSkeleton lables={["Company Name", "Date", "Address Type"]} />
         </>
       ) : (
         <>
@@ -287,28 +317,35 @@ const UkTable: React.FC = () => {
               <div className={styles.drawer}>
                 <button
                   onClick={() => setIsDrawerOpen1((prev) => !prev)}
-                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+                >
                   <div className="bg-black w-full h-[2px]"></div>
                   <div className="bg-black w-full h-[2px]"></div>
                   <div className="bg-black w-full h-[2px]"></div>
                 </button>
-                <FileDrawer register="uk/e-money-firms" isDrawerOpen={isDrawerOpen1} ref={drawerRef1} />
+                <FileDrawer
+                  register="uk/e-money-firms"
+                  isDrawerOpen={isDrawerOpen1}
+                  ref={drawerRef1}
+                />
               </div>
             </div>
           </div>
           <Table
-            lables={["EmoneyStatusEffectiveDate", "FirmName", "EmoneyRegisterStatus"]}
+            lables={["Company Name", "Date", "Address Type"]}
             tableData={tableRows1}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage1}
             onPageChange={handlePageChange1}
-            onFilterByLicenseName={handleFilterByEmoneyStatusEffectiveDate}
-            onFilterByAdress={handleFilterByFirmName1}
+            onFilterByLicenseName={handleFilterByFirmName1}
+            onFilterByAdress={handleFilterByEmoneyStatusEffectiveDate}
             addressTypes={getUniqueAddressTypes1()}
             onFilterByAddressType={handleFilterByEmoneyRegisterStatus}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}</div>
+            <div className="text-lg">
+              Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}
+            </div>
           </div>
         </>
       )}
@@ -325,16 +362,21 @@ const UkTable: React.FC = () => {
               <div className={styles.drawer}>
                 <button
                   onClick={() => setIsDrawerOpen2((prev) => !prev)}
-                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+                >
                   <div className="bg-black w-full h-[2px]"></div>
                   <div className="bg-black w-full h-[2px]"></div>
                   <div className="bg-black w-full h-[2px]"></div>
                 </button>
-                <FileDrawer register="uk/firm-psd-permission" isDrawerOpen={isDrawerOpen2} ref={drawerRef2} />
+                <FileDrawer
+                  register="uk/firm-psd-permission"
+                  isDrawerOpen={isDrawerOpen2}
+                  ref={drawerRef2}
+                />
               </div>
             </div>
           </div>
-          <TableSkeleton lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]} />
+          <TableSkeleton lables={["Company Name", "Date", "Address Type"]} />
         </>
       ) : (
         <>
@@ -349,28 +391,35 @@ const UkTable: React.FC = () => {
               <div className={styles.drawer}>
                 <button
                   onClick={() => setIsDrawerOpen2((prev) => !prev)}
-                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2">
+                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
+                >
                   <div className="bg-black w-full h-[2px]"></div>
                   <div className="bg-black w-full h-[2px]"></div>
                   <div className="bg-black w-full h-[2px]"></div>
                 </button>
-                <FileDrawer register="uk/firm-psd-permission" isDrawerOpen={isDrawerOpen2} ref={drawerRef2} />
+                <FileDrawer
+                  register="uk/firm-psd-permission"
+                  isDrawerOpen={isDrawerOpen2}
+                  ref={drawerRef2}
+                />
               </div>
             </div>
           </div>
           <Table
-            lables={["PSDStatusEffectiveDate", "FirmName", "PSDFirmStatus"]}
+            lables={["Company Name", "Date", "Address Type"]}
             tableData={tableRows2}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage2}
             onPageChange={handlePageChange2}
-            onFilterByLicenseName={handleFilterByPSDStatusEffectiveDate}
-            onFilterByAdress={handleFilterByFirmName2}
+            onFilterByLicenseName={handleFilterByFirmName2}
+            onFilterByAdress={handleFilterByPSDStatusEffectiveDate}
             addressTypes={getUniqueAddressTypes2()}
             onFilterByAddressType={handleFilterByPSDFirmStatus}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}</div>
+            <div className="text-lg">
+              Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}
+            </div>
           </div>
         </>
       )}
