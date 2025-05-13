@@ -6,6 +6,7 @@ import { Table } from "@/src/components/shared/TablesExpanded/Table";
 import { TableSkeleton } from "@/src/components/shared/TablesExpanded/TableSkeleton";
 import styles from "../all-tables-style.module.css";
 import { FileDrawer } from "@/src/components/ui/file-drawer";
+import Image from "next/image";
 
 interface Props {
   id: number;
@@ -55,18 +56,14 @@ const HongKong: React.FC = () => {
       if (filters.searchTerm) {
         filtered = filtered.filter((item) =>
           Object.values(item).some((value) =>
-            String(value)
-              .toLowerCase()
-              .includes(filters.searchTerm.toLowerCase())
+            String(value).toLowerCase().includes(filters.searchTerm.toLowerCase())
           )
         );
       }
 
       if (filters.licenseName) {
         filtered = filtered.filter((item) =>
-          item.licenseName
-            .toLowerCase()
-            .includes(filters.licenseName.toLowerCase())
+          item.licenseName.toLowerCase().includes(filters.licenseName.toLowerCase())
         );
       }
       if (filters.adress) {
@@ -75,9 +72,7 @@ const HongKong: React.FC = () => {
         );
       }
       if (filters.addressType && filters.addressType !== "") {
-        filtered = filtered.filter(
-          (item) => item.addressType === filters.addressType
-        );
+        filtered = filtered.filter((item) => item.addressType === filters.addressType);
       }
       setFilteredData(filtered);
       setCurrentPage(0);
@@ -88,10 +83,7 @@ const HongKong: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        drawerRef.current &&
-        !drawerRef.current.contains(event.target as Node)
-      ) {
+      if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
         setIsDrawerOpen(false);
       }
     };
@@ -123,9 +115,7 @@ const HongKong: React.FC = () => {
   };
 
   const getUniqueAddressTypes = () => {
-    const uniqueTypes = Array.from(
-      new Set(hongKongData.map((item) => item.addressType))
-    );
+    const uniqueTypes = Array.from(new Set(hongKongData.map((item) => item.addressType)));
     return uniqueTypes;
   };
   const handlePageChange = (page: number) => {
@@ -139,25 +129,19 @@ const HongKong: React.FC = () => {
       <div className={styles.mains}>
         <SearchBar onSearch={(value) => handleSearch(value)} />
         <div className="flex gap-4 relative items-center justify-center">
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
+          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
           <div className={styles.drawer}>
-            <button
-              onClick={() => setIsDrawerOpen((prev) => !prev)}
-              className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
-            >
-              <div className="bg-black w-full h-[2px]"></div>
-              <div className="bg-black w-full h-[2px]"></div>
-              <div className="bg-black w-full h-[2px]"></div>
-            </button>
-            <FileDrawer
-              register="hong-kong"
-              isDrawerOpen={isDrawerOpen}
-              ref={drawerRef}
-            />
+            <div className="cursor-pointer border border-black rounded-xl w-10 h-10 flex items-center justify-center">
+              <Image
+                width={20}
+                height={20}
+                src={"/images/download.jpg"}
+                onClick={() => setIsDrawerOpen((prev) => !prev)}
+                className="w-8 h-8"
+                alt={"download icon"}
+              />
+            </div>
+            <FileDrawer register="hong-kong" isDrawerOpen={isDrawerOpen} ref={drawerRef} />
           </div>
         </div>
       </div>
@@ -177,9 +161,7 @@ const HongKong: React.FC = () => {
             onFilterByAddressType={handleFilterByAddressType}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">
-              Last Update: {hongKongData[0]?.lastUpdatedDate.slice(0, 10)}
-            </div>
+            <div className="text-lg">Last Update: {hongKongData[0]?.lastUpdatedDate.slice(0, 10)}</div>
           </div>
         </>
       )}
