@@ -4,6 +4,7 @@ import SearchBar from "../HomeContentTemaplate/search-bar";
 import SelectField from "../../ui/selectField";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { cn } from "@/src/lib/utils";
 
 interface TableHeaderProps {
   lables: string[];
@@ -44,8 +45,8 @@ const TableHeader: React.FC<TableHeaderProps> = ({
     <thead className={styles.tableHeader}>
       <tr>
         <th>
-          <div>
-            <div className={styles.addIcon}>
+          <div className="my-2">
+            <div className={cn(styles.addIcon, "mb-1")}>
               <p className="font-semibold">{lables?.[0]}</p>
               <Image
                 className="ml-1"
@@ -73,7 +74,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
         </th>
         <th>
           <div>
-            <div className={styles.addIcon}>
+            <div className={cn(styles.addIcon, "mb-1")}>
               <p className="font-semibold">{lables?.[1]}</p>
               <Image
                 className="ml-1"
@@ -101,7 +102,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
         </th>
         <th>
           <div className={styles.content}>
-            <div className={styles.addIcon}>
+            <div className={cn(styles.addIcon, "mb-1")}>
               <p className="font-semibold">{lables?.[2]}</p>
               <Image
                 className="ml-1"

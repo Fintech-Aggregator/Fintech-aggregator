@@ -27,7 +27,14 @@ export const TableContent: React.FC<Props> = ({
       </td>
       <td
         className="font-medium"
-        style={{ width: "375px", paddingLeft: "25px" }}
+        style={{
+          width: "375px",
+          paddingLeft: "25px",
+          paddingTop: "20px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
       >
         {address}
       </td>
