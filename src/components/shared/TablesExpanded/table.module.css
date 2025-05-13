@@ -97,6 +97,7 @@
   width: 100%;
   height: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .table th,
@@ -121,7 +122,9 @@
 .table tr:nth-child(odd) {
   background-color: #ffffff;
 }
-
+.tableRow {
+  height: 52px;
+}
 .mobileTable {
   display: none;
   flex-direction: column;

@@ -17,15 +17,15 @@ export const TableSkeleton: React.FC<TableSkeletonProps> = ({ lables }) => {
             {Array(10)
               .fill(0)
               .map((_, index) => (
-                <tr key={index}>
+                <tr key={index} className={styles.tableRow}>
                   <td style={{ width: "294px" }}>
-                    <Skeleton className="w-[294px] h-[52px] rounded-[10px]" />
+                    <Skeleton className=" h-[52px] rounded-[10px]" />
                   </td>
-                  <td style={{ width: "375px" }}>
-                    <Skeleton className="w-[375px] h-[52px] rounded-[10px]" />
+                  <td style={{ width: "320px" }}>
+                    <Skeleton className=" h-[52px] rounded-[10px]" />
                   </td>
-                  <td style={{ width: "200px" }}>
-                    <Skeleton className="w-[200px] h-[52px] rounded-[10px]" />
+                  <td style={{ width: "125px" }}>
+                    <Skeleton className=" h-[52px] rounded-[10px]" />
                   </td>
                 </tr>
               ))}
