@@ -179,7 +179,7 @@ export const Header = ({ type }: HeaderProps) => {
                   height={100}
                 />
               </Link>
-              <Link className={cn("mr-20 min-w-32", pathname === "" && "hidden")} href="/">
+              <Link className={cn("mr-12 min-w-28", pathname === "" && "hidden")} href="/">
                 <span className={cn("font-semibold text-2xl", pathname === "" && "hidden")}>
                   {pathname === "hong-kong"
                     ? "Hong Kong"

@@ -56,9 +56,64 @@ export default function Content() {
             </h2>
           </div>
 
-          <button className={cn(styles.button, "w-[80%] my-8 !h-12 !text-lg")}>
-            Fintech Licenses
-          </button>
+          <Dialog>
+              <DialogTrigger className={cn(styles.button, "my-4 w-[80%] h-12 text-xl")}>
+                Fintech Licenses
+              </DialogTrigger>
+              <DialogContent className="bg-white rounded-lg p-6 w-[90%] max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="text-center text-[24px] font-semibold mb-4">
+                    Choose a country
+                  </DialogTitle>
+                </DialogHeader>
+
+                <div className="flex flex-col gap-3">
+                  <Link href="/hong-kong" className="block w-full">
+                    <div className="flex items-center gap-3 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 w-full">
+                      <Image
+                        className="max-w-16 max-h-16"
+                        src="/images/flag-for-hong-kong.svg"
+                        alt="HK"
+                        width={50}
+                        height={50}
+                        priority
+                      />
+                      <span className="text-[28px] font-bold">Hong Kong</span>
+                    </div>
+                  </Link>
+
+                  <Link href="/uk" className="block w-full">
+                    <div className="flex items-center gap-3 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 w-full">
+                      <Image
+                        className="max-w-16 max-h-16"
+                        src="/images/flag-for-united-kingdom.svg"
+                        alt="UK"
+                        width={50}
+                        height={50}
+                        priority
+                      />
+                      <span className="text-[28px] font-bold">
+                        United Kingdom
+                      </span>
+                    </div>
+                  </Link>
+
+                  <Link href="/lithuania" className="block w-full">
+                    <div className="flex items-center gap-3 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-100 w-full">
+                      <Image
+                        className="max-w-16 max-h-16"
+                        src="/images/flag-lithuania.svg"
+                        alt="LT"
+                        width={50}
+                        height={50}
+                        priority
+                      />
+                      <span className="text-[28px] font-bold">Lithuania</span>
+                    </div>
+                  </Link>
+                </div>
+              </DialogContent>
+            </Dialog>
         </div>
 
         {/* Desktop */}
@@ -78,7 +133,7 @@ export default function Content() {
               </h2>
             </div>
             <Dialog>
-              <DialogTrigger className={styles.button}>
+              <DialogTrigger className={cn(styles.button, "h-14 text-2xl w-[80%]")}>
                 Fintech Licenses
               </DialogTrigger>
               <DialogContent className="bg-white rounded-lg p-6 w-[90%] max-w-md">
