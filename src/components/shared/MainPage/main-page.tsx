@@ -79,7 +79,7 @@ export default function Content() {
             </div>
             <Dialog>
               <DialogTrigger className={styles.button}>
-                Find Licenses
+                Fintech Licenses
               </DialogTrigger>
               <DialogContent className="bg-white rounded-lg p-6 w-[90%] max-w-md">
                 <DialogHeader>
