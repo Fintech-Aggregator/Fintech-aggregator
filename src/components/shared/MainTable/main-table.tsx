@@ -195,24 +195,6 @@ const CombinedTable: React.FC = () => {
             currentPage={currentPage}
             onPageChange={handlePageChange}
           />
-          <div ref={drawerRef}>
-            <div
-              className="cursor-pointer border border-black rounded-xl w-10 h-10 flex items-center justify-center"
-              onClick={() => setIsDrawerOpen((prev) => !prev)}
-            >
-              <Image
-                src="/images/download.jpg"
-                width={20}
-                height={20}
-                alt="download icon"
-              />
-            </div>
-            <FileDrawer
-              register="combined"
-              isDrawerOpen={isDrawerOpen}
-              ref={drawerRef}
-            />
-          </div>
         </div>
       </div>
       {loading ? (
