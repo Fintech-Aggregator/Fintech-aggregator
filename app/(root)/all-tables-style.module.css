@@ -5,6 +5,13 @@
   align-items: center;
   gap: 438px;
 }
+.mainsWithCountry {
+  margin-right: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 230px;
+}
 .pagination {
   align-items: center;
 }
@@ -21,6 +28,20 @@
 
     justify-content: space-between;
     align-items: center;
+    gap: 0px;
+  }
+  .mainsWithCountry {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+    gap: 0px;
+  }
+}
+@media (max-width: 800px) {
+  .mainsWithCountry {
+    margin: 20px;
+    flex-direction: column-reverse;
     gap: 0px;
   }
 }
