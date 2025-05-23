@@ -33,7 +33,7 @@ export const Header = ({ type }: HeaderProps) => {
               <Link href="/">
                 <Image
                   className="max-w-16 max-h-16"
-                  src="/images/main-logo.png"
+                  src="/images/main-logo.webp"
                   alt="logo"
                   width={100}
                   height={100}
@@ -44,8 +44,7 @@ export const Header = ({ type }: HeaderProps) => {
             <div className="flex justify-between items-center">
               <Link
                 className="border border-black rounded-md font-medium w-44 h-10 flex justify-center items-center "
-                href={pathname === "sign-up" ? "/sign-in" : "/sign-up"}
-              >
+                href={pathname === "sign-up" ? "/sign-in" : "/sign-up"}>
                 {pathname === "sign-up" ? "Log in" : "Register"}
               </Link>
             </div>
@@ -57,7 +56,7 @@ export const Header = ({ type }: HeaderProps) => {
               <Link href="/">
                 <Image
                   className="max-w-16 max-h-16"
-                  src="/images/main-logo.png"
+                  src="/images/main-logo.webp"
                   alt="logo"
                   width={100}
                   height={100}
@@ -68,8 +67,7 @@ export const Header = ({ type }: HeaderProps) => {
                   className={cn(
                     "font-semibold text-md md:text-xl lg:text-2xl",
                     pathname === "" && "text-primary"
-                  )}
-                >
+                  )}>
                   Home
                 </span>
               </Link>
@@ -78,8 +76,7 @@ export const Header = ({ type }: HeaderProps) => {
                   className={cn(
                     "font-semibold text-md md:text-xl lg:text-2xl",
                     pathname === "hong-kong" && "text-primary"
-                  )}
-                >
+                  )}>
                   Hong Kong
                 </span>
               </Link>
@@ -88,8 +85,7 @@ export const Header = ({ type }: HeaderProps) => {
                   className={cn(
                     "font-semibold text-md md:text-xl lg:text-2xl",
                     pathname === "uk" && "text-primary"
-                  )}
-                >
+                  )}>
                   UK
                 </span>
               </Link>
@@ -98,8 +94,7 @@ export const Header = ({ type }: HeaderProps) => {
                   className={cn(
                     "font-semibold text-md md:text-xl lg:text-2xl",
                     pathname === "lithuania" && "text-primary"
-                  )}
-                >
+                  )}>
                   Lithuania
                 </span>
               </Link>
@@ -119,12 +114,7 @@ export const Header = ({ type }: HeaderProps) => {
               <Drawer direction="top">
                 <DrawerTrigger asChild>
                   <Button className="p-0" variant={"ghost"}>
-                    <Image
-                      src="/images/menu.png"
-                      alt="exit"
-                      width={36}
-                      height={36}
-                    />
+                    <Image src="/images/menu.webp" alt="exit" width={36} height={36} />
                   </Button>
                 </DrawerTrigger>
                 <DrawerContent>
@@ -135,12 +125,7 @@ export const Header = ({ type }: HeaderProps) => {
                     </DrawerHeader>
                     <div className="pb-0 flex flex-col ml-4 gap-2">
                       <Link href="/">
-                        <span
-                          className={cn(
-                            "font-semibold text-2xl",
-                            pathname === "" && "text-primary"
-                          )}
-                        >
+                        <span className={cn("font-semibold text-2xl", pathname === "" && "text-primary")}>
                           Home
                         </span>
                       </Link>
@@ -149,18 +134,12 @@ export const Header = ({ type }: HeaderProps) => {
                           className={cn(
                             "font-semibold text-2xl",
                             pathname === "hong-kong" && "text-primary"
-                          )}
-                        >
+                          )}>
                           Hong Kong
                         </span>
                       </Link>
                       <Link href="/uk">
-                        <span
-                          className={cn(
-                            "font-semibold text-2xl",
-                            pathname === "uk" && "text-primary"
-                          )}
-                        >
+                        <span className={cn("font-semibold text-2xl", pathname === "uk" && "text-primary")}>
                           UK
                         </span>
                       </Link>
@@ -169,8 +148,7 @@ export const Header = ({ type }: HeaderProps) => {
                           className={cn(
                             "font-semibold text-2xl",
                             pathname === "lithuania" && "text-primary"
-                          )}
-                        >
+                          )}>
                           Lithuania
                         </span>
                       </Link>
@@ -193,28 +171,17 @@ export const Header = ({ type }: HeaderProps) => {
                   </div>
                 </DrawerContent>
               </Drawer>
-              <Link
-                className={cn("hidden", pathname === "" && "block")}
-                href="/"
-              >
+              <Link className={cn("hidden", pathname === "" && "block")} href="/">
                 <Image
                   className="max-w-16 max-h-16"
-                  src="/images/main-logo.png"
+                  src="/images/main-logo.webp"
                   alt="logo"
                   width={100}
                   height={100}
                 />
               </Link>
-              <Link
-                className={cn("mr-12 min-w-28", pathname === "" && "hidden")}
-                href="/"
-              >
-                <span
-                  className={cn(
-                    "font-semibold text-2xl",
-                    pathname === "" && "hidden"
-                  )}
-                >
+              <Link className={cn("mr-12 min-w-28", pathname === "" && "hidden")} href="/">
+                <span className={cn("font-semibold text-2xl", pathname === "" && "hidden")}>
                   {pathname === "hong-kong"
                     ? "Hong Kong"
                     : pathname === "uk"
@@ -224,47 +191,16 @@ export const Header = ({ type }: HeaderProps) => {
                     : "Documentaion"}
                 </span>
               </Link>
-              <Link
-                href="/sign-up"
-                id="launchModalBtn"
-                className="flex items-center"
-              >
-                <Image
-                  src="/images/user.png"
-                  alt="person"
-                  width={36}
-                  height={36}
-                />
+              <Link href="/sign-up" id="launchModalBtn" className="flex items-center">
+                <Image src="/images/user.webp" alt="person" width={36} height={36} />
               </Link>
             </div>
-            <div
-              className={cn("hidden w-24 sm:flex justify-between items-center")}
-            >
-              <Link
-                href="/sign-up"
-                id="launchModalBtn"
-                className="flex items-center max-w-12 max-h-12"
-              >
-                <Image
-                  className="w-8 h-8"
-                  src="/images/user.png"
-                  alt="person"
-                  width={100}
-                  height={100}
-                />
+            <div className={cn("hidden w-24 sm:flex justify-between items-center")}>
+              <Link href="/sign-up" id="launchModalBtn" className="flex items-center max-w-12 max-h-12">
+                <Image className="w-8 h-8" src="/images/user.webp" alt="person" width={100} height={100} />
               </Link>
-              <Button
-                className="p-0 max-w-12 max-h-12"
-                onClick={logOut}
-                variant={"ghost"}
-              >
-                <Image
-                  className="w-8 h-8"
-                  src="/images/exit.svg"
-                  alt="exit"
-                  width={100}
-                  height={100}
-                />
+              <Button className="p-0 max-w-12 max-h-12" onClick={logOut} variant={"ghost"}>
+                <Image className="w-8 h-8" src="/images/exit.svg" alt="exit" width={100} height={100} />
               </Button>
             </div>
           </>

@@ -23,7 +23,7 @@ export default function Content() {
           </h1>
           <Image
             className="h-[400px] sm:h-[500px] w-full bg-cover bg-no-repeat brightness-[0.5]"
-            src="/images/hero.png"
+            src="/images/hero.webp"
             alt="hero"
             width={1000}
             height={600}
@@ -33,34 +33,25 @@ export default function Content() {
 
         {/* Mobile */}
         <div className="flex sm:hidden mt-8 flex-col justify-center items-center">
-          <div
-            className={cn(
-              styles.text_bet,
-              "text-center sm:text-left w-[clamp(15rem,_70vw,_25rem)]"
-            )}
-          >
+          <div className={cn(styles.text_bet, "text-center sm:text-left w-[clamp(15rem,_70vw,_25rem)]")}>
             <Image
               className="w-full"
-              src="/images/fintech.png"
+              src="/images/fintech.webp"
               alt="fintech"
               width={500}
               height={300}
               priority
             />
-            <h1 className="text-[clamp(0.8rem,_4vw,_3rem)]">
-              What exactly does our service do?
-            </h1>
+            <h1 className="text-[clamp(0.8rem,_4vw,_3rem)]">What exactly does our service do?</h1>
 
             <h2 className="text-[clamp(0.8rem,_2vw,_2rem)]">
-              Our service enables users to efficiently access accurate and
-              up-to-date information about fintech company licenses.
+              Our service enables users to efficiently access accurate and up-to-date information about
+              fintech company licenses.
             </h2>
           </div>
 
           <Dialog>
-            <DialogTrigger
-              className={cn(styles.button, "my-4 w-[80%] h-12 text-xl")}
-            >
+            <DialogTrigger className={cn(styles.button, "my-4 w-[80%] h-12 text-xl")}>
               Fintech Licenses
             </DialogTrigger>
             <DialogContent className="bg-white rounded-lg p-6 w-[90%] max-w-md">
@@ -95,9 +86,7 @@ export default function Content() {
                       height={50}
                       priority
                     />
-                    <span className="text-[28px] font-bold">
-                      United Kingdom
-                    </span>
+                    <span className="text-[28px] font-bold">United Kingdom</span>
                   </div>
                 </Link>
 
@@ -123,9 +112,7 @@ export default function Content() {
         <div className={cn("hidden sm:flex justify-center py-16 gap-8")}>
           <div className={cn(styles.template_between)}>
             <div className={styles.text_bet}>
-              <h1 className="text-[clamp(1rem,_2vw,_2rem)]">
-                What exactly does our service do?
-              </h1>
+              <h1 className="text-[clamp(1rem,_2vw,_2rem)]">What exactly does our service do?</h1>
 
               <h2 className="text-[clamp(1rem,_1.5vw,_1.5rem)]">
                 Our service enables users to efficiently
@@ -136,9 +123,7 @@ export default function Content() {
               </h2>
             </div>
             <Dialog>
-              <DialogTrigger
-                className={cn(styles.button, "h-14 text-2xl w-[80%]")}
-              >
+              <DialogTrigger className={cn(styles.button, "h-14 text-2xl w-[80%]")}>
                 Fintech Licenses
               </DialogTrigger>
               <DialogContent className="bg-white rounded-lg p-6 w-[90%] max-w-md">
@@ -173,9 +158,7 @@ export default function Content() {
                         height={50}
                         priority
                       />
-                      <span className="text-[28px] font-bold">
-                        United Kingdom
-                      </span>
+                      <span className="text-[28px] font-bold">United Kingdom</span>
                     </div>
                   </Link>
 
@@ -199,7 +182,7 @@ export default function Content() {
           <div className={styles.containerImage}>
             <Image
               className="w-[clamp(15rem,_40vw,_25rem)] items-center"
-              src="/images/fintech.png"
+              src="/images/fintech.webp"
               alt="fintech"
               width={500}
               height={300}
@@ -209,13 +192,12 @@ export default function Content() {
 
         <div className="relative">
           <h1 className="absolute inset-0 flex items-center justify-center text-white text-[clamp(1.2rem,_3vw,_2rem)] font-bold text-center mx-5 z-10">
-            We are a team of enthusiasts who strive to make financial
-            information <br />
+            We are a team of enthusiasts who strive to make financial information <br />
             more accessible, transparent and user-friendly.
           </h1>
           <Image
             className="w-full h-[500px] brightness-[0.5]"
-            src="/images/city.png"
+            src="/images/city.webp"
             alt="city"
             width={1600}
             height={500}
