@@ -265,7 +265,7 @@ const UkTable: React.FC = () => {
                   <Image
                     width={20}
                     height={20}
-                    src={"/images/download.jpg"}
+                    src={"/images/download.webp"}
                     onClick={() => setIsDrawerOpen1((prev) => !prev)}
                     className="w-8 h-8"
                     alt={"download icon"}
@@ -293,7 +293,7 @@ const UkTable: React.FC = () => {
                   <Image
                     width={20}
                     height={20}
-                    src={"/images/download.jpg"}
+                    src={"/images/download.webp"}
                     onClick={() => setIsDrawerOpen2((prev) => !prev)}
                     className="w-8 h-8"
                     alt={"download icon"}

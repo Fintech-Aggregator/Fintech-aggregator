@@ -12,6 +12,8 @@ interface TableHeaderProps {
   onFilterByAdress?: (name: string) => void;
   addressTypes?: string[];
   onFilterByAddressType?: (addressType: string) => void;
+  extraFilterOptions?: string[];
+  onExtraFilter?: (addressType: string) => void;
 }
 
 const TableHeader: React.FC<TableHeaderProps> = ({
@@ -20,27 +22,23 @@ const TableHeader: React.FC<TableHeaderProps> = ({
   onFilterByAdress,
   addressTypes,
   onFilterByAddressType,
+  extraFilterOptions,
+  onExtraFilter,
 }) => {
   const pathname = usePathname();
 
-  const truncateText = (text: string, maxLength: number) => {
-    return text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
-  };
+  const truncateText = (text: string, maxLength: number) =>
+    text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 
-  const handleLicenseNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    onFilterByLicenseName!(value);
-  };
+  const handleLicenseNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    onFilterByLicenseName?.(e.target.value);
+  const handleAdressChange = (e: React.ChangeEvent<HTMLInputElement>) =>
+    onFilterByAdress?.(e.target.value);
+  const handleAddressTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    onFilterByAddressType?.(e.target.value);
+  const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+    onExtraFilter?.(e.target.value);
 
-  const handleAdressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    onFilterByAdress!(value);
-  };
-
-  const handleAddressTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const value = e.target.value;
-    onFilterByAddressType!(value);
-  };
   return (
     <thead className={styles.tableHeader}>
       <tr>
@@ -58,7 +56,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             </div>
             <div className={styles.addIcon}>
               <input
-                className={`${styles.stylesForInput}`}
+                className={styles.stylesForInput}
                 type="text"
                 onChange={handleLicenseNameChange}
               />
@@ -116,22 +114,14 @@ const TableHeader: React.FC<TableHeaderProps> = ({
               <select
                 className={styles.stylesForInput}
                 style={{ appearance: "none" }}
-                name=""
-                id=""
                 onChange={handleAddressTypeChange}
               >
                 <option value="">All</option>
-                {addressTypes &&
-                Array.isArray(addressTypes) &&
-                addressTypes.length > 0 ? (
-                  addressTypes.map((type) => (
-                    <option key={type} value={type}>
-                      {truncateText(type, 10)}
-                    </option>
-                  ))
-                ) : (
-                  <option value=""></option>
-                )}
+                {addressTypes?.map((type) => (
+                  <option key={type} value={type}>
+                    {truncateText(type, 10)}
+                  </option>
+                ))}
               </select>
               <Image
                 className={styles.searchIcon}
@@ -143,6 +133,33 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             </div>
           </div>
         </th>
+
+        {/* {extraFilterOptions && onExtraFilter && (
+          <th style={{ width: "120px" }}>
+            <div className={styles.addIcon}>
+              <p className="font-semibold">{lables?.[3]}</p>
+              <select
+                className={styles.stylesForInput}
+                style={{ appearance: "none" }}
+                onChange={handleCountryChange}
+              >
+                <option value="">All</option>
+                {extraFilterOptions.map((c) => (
+                  <option key={c} value={c}>
+                    {c}
+                  </option>
+                ))}
+              </select>
+              <Image
+                className={styles.searchIcon}
+                src="/images/vector.svg"
+                alt="Vector"
+                width={10}
+                height={10}
+              />
+            </div>
+          </th>
+        )} */}
       </tr>
     </thead>
   );

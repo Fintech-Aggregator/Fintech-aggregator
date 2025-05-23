@@ -41,8 +41,6 @@ jobs:
           script: |
             cd /root/fintech-aggregator
             docker compose -f compose.prod.yaml down
-            docker image prune -f
             docker login -u ${{ secrets.REGISTRY_USER }} -p ${{ secrets.REGISTRY_PASSWORD }}
             docker pull bering152/fintech-aggregator-frontend-prod:latest
             docker compose -f compose.prod.yaml up -d
-

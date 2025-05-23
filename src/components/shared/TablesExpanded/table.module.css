@@ -174,7 +174,7 @@
     width: 100%;
   }
 }
-@media (max-width: 590px) {
+@media (max-width: 0px) {
   .container {
     width: 100px;
     height: 30px;

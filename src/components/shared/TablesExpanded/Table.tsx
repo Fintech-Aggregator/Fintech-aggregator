@@ -23,6 +23,8 @@ interface Props {
   onFilterByAdress: (name: string) => void;
   addressTypes: string[];
   onFilterByAddressType: (addressType: string) => void;
+  extraFilterOptions?: string[];
+  onExtraFilter?: (addressType: string) => void;
 }
 
 export const Table: React.FC<Props> = ({
@@ -35,6 +37,8 @@ export const Table: React.FC<Props> = ({
   onFilterByAdress,
   addressTypes,
   onFilterByAddressType,
+  extraFilterOptions,
+  onExtraFilter,
 }) => {
   const [localPage, setLocalPage] = useState(0);
   const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
@@ -93,6 +97,8 @@ export const Table: React.FC<Props> = ({
             onFilterByAdress={onFilterByAdress}
             addressTypes={addressTypes}
             onFilterByAddressType={onFilterByAddressType}
+            extraFilterOptions={extraFilterOptions}
+            onExtraFilter={onExtraFilter}
           />
           <tbody>
             {currentData.map((data: any) => (
