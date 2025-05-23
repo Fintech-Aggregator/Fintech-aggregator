@@ -24,8 +24,5 @@ export default async function Home() {
       }
     }
   } 
-  // else {
-  //   redirect("/sign-up");
-  // }
   return <MainPage />;
 }
