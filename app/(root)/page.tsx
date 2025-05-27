@@ -6,7 +6,6 @@ import { redirect } from "next/navigation";
 const JWT_SECRET = process.env.JWT_SECRET!;
 
 export default async function Home() {
-  console.log("ENV_TYPE:", process.env.ENV_TYPE);
   const cookie = await cookies();
   const token = cookie.get("fintech-aggregator-session")?.value;
   if (token) {
