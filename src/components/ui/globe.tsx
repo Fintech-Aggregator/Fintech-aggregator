@@ -221,7 +221,7 @@ export function Globe({ globeConfig, data }: WorldProps) {
     };
   }, [isInitialized, data]);
 
-  return <group ref={groupRef} scale={[0.65, 0.65, 0.65]} />;
+  return <group ref={groupRef} scale={[0.9, 0.9, 0.9]} />;
 }
 
 export function WebGLRendererConfig() {

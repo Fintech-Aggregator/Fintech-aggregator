@@ -1,12 +1,13 @@
 "use client";
 import React from "react";
 import dynamic from "next/dynamic";
+import { cn } from "@/src/lib/utils";
 
 const World = dynamic(() => import("./globe").then((m) => m.World), {
   ssr: false,
 });
 
-export function GlobeDemo() {
+export function GlobeDemo({ className }: { className?: string }) {
   const globeConfig = {
     pointSize: 4,
     globeColor: "#062056",
@@ -394,9 +395,13 @@ export function GlobeDemo() {
   ];
 
   return (
-    <div className="flex items-center justify-center absolute bottom-18 right-10 w-[400px] h-[200px]">
-      <div className="max-w-7xl mx-auto w-full relative overflow-hidden h-96 px-4">
-        <div className="absolute w-full h-72 md:h-full z-10">
+    <div
+      className={cn(
+        "flex items-center justify-center absolute",
+        className
+      )}>
+      <div className=" mx-auto w-48 relative overflow-hidden h-48 px-4">
+        <div className="absolute w-48 h-48 z-10">
           <World data={sampleArcs} globeConfig={globeConfig} />
         </div>
       </div>

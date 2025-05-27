@@ -3,13 +3,7 @@ import styles from "./main-page.module.css";
 import Image from "next/image";
 import Link from "next/link";
 import MainTable from "../MainTable/main-table";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "../../ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "../../ui/dialog";
 import Footer from "../Footer/footer";
 import { GlobeDemo } from "../../ui/globe-demo";
 
@@ -33,15 +27,18 @@ export default function Content() {
 
         {/* Mobile */}
         <div className="flex sm:hidden mt-8 flex-col justify-center items-center">
-          <div className={cn(styles.text_bet, "text-center sm:text-left w-[clamp(15rem,_70vw,_25rem)]")}>
-            <Image
-              className="w-full"
-              src="/images/model-bg.webp"
-              alt="model-bg"
-              width={500}
-              height={300}
-              priority
-            />
+          <div className={cn(styles.text_bet, "text-center sm:text-left px-8")}>
+            <div className="relative">
+              <GlobeDemo className="top-[5%] right-[32%]" />
+              <Image
+                className="w-full"
+                src="/images/model-bg.webp"
+                alt="model-bg"
+                width={500}
+                height={300}
+                priority
+              />
+            </div>
             <h1 className="text-[clamp(0.8rem,_4vw,_3rem)]">What exactly does our service do?</h1>
 
             <h2 className="text-[clamp(0.8rem,_2vw,_2rem)]">
@@ -180,7 +177,7 @@ export default function Content() {
             </Dialog>
           </div>
           <div className={cn(styles.containerImage, "relative")}>
-            <GlobeDemo />
+            <GlobeDemo className="top-4 right-32" />
             <Image
               className="w-[clamp(15rem,_40vw,_25rem)] items-center"
               src="/images/model-bg.webp"
