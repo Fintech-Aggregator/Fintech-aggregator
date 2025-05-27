@@ -6,12 +6,12 @@ import MainTable from "../MainTable/main-table";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../../ui/dialog";
 import Footer from "../Footer/footer";
+import { GlobeDemo } from "../../ui/globe-demo";
 
 export default function Content() {
   return (
@@ -36,8 +36,8 @@ export default function Content() {
           <div className={cn(styles.text_bet, "text-center sm:text-left w-[clamp(15rem,_70vw,_25rem)]")}>
             <Image
               className="w-full"
-              src="/images/fintech.webp"
-              alt="fintech"
+              src="/images/model-bg.webp"
+              alt="model-bg"
               width={500}
               height={300}
               priority
@@ -179,11 +179,12 @@ export default function Content() {
               </DialogContent>
             </Dialog>
           </div>
-          <div className={styles.containerImage}>
+          <div className={cn(styles.containerImage, "relative")}>
+            <GlobeDemo />
             <Image
               className="w-[clamp(15rem,_40vw,_25rem)] items-center"
-              src="/images/fintech.webp"
-              alt="fintech"
+              src="/images/model-bg.webp"
+              alt="model-bg"
               width={500}
               height={300}
             />
