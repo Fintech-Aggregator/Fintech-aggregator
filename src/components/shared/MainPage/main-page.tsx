@@ -61,7 +61,7 @@ export default function Content() {
             <DialogTrigger
               className={cn(styles.button, "my-4 w-[80%] h-12 text-xl")}
             >
-              Fintech Licenses
+              Find a Fintech
             </DialogTrigger>
             <DialogContent className="bg-white rounded-lg p-6 w-[90%] max-w-md">
               <DialogHeader>
@@ -139,7 +139,7 @@ export default function Content() {
               <DialogTrigger
                 className={cn(styles.button, "h-14 text-2xl w-[80%]")}
               >
-                Fintech Licenses
+                Find a Fintech
               </DialogTrigger>
               <DialogContent className="bg-white rounded-lg p-6 w-[90%] max-w-md">
                 <DialogHeader>
