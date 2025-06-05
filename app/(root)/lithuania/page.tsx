@@ -62,7 +62,9 @@ const Lithuania: React.FC = () => {
       if (filters.searchTerm) {
         filtered = filtered.filter((item) =>
           Object.values(item).some((value) =>
-            String(value).toLowerCase().includes(filters.searchTerm.toLowerCase())
+            String(value)
+              .toLowerCase()
+              .includes(filters.searchTerm.toLowerCase())
           )
         );
       }
@@ -89,7 +91,10 @@ const Lithuania: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (drawerRef.current && !drawerRef.current.contains(event.target as Node)) {
+      if (
+        drawerRef.current &&
+        !drawerRef.current.contains(event.target as Node)
+      ) {
         setIsDrawerOpen(false);
       }
     };
@@ -121,7 +126,9 @@ const Lithuania: React.FC = () => {
   };
 
   const getUniqueLicence = () => {
-    const uniqueTypes = Array.from(new Set(LithuaniaData.map((item) => item.Licence)));
+    const uniqueTypes = Array.from(
+      new Set(LithuaniaData.map((item) => item.Licence))
+    );
     return uniqueTypes;
   };
   const handlePageChange = (page: number) => {
@@ -135,7 +142,11 @@ const Lithuania: React.FC = () => {
       <div className={styles.mains}>
         <SearchBar onSearch={(value) => handleSearch(value)} />
         <div className="flex gap-4 relative items-center justify-center">
-          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            onPageChange={handlePageChange}
+          />
 
           <div className={styles.drawer}>
             <div className="cursor-pointer border border-black rounded-xl w-10 h-10 flex items-center justify-center">
@@ -149,16 +160,22 @@ const Lithuania: React.FC = () => {
               />
             </div>
 
-            <FileDrawer register="lithuania" isDrawerOpen={isDrawerOpen} ref={drawerRef} />
+            <FileDrawer
+              register="lithuania"
+              isDrawerOpen={isDrawerOpen}
+              ref={drawerRef}
+            />
           </div>
         </div>
       </div>
       {loading ? (
-        <TableSkeleton lables={["Company Name", "Address", "Address Type"]} />
+        <TableSkeleton
+          lables={["Company Name", "Address", "License Type", "Lithuania"]}
+        />
       ) : (
         <>
           <Table
-            lables={["Company Name", "Address", "Address Type"]}
+            lables={["Company Name", "Address", "License Type", "Lithuania"]}
             tableData={tableRows}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage}
@@ -169,7 +186,9 @@ const Lithuania: React.FC = () => {
             onFilterByAddressType={handleFilterByLicence}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">Last Update: {LithuaniaData[0].lastUpdatedDate.slice(0, 10)}</div>
+            <div className="text-lg">
+              Last Update: {LithuaniaData[0].lastUpdatedDate.slice(0, 10)}
+            </div>
           </div>
         </>
       )}

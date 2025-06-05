@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./table.module.css";
 import SearchBar from "../HomeContentTemaplate/search-bar";
 import SelectField from "../../ui/selectField";
@@ -27,15 +27,22 @@ const TableHeader: React.FC<TableHeaderProps> = ({
 }) => {
   const pathname = usePathname();
 
+  const [selectedAddressType, setSelectedAddressType] = useState("");
+
   const truncateText = (text: string, maxLength: number) =>
     text.length > maxLength ? `${text.slice(0, maxLength)}...` : text;
 
   const handleLicenseNameChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     onFilterByLicenseName?.(e.target.value);
+
   const handleAdressChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     onFilterByAdress?.(e.target.value);
-  const handleAddressTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
+
+  const handleAddressTypeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedAddressType(e.target.value);
     onFilterByAddressType?.(e.target.value);
+  };
+
   const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) =>
     onExtraFilter?.(e.target.value);
 
@@ -70,8 +77,9 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             </div>
           </div>
         </th>
+
         <th style={{ width: "300px" }}>
-          <div>
+          <div style={{ marginRight: "20px" }}>
             <div className={cn(styles.addIcon, "mb-1")}>
               <p className="font-semibold">{lables?.[1]}</p>
               <Image
@@ -98,6 +106,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
             </div>
           </div>
         </th>
+
         <th style={{ width: "200px" }}>
           <div className={styles.content}>
             <div className={cn(styles.addIcon, "mb-1")}>
@@ -110,30 +119,43 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 height={10}
               />
             </div>
-            <div className={styles.addIcon}>
-              <select
-                className={styles.stylesForInput}
-                style={{ appearance: "none" }}
-                onChange={handleAddressTypeChange}
-              >
-                <option value="">All</option>
-                {addressTypes?.map((type) => (
-                  <option key={type} value={type}>
-                    {truncateText(type, 10)}
-                  </option>
-                ))}
-              </select>
+
+            <div
+              className={cn(
+                styles.stylesForInput,
+                styles.addIcon,
+                "relative flex items-center justify-between bg-white "
+              )}
+            >
+              <span className="text-left flex-1">
+                {selectedAddressType
+                  ? truncateText(selectedAddressType, 15)
+                  : "All"}
+              </span>
+
               <Image
-                className={styles.searchIcon}
+                className="ml-2 mr-2"
                 src="/images/vector.svg"
                 alt="Vector"
                 width={10}
                 height={10}
               />
+
+              <select
+                className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                value={selectedAddressType}
+                onChange={handleAddressTypeChange}
+              >
+                <option value="">All</option>
+                {addressTypes?.map((type) => (
+                  <option key={type} value={type} title={type}>
+                    {type}
+                  </option>
+                ))}
+              </select>
             </div>
           </div>
         </th>
-
         {/* {extraFilterOptions && onExtraFilter && (
           <th style={{ width: "120px" }}>
             <div className={styles.addIcon}>
