@@ -6,12 +6,12 @@ import MainTable from "../MainTable/main-table";
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "../../ui/dialog";
 import Footer from "../Footer/footer";
+import { GlobeDemo } from "../../ui/globe-demo";
 
 export default function Content() {
   return (
@@ -23,7 +23,7 @@ export default function Content() {
           </h1>
           <Image
             className="h-[400px] sm:h-[500px] w-full bg-cover bg-no-repeat brightness-[0.5]"
-            src="/images/hero.png"
+            src="/images/hero.webp"
             alt="hero"
             width={1000}
             height={600}
@@ -33,20 +33,18 @@ export default function Content() {
 
         {/* Mobile */}
         <div className="flex sm:hidden mt-8 flex-col justify-center items-center">
-          <div
-            className={cn(
-              styles.text_bet,
-              "text-center sm:text-left w-[clamp(15rem,_70vw,_25rem)]"
-            )}
-          >
-            <Image
-              className="w-full"
-              src="/images/fintech.png"
-              alt="fintech"
-              width={500}
-              height={300}
-              priority
-            />
+          <div className={cn(styles.text_bet, "text-center sm:text-left px-8")}>
+            <div className="relative">
+              <GlobeDemo className="top-[5%] right-[32%]" />
+              <Image
+                className="w-full"
+                src="/images/model-bg.webp"
+                alt="model-bg"
+                width={500}
+                height={300}
+                priority
+              />
+            </div>
             <h1 className="text-[clamp(0.8rem,_4vw,_3rem)]">
               What exactly does our service do?
             </h1>
@@ -61,7 +59,7 @@ export default function Content() {
             <DialogTrigger
               className={cn(styles.button, "my-4 w-[80%] h-12 text-xl")}
             >
-              Find a Fintech
+              Fintech Licenses
             </DialogTrigger>
             <DialogContent className="bg-white rounded-lg p-6 w-[90%] max-w-md">
               <DialogHeader>
@@ -139,7 +137,7 @@ export default function Content() {
               <DialogTrigger
                 className={cn(styles.button, "h-14 text-2xl w-[80%]")}
               >
-                Find a Fintech
+                Fintech Licenses
               </DialogTrigger>
               <DialogContent className="bg-white rounded-lg p-6 w-[90%] max-w-md">
                 <DialogHeader>
@@ -196,11 +194,12 @@ export default function Content() {
               </DialogContent>
             </Dialog>
           </div>
-          <div className={styles.containerImage}>
+          <div className={cn(styles.containerImage, "relative")}>
+            <GlobeDemo className="top-4 right-32" />
             <Image
               className="w-[clamp(15rem,_40vw,_25rem)] items-center"
-              src="/images/fintech.png"
-              alt="fintech"
+              src="/images/model-bg.webp"
+              alt="model-bg"
               width={500}
               height={300}
             />
@@ -215,7 +214,7 @@ export default function Content() {
           </h1>
           <Image
             className="w-full h-[500px] brightness-[0.5]"
-            src="/images/city.png"
+            src="/images/city.webp"
             alt="city"
             width={1600}
             height={500}
