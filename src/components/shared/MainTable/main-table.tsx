@@ -4,11 +4,11 @@ import SearchBar from "@/src/components/shared/HomeContentTemaplate/search-bar";
 import Pagination from "@/src/components/shared/TablesExpanded/pagination";
 import { Table } from "@/src/components/shared/TablesExpanded/Table";
 import { TableSkeleton } from "@/src/components/shared/TablesExpanded/TableSkeleton";
-import { FileDrawer } from "@/src/components/ui/file-drawer";
 import type { RowProps } from "@/src/components/shared/TablesExpanded/Table";
 import styles from "@/app/(root)/all-tables-style.module.css";
 import Image from "next/image";
 import CountryFilter from "./country-filter";
+
 interface UnifiedProps {
   id: number;
   licenseName: string;
@@ -22,6 +22,7 @@ const CombinedTable: React.FC = () => {
   const [allData, setAllData] = useState<UnifiedProps[]>([]);
   const [filteredData, setFilteredData] = useState<UnifiedProps[]>([]);
   const [loading, setLoading] = useState(true);
+
   const [filters, setFilters] = useState({
     searchTerm: "",
     address: "",
@@ -29,10 +30,19 @@ const CombinedTable: React.FC = () => {
     addressType: "",
     country: "",
   });
+
   const [currentPage, setCurrentPage] = useState(0);
   const rowsPerPage = 10;
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
+
+  const getStatusFromType = (addressType: string) => {
+    if (addressType.includes("Cancelled")) return "Cancelled";
+    else if (addressType.includes("Registered")) return "Registered";
+    else if (addressType.includes("Authorised")) return "Authorised";
+
+    return "Active";
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,6 +121,7 @@ const CombinedTable: React.FC = () => {
 
   useEffect(() => {
     let filtered = allData;
+
     if (filters.searchTerm) {
       filtered = filtered.filter((item) =>
         Object.values(item)
@@ -119,11 +130,14 @@ const CombinedTable: React.FC = () => {
           .includes(filters.searchTerm.toLowerCase())
       );
     }
+
     if (filters.address) {
-      filtered = filtered.filter((item) =>
-        item.address.toLowerCase().includes(filters.address.toLowerCase())
-      );
+      filtered = filtered.filter((item) => {
+        const status = getStatusFromType(item.addressType);
+        return status.toLowerCase().includes(filters.address.toLowerCase());
+      });
     }
+
     if (filters.licenseName) {
       filtered = filtered.filter((item) =>
         item.licenseName
@@ -139,6 +153,7 @@ const CombinedTable: React.FC = () => {
     if (filters.country) {
       filtered = filtered.filter((item) => item.country === filters.country);
     }
+
     setFilteredData(filtered);
     setCurrentPage(0);
   }, [filters, allData]);
@@ -164,17 +179,21 @@ const CombinedTable: React.FC = () => {
     setFilters((prev) => ({ ...prev, addressType: type }));
   const handleFilterByCountry = (country: string) =>
     setFilters((prev) => ({ ...prev, country }));
+
   const handlePageChange = (page: number) => setCurrentPage(page);
 
   const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
-  const tableRows: RowProps[] = filteredData.map((item) => ({
-    id: item.id,
-    address: item.address,
-    licenseName: item.licenseName,
-    addressType: item.addressType,
-    extraColumn: item.country,
-  }));
+  const tableRows: RowProps[] = filteredData.map((item) => {
+    const status = getStatusFromType(item.addressType);
+    return {
+      id: item.id,
+      address: status,
+      licenseName: item.licenseName,
+      addressType: item.addressType,
+      extraColumn: item.country,
+    };
+  });
 
   const addressTypes = Array.from(new Set(allData.map((i) => i.addressType)));
   const countries = Array.from(new Set(allData.map((i) => i.country)));
@@ -199,12 +218,13 @@ const CombinedTable: React.FC = () => {
       </div>
       {loading ? (
         <TableSkeleton
-          lables={["Company Name", "Address", "Address Type", "Country"]}
+          lables={["Company Name", "Status", "License Type", "Country"]}
+          columnOrder={["license", "address", "addressType"]}
         />
       ) : (
         <>
           <Table
-            lables={["Company Name", "Address", "Address Type", "Country"]}
+            lables={["Company Name", "Status", "License Type", "Country"]}
             tableData={tableRows}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage}
@@ -215,6 +235,7 @@ const CombinedTable: React.FC = () => {
             onFilterByAddressType={handleFilterByAddressType}
             extraFilterOptions={countries}
             onExtraFilter={handleFilterByCountry}
+            columnOrder={["license", "addressType", "address"]}
           />
           <div className="relative mb-2 flex justify-center items-center">
             <div className="text-lg">

@@ -25,14 +25,12 @@
 @media (max-width: 1000px) {
   .mains {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
     gap: 0px;
   }
   .mainsWithCountry {
     display: flex;
-
     justify-content: space-between;
     align-items: center;
     gap: 0px;

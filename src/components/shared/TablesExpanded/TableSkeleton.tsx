@@ -5,26 +5,30 @@ import styles from "./table.module.css";
 
 interface TableSkeletonProps {
   lables: string[];
+  columnOrder?: Array<"license" | "address" | "addressType">;
 }
 
-export const TableSkeleton: React.FC<TableSkeletonProps> = ({ lables }) => {
+export const TableSkeleton: React.FC<TableSkeletonProps> = ({
+  lables,
+  columnOrder,
+}) => {
   return (
     <div className={styles.centerTable}>
       <div className={styles.tableContainer}>
         <table className={styles.table}>
-          <TableHeader lables={lables} />
+          <TableHeader lables={lables} columnOrder={columnOrder} />
           <tbody>
             {Array(10)
               .fill(0)
               .map((_, index) => (
-                <tr key={index} className={styles.tableRow}>
-                  <td style={{ width: "294px" }}>
+                <tr key={index}>
+                  <td>
                     <Skeleton className=" h-[52px] rounded-[10px]" />
                   </td>
-                  <td style={{ width: "320px" }}>
+                  <td>
                     <Skeleton className=" h-[52px] rounded-[10px]" />
                   </td>
-                  <td style={{ width: "125px" }}>
+                  <td>
                     <Skeleton className=" h-[52px] rounded-[10px]" />
                   </td>
                 </tr>

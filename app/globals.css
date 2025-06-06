@@ -8,7 +8,13 @@
   scroll-behavior: smooth;
   font-family: var(--font-montserrat), sans-serif;
 }
-
+@layer utilities {
+  @media (max-width: 590px) {
+    .mt-responsive {
+      margin-top: 90px !important;
+    }
+  }
+}
 body {
   font-family: "Inter", sans-serif;
 }
