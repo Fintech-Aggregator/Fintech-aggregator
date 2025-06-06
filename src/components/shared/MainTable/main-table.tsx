@@ -219,6 +219,7 @@ const CombinedTable: React.FC = () => {
       {loading ? (
         <TableSkeleton
           lables={["Company Name", "Status", "License Type", "Country"]}
+          columnOrder={["license", "addressType", "address"]}
         />
       ) : (
         <>
@@ -234,6 +235,7 @@ const CombinedTable: React.FC = () => {
             onFilterByAddressType={handleFilterByAddressType}
             extraFilterOptions={countries}
             onExtraFilter={handleFilterByCountry}
+            columnOrder={["license", "addressType", "address"]}
           />
           <div className="relative mb-2 flex justify-center items-center">
             <div className="text-lg">

@@ -25,6 +25,7 @@ interface Props {
   onFilterByAddressType: (addressType: string) => void;
   extraFilterOptions?: string[];
   onExtraFilter?: (addressType: string) => void;
+  columnOrder?: Array<"license" | "address" | "addressType">;
 }
 
 export const Table: React.FC<Props> = ({
@@ -39,6 +40,7 @@ export const Table: React.FC<Props> = ({
   onFilterByAddressType,
   extraFilterOptions,
   onExtraFilter,
+  columnOrder,
 }) => {
   const [localPage, setLocalPage] = useState(0);
   const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
@@ -99,6 +101,7 @@ export const Table: React.FC<Props> = ({
             onFilterByAddressType={onFilterByAddressType}
             extraFilterOptions={extraFilterOptions}
             onExtraFilter={onExtraFilter}
+            columnOrder={columnOrder}
           />
           <tbody>
             {currentData.map((data: any) => (
@@ -109,6 +112,7 @@ export const Table: React.FC<Props> = ({
                 licenseName={data.licenseName}
                 selectedRows={selectedRows}
                 toggleRowSelection={toggleRowSelection}
+                columnOrder={columnOrder}
               />
             ))}
           </tbody>
