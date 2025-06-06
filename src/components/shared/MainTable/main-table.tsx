@@ -41,7 +41,7 @@ const CombinedTable: React.FC = () => {
     else if (addressType.includes("Registered")) return "Registered";
     else if (addressType.includes("Authorised")) return "Authorised";
 
-    return "Allowed";
+    return "Active";
   };
 
   useEffect(() => {
@@ -219,7 +219,7 @@ const CombinedTable: React.FC = () => {
       {loading ? (
         <TableSkeleton
           lables={["Company Name", "Status", "License Type", "Country"]}
-          columnOrder={["license", "addressType", "address"]}
+          columnOrder={["license", "address", "addressType"]}
         />
       ) : (
         <>
