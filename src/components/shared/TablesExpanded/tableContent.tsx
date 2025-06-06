@@ -51,7 +51,8 @@ export const TableContent: React.FC<Props> = ({
           key="address"
           style={{
             ...baseStyles,
-            transform: index !== 1 ? "translateX(40px)" : "translateX(0)",
+
+            paddingLeft: index !== 1 ? "85px" : "0px",
             textAlign: "center",
           }}
         >
@@ -68,6 +69,7 @@ export const TableContent: React.FC<Props> = ({
             ...baseStyles,
 
             transform: index !== 2 ? "translateX(50px)" : "translateX(0)",
+
             textAlign: "center",
           }}
         >
