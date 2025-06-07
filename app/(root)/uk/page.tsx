@@ -308,7 +308,7 @@ const UkTable: React.FC = () => {
           </div>
           <h1 className="text-3xl font-bold text-center ">E-Money Register Status</h1>
           <TableSkeleton
-            lables={["Company Name", "Issuance of License", "License Type"]}
+            lables={["Company Name", "License Issue Date", "License Type"]}
           />
         </>
       ) : (
@@ -342,7 +342,7 @@ const UkTable: React.FC = () => {
           </div>
           <h1 className="text-3xl font-bold text-center ">E-Money Register Status</h1>
           <Table
-            lables={["Company Name", "Issuance of License", "License Type"]}
+            lables={["Company Name", "License Issue Date", "License Type"]}
             tableData={tableRows1}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage1}
@@ -389,7 +389,7 @@ const UkTable: React.FC = () => {
           </div>
           <h1 className="text-3xl font-bold text-center ">firm PSD Permission</h1>
           <TableSkeleton
-            lables={["Company Name", "Issuance of License", "License Type"]}
+            lables={["Company Name", "License Issue Date", "License Type"]}
           />
         </>
       ) : (
@@ -421,7 +421,7 @@ const UkTable: React.FC = () => {
           </div>
           <h1 className="text-3xl font-bold text-center ">PSD Permission</h1>
           <Table
-            lables={["Company Name", "Issuance of License", "License Type"]}
+            lables={["Company Name", "License Issue Date", "License Type"]}
             tableData={tableRows2}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage2}

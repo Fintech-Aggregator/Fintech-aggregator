@@ -44,6 +44,16 @@ const CombinedTable: React.FC = () => {
     return "Active";
   };
 
+  const removeStatusType = (licenceType: string) => {
+    const statuses = ["Cancelled -", "Registered", "Authorised"];
+    for (const status of statuses) {
+      if (licenceType.includes(status)) {
+        return licenceType.replace(status, "").trim();
+      }
+    }
+    return licenceType;
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -58,56 +68,43 @@ const CombinedTable: React.FC = () => {
         const ukEmRaw = await ukEmRes.json();
         const ukPsdRaw = await ukPsdRes.json();
 
-        const hongKongData: UnifiedProps[] = hkRaw.hongKongData.map(
-          (item: any) => ({
-            id: item.id,
-            licenseName: item.licenseName,
-            address: item.address,
-            addressType: item.addressType,
-            lastUpdatedDate: item.lastUpdatedDate,
-            country: "Hong Kong",
-          })
-        );
+        const hongKongData: UnifiedProps[] = hkRaw.hongKongData.map((item: any) => ({
+          id: item.id,
+          licenseName: item.licenseName,
+          address: item.address,
+          addressType: item.addressType,
+          lastUpdatedDate: item.lastUpdatedDate,
+          country: "Hong Kong",
+        }));
 
-        const lithuaniaData: UnifiedProps[] = ltRaw.lithuania.map(
-          (item: any) => ({
-            id: item.id,
-            licenseName: item.FirmName,
-            address: item.Address,
-            addressType: item.Licence,
-            lastUpdatedDate: item.lastUpdatedDate,
-            country: "Lithuania",
-          })
-        );
+        const lithuaniaData: UnifiedProps[] = ltRaw.lithuania.map((item: any) => ({
+          id: item.id,
+          licenseName: item.FirmName,
+          address: item.Address,
+          addressType: item.Licence,
+          lastUpdatedDate: item.lastUpdatedDate,
+          country: "Lithuania",
+        }));
 
-        const ukEmoneyData: UnifiedProps[] = ukEmRaw.eMoneyFirms.map(
-          (item: any) => ({
-            id: item.FRN,
-            licenseName: item.FirmName,
-            address: item.EmoneyStatusEffectiveDate,
-            addressType: item.EmoneyRegisterStatus,
-            lastUpdatedDate: item.lastUpdatedDate,
-            country: "UK - E-Money",
-          })
-        );
+        const ukEmoneyData: UnifiedProps[] = ukEmRaw.eMoneyFirms.map((item: any) => ({
+          id: item.FRN,
+          licenseName: item.FirmName,
+          address: item.EmoneyStatusEffectiveDate,
+          addressType: item.EmoneyRegisterStatus,
+          lastUpdatedDate: item.lastUpdatedDate,
+          country: "UK - E-Money",
+        }));
 
-        const ukPsdData: UnifiedProps[] = ukPsdRaw.firmPSDPermission.map(
-          (item: any) => ({
-            id: item.FRN,
-            licenseName: item.FirmName,
-            address: item.PSDStatusEffectiveDate || "-",
-            addressType: item.PSDFirmStatus,
-            lastUpdatedDate: item.lastUpdatedDate,
-            country: "UK - PSD Permission",
-          })
-        );
+        const ukPsdData: UnifiedProps[] = ukPsdRaw.firmPSDPermission.map((item: any) => ({
+          id: item.FRN,
+          licenseName: item.FirmName,
+          address: item.PSDStatusEffectiveDate || "-",
+          addressType: item.PSDFirmStatus,
+          lastUpdatedDate: item.lastUpdatedDate,
+          country: "UK - PSD Permission",
+        }));
 
-        const combined = [
-          ...hongKongData,
-          ...lithuaniaData,
-          ...ukEmoneyData,
-          ...ukPsdData,
-        ];
+        const combined = [...hongKongData, ...lithuaniaData, ...ukEmoneyData, ...ukPsdData];
         setAllData(combined);
         setFilteredData(combined);
       } catch (error) {
@@ -124,10 +121,7 @@ const CombinedTable: React.FC = () => {
 
     if (filters.searchTerm) {
       filtered = filtered.filter((item) =>
-        Object.values(item)
-          .join(" ")
-          .toLowerCase()
-          .includes(filters.searchTerm.toLowerCase())
+        Object.values(item).join(" ").toLowerCase().includes(filters.searchTerm.toLowerCase())
       );
     }
 
@@ -140,16 +134,13 @@ const CombinedTable: React.FC = () => {
 
     if (filters.licenseName) {
       filtered = filtered.filter((item) =>
-        item.licenseName
-          .toLowerCase()
-          .includes(filters.licenseName.toLowerCase())
+        item.licenseName.toLowerCase().includes(filters.licenseName.toLowerCase())
       );
     }
     if (filters.addressType) {
-      filtered = filtered.filter(
-        (item) => item.addressType === filters.addressType
-      );
+      filtered = filtered.filter((item) => removeStatusType(item.addressType) === filters.addressType);
     }
+
     if (filters.country) {
       filtered = filtered.filter((item) => item.country === filters.country);
     }
@@ -169,16 +160,11 @@ const CombinedTable: React.FC = () => {
     return () => document.removeEventListener("mousedown", handleOutside);
   }, [isDrawerOpen]);
 
-  const handleSearch = (term: string) =>
-    setFilters((prev) => ({ ...prev, searchTerm: term }));
-  const handleFilterByAddress = (address: string) =>
-    setFilters((prev) => ({ ...prev, address }));
-  const handleFilterByLicenseName = (name: string) =>
-    setFilters((prev) => ({ ...prev, licenseName: name }));
-  const handleFilterByAddressType = (type: string) =>
-    setFilters((prev) => ({ ...prev, addressType: type }));
-  const handleFilterByCountry = (country: string) =>
-    setFilters((prev) => ({ ...prev, country }));
+  const handleSearch = (term: string) => setFilters((prev) => ({ ...prev, searchTerm: term }));
+  const handleFilterByAddress = (address: string) => setFilters((prev) => ({ ...prev, address }));
+  const handleFilterByLicenseName = (name: string) => setFilters((prev) => ({ ...prev, licenseName: name }));
+  const handleFilterByAddressType = (type: string) => setFilters((prev) => ({ ...prev, addressType: type }));
+  const handleFilterByCountry = (country: string) => setFilters((prev) => ({ ...prev, country }));
 
   const handlePageChange = (page: number) => setCurrentPage(page);
 
@@ -186,11 +172,12 @@ const CombinedTable: React.FC = () => {
 
   const tableRows: RowProps[] = filteredData.map((item) => {
     const status = getStatusFromType(item.addressType);
+    const formatedLicenseType = removeStatusType(item.addressType);
     return {
       id: item.id,
       address: status,
       licenseName: item.licenseName,
-      addressType: item.addressType,
+      addressType: formatedLicenseType,
       extraColumn: item.country,
     };
   });
@@ -204,16 +191,8 @@ const CombinedTable: React.FC = () => {
         <SearchBar onSearch={handleSearch} />
 
         <div className="flex gap-4 items-center">
-          <CountryFilter
-            value={filters.country}
-            options={countries}
-            onChange={handleFilterByCountry}
-          />
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            onPageChange={handlePageChange}
-          />
+          <CountryFilter value={filters.country} options={countries} onChange={handleFilterByCountry} />
+          <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
         </div>
       </div>
       {loading ? (
@@ -231,7 +210,10 @@ const CombinedTable: React.FC = () => {
             onPageChange={handlePageChange}
             onFilterByLicenseName={handleFilterByLicenseName}
             onFilterByAdress={handleFilterByAddress}
-            addressTypes={addressTypes}
+            addressTypes={addressTypes.map((item) => {
+              const formatedLicenseType = removeStatusType(item);
+              return formatedLicenseType;
+            })}
             onFilterByAddressType={handleFilterByAddressType}
             extraFilterOptions={countries}
             onExtraFilter={handleFilterByCountry}
@@ -239,8 +221,7 @@ const CombinedTable: React.FC = () => {
           />
           <div className="relative mb-2 flex justify-center items-center">
             <div className="text-lg">
-              Last Update:{" "}
-              {allData.length > 0 && allData[0].lastUpdatedDate.slice(0, 10)}
+              Last Update: {allData.length > 0 && allData[0].lastUpdatedDate.slice(0, 10)}
             </div>
           </div>
         </>
