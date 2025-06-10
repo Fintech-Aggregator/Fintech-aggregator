@@ -111,7 +111,8 @@ const HongKong: React.FC = () => {
   };
 
   const getUniqueAddressTypes = () => {
-    const uniqueTypes = Array.from(new Set(hongKongData.map((item) => item.addressType)));
+    const uniqueTypes = ["Money Service Operator"]
+
     return uniqueTypes;
   };
   const handlePageChange = (page: number) => {

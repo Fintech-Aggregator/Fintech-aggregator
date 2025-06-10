@@ -84,10 +84,7 @@ export const Table: React.FC<Props> = ({
     }
   };
 
-  const currentData = tableData.slice(
-    currentPage * rowsPerPage,
-    (currentPage + 1) * rowsPerPage
-  );
+  const currentData = tableData.slice(currentPage * rowsPerPage, (currentPage + 1) * rowsPerPage);
 
   return (
     <div className={styles.centerTable}>
@@ -121,14 +118,9 @@ export const Table: React.FC<Props> = ({
         <div className={styles.mobileTable}>
           {currentData.map((data: RowProps) => (
             <div key={data.id} className={styles.mobileRow}>
-              <div
-                className={styles.rowHeader}
-                onClick={() => toggleRowExpansion(data.id)}
-              >
+              <div className={styles.rowHeader} onClick={() => toggleRowExpansion(data.id)}>
                 <span>{data.licenseName}</span>
-                <button className={styles.expandButton}>
-                  {expandedRow === data.id ? "-" : "+"}
-                </button>
+                <button className={styles.expandButton}>{expandedRow === data.id ? "-" : "+"}</button>
               </div>
 
               {expandedRow === data.id && (
@@ -146,33 +138,17 @@ export const Table: React.FC<Props> = ({
         </div>
       </div>
       <div className={styles.pagination}>
-        <button
-          onClick={handlePreviousPage}
-          disabled={currentPage === 0}
-          className={styles.paginationButton}
-        >
-          <Image
-            src="/images/left-arrow.svg"
-            alt="Vector"
-            width={16}
-            height={16}
-          />
+        <button onClick={handlePreviousPage} disabled={currentPage === 0} className={styles.paginationButton}>
+          <Image src="/images/left-arrow.svg" alt="Vector" width={16} height={16} />
         </button>
         <span>
-          Page {currentPage + 1} із{" "}
-          {Math.ceil(tableData.length / rowsPerPage)}
+          Page {currentPage + 1} із {Math.ceil(tableData.length / rowsPerPage)}
         </span>
         <button
           onClick={handleNextPage}
           disabled={(currentPage + 1) * rowsPerPage >= tableData.length}
-          className={styles.paginationButton}
-        >
-          <Image
-            src="/images/right-arrow.svg"
-            alt="right-arrow"
-            width={16}
-            height={16}
-          />
+          className={styles.paginationButton}>
+          <Image src="/images/right-arrow.svg" alt="right-arrow" width={16} height={16} />
         </button>
       </div>
     </div>
