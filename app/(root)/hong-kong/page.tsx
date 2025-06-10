@@ -55,9 +55,7 @@ const HongKong: React.FC = () => {
 
       if (filters.searchTerm) {
         filtered = filtered.filter((item) =>
-          Object.values(item).some((value) =>
-            String(value).toLowerCase().includes(filters.searchTerm.toLowerCase())
-          )
+          Object.values(item).some((value) => String(value).toLowerCase().includes(filters.searchTerm.toLowerCase()))
         );
       }
 
@@ -67,9 +65,7 @@ const HongKong: React.FC = () => {
         );
       }
       if (filters.adress) {
-        filtered = filtered.filter((item) =>
-          item.address.toLowerCase().includes(filters.adress.toLowerCase())
-        );
+        filtered = filtered.filter((item) => item.address.toLowerCase().includes(filters.adress.toLowerCase()));
       }
       if (filters.addressType && filters.addressType !== "") {
         filtered = filtered.filter((item) => item.addressType === filters.addressType);
@@ -146,12 +142,15 @@ const HongKong: React.FC = () => {
         </div>
       </div>
       {loading ? (
-        <TableSkeleton lables={["Company Name", "Address", "Address Type"]} />
+        <TableSkeleton lables={["Company Name", "Address", "License Type"]} />
       ) : (
         <>
           <Table
-            lables={["Company Name", "Address", "Address Type"]}
-            tableData={filteredData}
+            lables={["Company Name", "Address", "License Type"]}
+            tableData={filteredData.map((item) => {
+              const newItem = { ...item, addressType: "Money Service Operator" };
+              return newItem;
+            })}
             rowsPerPage={rowsPerPage}
             currentPage={currentPage}
             onPageChange={handlePageChange}

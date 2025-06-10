@@ -159,7 +159,7 @@ export const Table: React.FC<Props> = ({
           />
         </button>
         <span>
-          Сторінка {currentPage + 1} із{" "}
+          Page {currentPage + 1} із{" "}
           {Math.ceil(tableData.length / rowsPerPage)}
         </span>
         <button
