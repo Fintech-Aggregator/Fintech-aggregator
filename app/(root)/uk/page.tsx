@@ -37,9 +37,7 @@ const UkTable: React.FC = () => {
   const [filteredData1, setFilteredData1] = useState<Props1[]>([]);
 
   const [filteredData2, setFilteredData2] = useState<Props2[]>([]);
-  const [firmPsdPermissionData, setFirmPsdPermissionData] = useState<Props2[]>(
-    []
-  );
+  const [firmPsdPermissionData, setFirmPsdPermissionData] = useState<Props2[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [filters1, setFilters1] = useState({
@@ -73,10 +71,7 @@ const UkTable: React.FC = () => {
 
   const tableRows2: RowProps[] = filteredData2.map((item) => ({
     id: item.FRN,
-    address:
-      item.PSDStatusEffectiveDate === ""
-        ? "-"
-        : item.PSDStatusEffectiveDate.slice(0, 10),
+    address: item.PSDStatusEffectiveDate === "" ? "-" : item.PSDStatusEffectiveDate.slice(0, 10),
     addressType: item.PSDFirmStatus,
     licenseName: item.FirmName,
   }));
@@ -85,9 +80,7 @@ const UkTable: React.FC = () => {
     const fetchData = async () => {
       const urls = ["/api/uk/e-money-firms", "/api/uk/firm-psd-permission"];
       try {
-        const data = await Promise.all(
-          urls.map((url) => fetch(url).then((res) => res.json()))
-        );
+        const data = await Promise.all(urls.map((url) => fetch(url).then((res) => res.json())));
         const eMoneyFirmsData = data[0] as EMoneyFirmsData;
         const firmPSDPermission = data[1] as FirmPSDPermissionData;
         setEMoneyFirmsData(eMoneyFirmsData.eMoneyFirms);
@@ -111,30 +104,20 @@ const UkTable: React.FC = () => {
 
       if (filters1.searchTerm) {
         filtered = filtered.filter((item) =>
-          Object.values(item).some((value) =>
-            String(value)
-              .toLowerCase()
-              .includes(filters1.searchTerm.toLowerCase())
-          )
+          Object.values(item).some((value) => String(value).toLowerCase().includes(filters1.searchTerm.toLowerCase()))
         );
       }
 
       if (filters1.EmoneyStatusEffectiveDate) {
         filtered = filtered.filter((item) =>
-          item.EmoneyStatusEffectiveDate.toLowerCase().includes(
-            filters1.EmoneyStatusEffectiveDate.toLowerCase()
-          )
+          item.EmoneyStatusEffectiveDate.toLowerCase().includes(filters1.EmoneyStatusEffectiveDate.toLowerCase())
         );
       }
       if (filters1.FirmName) {
-        filtered = filtered.filter((item) =>
-          item.FirmName.toLowerCase().includes(filters1.FirmName.toLowerCase())
-        );
+        filtered = filtered.filter((item) => item.FirmName.toLowerCase().includes(filters1.FirmName.toLowerCase()));
       }
       if (filters1.EmoneyRegisterStatus) {
-        filtered = filtered.filter(
-          (item) => item.EmoneyRegisterStatus === filters1.EmoneyRegisterStatus
-        );
+        filtered = filtered.filter((item) => item.EmoneyRegisterStatus === filters1.EmoneyRegisterStatus);
       }
       setFilteredData1(filtered);
     };
@@ -149,30 +132,20 @@ const UkTable: React.FC = () => {
 
       if (filters2.searchTerm) {
         filtered = filtered.filter((item) =>
-          Object.values(item).some((value) =>
-            String(value)
-              .toLowerCase()
-              .includes(filters2.searchTerm.toLowerCase())
-          )
+          Object.values(item).some((value) => String(value).toLowerCase().includes(filters2.searchTerm.toLowerCase()))
         );
       }
 
       if (filters2.PSDStatusEffectiveDate) {
         filtered = filtered.filter((item) =>
-          item.PSDStatusEffectiveDate.toLowerCase().includes(
-            filters2.PSDStatusEffectiveDate.toLowerCase()
-          )
+          item.PSDStatusEffectiveDate.toLowerCase().includes(filters2.PSDStatusEffectiveDate.toLowerCase())
         );
       }
       if (filters2.FirmName) {
-        filtered = filtered.filter((item) =>
-          item.FirmName.toLowerCase().includes(filters2.FirmName.toLowerCase())
-        );
+        filtered = filtered.filter((item) => item.FirmName.toLowerCase().includes(filters2.FirmName.toLowerCase()));
       }
       if (filters2.PSDFirmStatus) {
-        filtered = filtered.filter(
-          (item) => item.PSDFirmStatus === filters2.PSDFirmStatus
-        );
+        filtered = filtered.filter((item) => item.PSDFirmStatus === filters2.PSDFirmStatus);
       }
       setFilteredData2(filtered);
       setCurrentPage2(0);
@@ -183,10 +156,7 @@ const UkTable: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        drawerRef1.current &&
-        !drawerRef1.current.contains(event.target as Node)
-      ) {
+      if (drawerRef1.current && !drawerRef1.current.contains(event.target as Node)) {
         setIsDrawerOpen1(false);
       }
     };
@@ -204,10 +174,7 @@ const UkTable: React.FC = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        drawerRef2.current &&
-        !drawerRef2.current.contains(event.target as Node)
-      ) {
+      if (drawerRef2.current && !drawerRef2.current.contains(event.target as Node)) {
         setIsDrawerOpen2(false);
       }
     };
@@ -254,15 +221,11 @@ const UkTable: React.FC = () => {
   };
 
   const getUniqueAddressTypes1 = () => {
-    const uniqueTypes = Array.from(
-      new Set(eMoneyFirmsData.map((item: any) => item.EmoneyRegisterStatus))
-    );
+    const uniqueTypes = Array.from(new Set(eMoneyFirmsData.map((item: any) => item.EmoneyRegisterStatus)));
     return uniqueTypes;
   };
   const getUniqueAddressTypes2 = () => {
-    const uniqueTypes = Array.from(
-      new Set(firmPsdPermissionData.map((item: any) => item.PSDFirmStatus))
-    );
+    const uniqueTypes = Array.from(new Set(firmPsdPermissionData.map((item: any) => item.PSDFirmStatus)));
     return uniqueTypes;
   };
 
@@ -282,11 +245,7 @@ const UkTable: React.FC = () => {
           <div className={`${styles.mains} h-[60px] mt-4 mt-responsive`}>
             <SearchBar onSearch={(value) => handleSearch1(value)} />
             <div className="flex gap-4 relative items-center justify-center">
-              <Pagination
-                totalPages={totalPages1}
-                currentPage={currentPage1}
-                onPageChange={handlePageChange1}
-              />
+              <Pagination totalPages={totalPages1} currentPage={currentPage1} onPageChange={handlePageChange1} />
               <div className={styles.drawer}>
                 <div className="cursor-pointer border border-black rounded-xl w-10 h-10 flex items-center justify-center">
                   <Image
@@ -298,45 +257,31 @@ const UkTable: React.FC = () => {
                     alt={"download icon"}
                   />
                 </div>
-                <FileDrawer
-                  register="uk/e-money-firms"
-                  isDrawerOpen={isDrawerOpen1}
-                  ref={drawerRef1}
-                />
+                <FileDrawer register="uk/e-money-firms" isDrawerOpen={isDrawerOpen1} ref={drawerRef1} />
               </div>
             </div>
           </div>
           <h1 className="text-3xl font-bold text-center ">E-Money Register Status</h1>
-          <TableSkeleton
-            lables={["Company Name", "License Issue Date", "License Type"]}
-          />
+          <TableSkeleton lables={["Company Name", "License Issue Date", "License Type"]} />
         </>
       ) : (
         <>
           <div className={`${styles.mains} h-[60px] mt-4 mt-responsive`}>
             <SearchBar onSearch={(value) => handleSearch1(value)} />
             <div className="flex gap-4 relative items-center justify-center">
-              <Pagination
-                totalPages={totalPages1}
-                currentPage={currentPage1}
-                onPageChange={handlePageChange1}
-              />
+              <Pagination totalPages={totalPages1} currentPage={currentPage1} onPageChange={handlePageChange1} />
               <div className={styles.drawer}>
                 <div className="cursor-pointer border border-black rounded-xl w-10 h-10 flex items-center justify-center">
                   <Image
                     width={20}
                     height={20}
                     src={"/images/download.webp"}
-                    onClick={() => setIsDrawerOpen2((prev) => !prev)}
+                    onClick={() => setIsDrawerOpen1((prev) => !prev)}
                     className="w-8 h-8"
                     alt={"download icon"}
                   />
                 </div>
-                <FileDrawer
-                  register="uk/e-money-firms"
-                  isDrawerOpen={isDrawerOpen1}
-                  ref={drawerRef1}
-                />
+                <FileDrawer register="uk/e-money-firms" isDrawerOpen={isDrawerOpen1} ref={drawerRef1} />
               </div>
             </div>
           </div>
@@ -353,9 +298,7 @@ const UkTable: React.FC = () => {
             onFilterByAddressType={handleFilterByEmoneyRegisterStatus}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">
-              Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}
-            </div>
+            <div className="text-lg">Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}</div>
           </div>
         </>
       )}
@@ -365,57 +308,43 @@ const UkTable: React.FC = () => {
           <div className={`${styles.mains} h-[60px] mt-4 mt-responsive`}>
             <SearchBar onSearch={(value) => handleSearch2(value)} />
             <div className="flex gap-4 relative items-center justify-center">
-              <Pagination
-                totalPages={totalPages2}
-                currentPage={currentPage2}
-                onPageChange={handlePageChange2}
-              />
+              <Pagination totalPages={totalPages2} currentPage={currentPage2} onPageChange={handlePageChange2} />
               <div className={styles.drawer}>
-                <button
-                  onClick={() => setIsDrawerOpen2((prev) => !prev)}
-                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
-                >
-                  <div className="bg-black w-full h-[2px]"></div>
-                  <div className="bg-black w-full h-[2px]"></div>
-                  <div className="bg-black w-full h-[2px]"></div>
-                </button>
-                <FileDrawer
-                  register="uk/firm-psd-permission"
-                  isDrawerOpen={isDrawerOpen2}
-                  ref={drawerRef2}
-                />
+                <div className="cursor-pointer border border-black rounded-xl w-10 h-10 flex items-center justify-center">
+                  <Image
+                    width={20}
+                    height={20}
+                    src={"/images/download.webp"}
+                    onClick={() => setIsDrawerOpen2((prev) => !prev)}
+                    className="w-8 h-8"
+                    alt={"download icon"}
+                  />
+                </div>
+                <FileDrawer register="uk/firm-psd-permission" isDrawerOpen={isDrawerOpen2} ref={drawerRef2} />
               </div>
             </div>
           </div>
           <h1 className="text-3xl font-bold text-center ">firm PSD Permission</h1>
-          <TableSkeleton
-            lables={["Company Name", "License Issue Date", "License Type"]}
-          />
+          <TableSkeleton lables={["Company Name", "License Issue Date", "License Type"]} />
         </>
       ) : (
         <>
           <div className={`${styles.mains} h-[60px] mt-4 mt-responsive`}>
             <SearchBar onSearch={(value) => handleSearch2(value)} />
             <div className="flex gap-4 relative items-center justify-center">
-              <Pagination
-                totalPages={totalPages2}
-                currentPage={currentPage2}
-                onPageChange={handlePageChange2}
-              />
+              <Pagination totalPages={totalPages2} currentPage={currentPage2} onPageChange={handlePageChange2} />
               <div className={styles.drawer}>
-                <button
-                  onClick={() => setIsDrawerOpen2((prev) => !prev)}
-                  className="cursor-pointer border w-10 h-10 border-black rounded-xl flex flex-col gap-1 justify-evenly p-2"
-                >
-                  <div className="bg-black w-full h-[2px]"></div>
-                  <div className="bg-black w-full h-[2px]"></div>
-                  <div className="bg-black w-full h-[2px]"></div>
-                </button>
-                <FileDrawer
-                  register="uk/firm-psd-permission"
-                  isDrawerOpen={isDrawerOpen2}
-                  ref={drawerRef2}
-                />
+                <div className="cursor-pointer border border-black rounded-xl w-10 h-10 flex items-center justify-center">
+                  <Image
+                    width={20}
+                    height={20}
+                    src={"/images/download.webp"}
+                    onClick={() => setIsDrawerOpen2((prev) => !prev)}
+                    className="w-8 h-8"
+                    alt={"download icon"}
+                  />
+                </div>
+                <FileDrawer register="uk/firm-psd-permission" isDrawerOpen={isDrawerOpen2} ref={drawerRef2} />
               </div>
             </div>
           </div>
@@ -432,9 +361,7 @@ const UkTable: React.FC = () => {
             onFilterByAddressType={handleFilterByPSDFirmStatus}
           />
           <div className="relative mb-2 flex justify-center items-center">
-            <div className="text-lg">
-              Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}
-            </div>
+            <div className="text-lg">Last Update: {eMoneyFirmsData[0].lastUpdatedDate.slice(0, 10)}</div>
           </div>
         </>
       )}
